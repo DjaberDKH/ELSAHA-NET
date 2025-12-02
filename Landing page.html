@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELSAHA-NET - Digitalize your orders with pharmacies</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-blue: #2e3244;
+            --light-gray: #c5c6c6;
+            --white: #ffffff;
+            --orange: #f1895c;
+            --blue-gray: #516079;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--dark-blue);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+        
+        body.rtl {
+            direction: rtl;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h1, h2, h3 {
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+        }
+        
+        p {
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary {
+            background-color: var(--orange);
+            color: var(--white);
+            /* Animation de saut pour le bouton header */
+            animation: bounce 2s infinite;
+            box-shadow: 0 4px 15px rgba(241, 137, 92, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background-color: #e07a4f;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(241, 137, 92, 0.5);
+            animation: none;
+        }
+        
+        /* Animation bounce (saut) pour le bouton header */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        /* Animation supplémentaire au survol */
+        .btn-primary:hover {
+            animation: none;
+        }
+        
+        .btn-secondary {
+            background-color: var(--blue-gray);
+            color: var(--white);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #47536a;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo span {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--dark-blue);
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .lang-btn {
+            background: none;
+            border: 1px solid var(--light-gray);
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .lang-btn.active {
+            background-color: var(--blue-gray);
+            color: white;
+            border-color: var(--blue-gray);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background-color: var(--dark-blue);
+            color: var(--white);
+            padding-top: 150px;
+            padding-bottom: 100px;
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
+        
+        .hero-text {
+            flex: 1;
+        }
+        
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        /* Screenshot du header réduit de 50% */
+        .hero-image img {
+            max-width: 50%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .trust-badge {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* Section Styles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .problem-section {
+            background-color: #f8f9fa;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        
+        .problem-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .problem-card ul {
+            list-style-type: none;
+        }
+        
+        .problem-card li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .problem-card li:before {
+            content: "•";
+            color: var(--orange);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+        
+        .shock-phrase {
+            background-color: var(--orange);
+            color: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        /* Solution Section */
+        .solution-section {
+            background-color: var(--light-gray);
+            color: var(--dark-blue);
+        }
+        
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .solution-list {
+            list-style-type: none;
+        }
+        
+        .solution-list li {
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .solution-list li:before {
+            content: "✓";
+            color: var(--white);
+            background-color: var(--orange);
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .solution-copy {
+            background-color: var(--blue-gray);
+            color: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        /* Experiences Section */
+        .experiences-section {
+            background-color: #f8f9fa;
+        }
+        
+        .experience-block {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 100px;
+        }
+        
+        .experience-block:last-child {
+            margin-bottom: 0;
+        }
+        
+        .experience-content {
+            flex: 1;
+        }
+        
+        .experience-visual {
+            flex: 1;
+        }
+        
+        .experience-card {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .experience-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        /* Carousel Styles */
+        .carousel {
+            position: relative;
+            margin: 0;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-item {
+            min-width: 100%;
+            transition: opacity 0.5s ease;
+        }
+        
+        /* Screenshots augmentés de 70% dans la section expériences */
+        .experiences-section .carousel-item img {
+            width: 100%;
+            height: 680px; /* Augmenté de 70% par rapport à 400px initial */
+            object-fit: contain;
+            border-radius: 10px;
+        }
+        
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+        
+        .carousel-control:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .carousel-control.prev {
+            left: 15px;
+        }
+        
+        .carousel-control.next {
+            right: 15px;
+        }
+        
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-indicator.active {
+            background-color: var(--orange);
+        }
+        
+        /* Features Section */
+        .features-section {
+            background-color: var(--light-gray);
+            color: var(--dark-blue);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--orange);
+        }
+        
+        /* Impact Section */
+        .impact-section {
+            background-color: #f8f9fa;
+        }
+        
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        
+        .impact-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .impact-number {
+            display: inline-block;
+            background-color: var(--orange);
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        /* Future Section */
+        .future-section {
+            text-align: center;
+            background-color: var(--light-gray);
+            color: var(--dark-blue);
+        }
+        
+        .future-text {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.3rem;
+            font-style: italic;
+        }
+        
+        /* Onboarding Section */
+        .onboarding-section {
+            background-color: var(--white);
+        }
+        
+        .onboarding-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 50px 0;
+        }
+        
+        .step {
+            flex: 1;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        .step:not(:last-child):after {
+            content: "";
+            position: absolute;
+            top: 40px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background-color: var(--light-gray);
+            z-index: -1;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background-color: var(--orange);
+            color: var(--white);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        /* Audience Section */
+        .audience-section {
+            background-color: #f8f9fa;
+        }
+        
+        .audience-list {
+            list-style-type: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .audience-list li {
+            padding: 15px;
+            background-color: var(--white);
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background-color: var(--dark-blue);
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            margin-bottom: 30px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--blue-gray);
+            color: var(--white);
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-content, 
+            .problem-grid,
+            .solution-grid,
+            .features-grid,
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .experience-block {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .onboarding-steps {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .step:not(:last-child):after {
+                display: none;
+            }
+            
+            .audience-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .experiences-section .carousel-item img {
+                height: 450px;
+            }
+            
+            .hero-image img {
+                max-width: 70%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero {
+                padding-top: 180px;
+            }
+            
+            .experiences-section .carousel-item img {
+                height: 350px;
+            }
+            
+            .language-switcher {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .carousel-control {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .hero-image img {
+                max-width: 80%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-image img {
+                max-width: 90%;
+            }
+            
+            .experiences-section .carousel-item img {
+                height: 280px;
+            }
+        }
+        
+        /* RTL specific styles */
+        body.rtl .logo img {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+        
+        body.rtl .problem-card li {
+            padding-left: 0;
+            padding-right: 25px;
+        }
+        
+        body.rtl .problem-card li:before {
+            left: auto;
+            right: 0;
+        }
+        
+        body.rtl .solution-list li {
+            padding-left: 0;
+            padding-right: 40px;
+        }
+        
+        body.rtl .solution-list li:before {
+            left: auto;
+            right: 0;
+        }
+        
+        body.rtl .step:not(:last-child):after {
+            right: auto;
+            left: -50%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="https://i.imgur.com/Jd8sRQb.png" alt="ELSAHA-NET Logo">
+                <span>ELSAHA-NET</span>
+            </div>
+            <div class="nav-right">
+                <div class="language-switcher">
+                    <button class="lang-btn" data-lang="fr">FR</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ar">AR</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1 data-fr="Digitalisez vos commandes avec les pharmacies — simplement." data-en="Digitalize your orders with pharmacies — simply." data-ar="رقمنة طلباتك مع الصيدليات — ببساطة.">Digitalisez vos commandes avec les pharmacies — simplement.</h1>
+                <p data-fr="ElSaha-Net connecte distributeurs / grossistes et pharmacies à travers une plateforme B2B dédiée. Arrêtez les appels, messages et PDF. Passez en commandes organisées, traçables et centralisées." data-en="ElSaha-Net connects distributors / wholesalers and pharmacies through a dedicated B2B platform. Stop calls, messages and PDFs. Switch to organized, traceable and centralized orders." data-ar="ElSaha-Net تربط الموزعين / الجملة والصيدليات عبر منصة B2B مخصصة. توقف عن المكالمات والرسائل وملفات PDF. انتقل إلى طلبات منظمة وقابلة للتتبع ومركزية.">ElSaha-Net connecte distributeurs / grossistes et pharmacies à travers une plateforme B2B dédiée. Arrêtez les appels, messages et PDF. Passez en commandes organisées, traçables et centralisées.</p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeDlWjSPlq8o4fr8KX4IMYsRSlfmyWu_Ci_l4JDiQ3fOeohWg/viewform?usp=dialog" class="btn btn-primary" data-fr="Rejoindre la liste d'attente pour bénéficier des avantages des early adopters" data-en="Join the waiting list to benefit from early adopter advantages" data-ar="انضم إلى قائمة الانتظار للاستفادة من مزايا المستخدمين الأوائل">Rejoindre la liste d'attente pour bénéficier des avantages des early adopters</a>
+                <div class="trust-badge" data-fr="Conçu pour le marché algérien. Une plateforme centrée sur la gestion des commandes." data-en="Designed for the Algerian market. A platform focused on order management." data-ar="مصمم للسوق الجزائرية. منصة تركز على إدارة الطلبات.">Conçu pour le marché algérien. Une plateforme centrée sur la gestion des commandes.</div>
+            </div>
+            <div class="hero-image">
+                <img src="https://i.imgur.com/sFxprtM.png" alt="ELSAHA-NET Application">
+            </div>
+        </div>
+    </section>
+
+    <!-- Pourquoi ElSaha-Net ? -->
+    <section class="problem-section">
+        <div class="container">
+            <h2 class="section-title" data-fr="Pourquoi ElSaha-Net ?" data-en="Why ElSaha-Net?" data-ar="لماذا ElSaha-Net ؟">Pourquoi ElSaha-Net ?</h2>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h3 data-fr="Ce problème aujourd'hui" data-en="This problem today" data-ar="هذه المشكلة اليوم">Ce problème aujourd'hui</h3>
+                    <ul>
+                        <li data-fr="Inefficacité des WhatsApp ou appels téléphonique pour capturer les commandes" data-en="Inefficiency of WhatsApp or phone calls to capture orders" data-ar="عدم فعالية الواتساب أو المكالمات الهاتفية لالتقاط الطلبات">Inefficacité des WhatsApp ou appels téléphonique pour capturer les commandes</li>
+                        <li data-fr="Pas de visibilité en temps réel sur la disponibilité" data-en="No real-time visibility on availability" data-ar="لا توجد رؤية في الوقت الحقيقي حول التوفر">Pas de visibilité en temps réel sur la disponibilité</li>
+                        <li data-fr="Chaque distributeur a son réseau restreint" data-en="Each distributor has its limited network" data-ar="كل موزع لديه شبكته المحدودة">Chaque distributeur a son réseau restreint</li>
+                        <li data-fr="Pharmacies attendent les délégués commerciaux pour soulever leurs problèmes" data-en="Pharmacies wait for sales representatives to raise their problems" data-ar="الصيدليات تنتظر مندوبي المبيعات لطرح مشاكلهم">Pharmacies attendent les délégués commerciaux pour soulever leurs problèmes</li>
+                    </ul>
+                </div>
+                <div class="problem-card">
+                    <h3 data-fr="Les conséquences" data-en="The consequences" data-ar="النتائج">Les conséquences</h3>
+                    <p data-fr="Des processus inefficaces qui entravent votre croissance et votre productivité." data-en="Inefficient processes that hinder your growth and productivity." data-ar="عمليات غير فعالة تعيق نموك وإنتاجيتك.">Des processus inefficaces qui entravent votre croissance et votre productivité.</p>
+                </div>
+            </div>
+            <div class="shock-phrase" data-fr="Vous perdez du temps et de l'argent pour gérer l'opérationnel, pas pour vendre." data-en="You waste time and money managing operations, not selling." data-ar="أنت تخسر الوقت والمال لإدارة العمليات التشغيلية، وليس للبيع.">Vous perdez du temps et de l'argent pour gérer l'opérationnel, pas pour vendre.</div>
+        </div>
+    </section>
+
+    <!-- La solution -->
+    <section class="solution-section">
+        <div class="container">
+            <h2 class="section-title" data-fr="La solution" data-en="The solution" data-ar="الحل">La solution</h2>
+            <div class="solution-grid">
+                <div>
+                    <ul class="solution-list">
+                        <li data-fr="Un univers de pharmacies plus large" data-en="A wider universe of pharmacies" data-ar="عالم أوسع من الصيدليات">Un univers de pharmacies plus large</li>
+                        <li data-fr="Un catalogue centralisé" data-en="A centralized catalog" data-ar="كتالوج مركزي">Un catalogue centralisé</li>
+                        <li data-fr="Une prise de commande claire" data-en="Clear order taking" data-ar="أخذ طلبات واضح">Une prise de commande claire</li>
+                        <li data-fr="Un suivi structuré" data-en="Structured tracking" data-ar="متابعة منظمة">Un suivi structuré</li>
+                        <li data-fr="Une relation B2B professionnelle" data-en="Professional B2B relationship" data-ar="علاقة B2B مهنية">Une relation B2B professionnelle</li>
+                    </ul>
+                </div>
+                <div class="solution-copy">
+                    <p>❌ <span data-fr="pas marketplace grand public" data-en="not a public marketplace" data-ar="ليس سوقًا للجمهور العام">pas marketplace grand public</span></p>
+                    <p>❌ <span data-fr="pas boutique en ligne" data-en="not an online store" data-ar="ليس متجرًا إلكترونيًا">pas boutique en ligne</span></p>
+                    <p>✔️ <span data-fr="un outil métier" data-en="a professional tool" data-ar="أداة مهنية">un outil métier</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Les deux expériences -->
+    <section class="experiences-section">
+        <div class="container">
+            <h2 class="section-title" data-fr="Les deux expériences" data-en="The two experiences" data-ar="التجربتان">Les deux expériences</h2>
+            
+            <!-- Pharmacie -->
+            <div class="experience-block">
+                <div class="experience-content">
+                    <div class="experience-card">
+                        <h3>📱 <span data-fr="Pharmacie" data-en="Pharmacy" data-ar="الصيدلية">Pharmacie</span></h3>
+                        <ul>
+                            <li data-fr="Catalogue simple" data-en="Simple catalog" data-ar="كتالوج بسيط">Catalogue simple</li>
+                            <li data-fr="Ajout au panier" data-en="Add to cart" data-ar="إضافة إلى السلة">Ajout au panier</li>
+                            <li data-fr="Commande directe" data-en="Direct order" data-ar="طلب مباشر">Commande directe</li>
+                            <li data-fr="Suivi statut de commande" data-en="Order status tracking" data-ar="متابعة حالة الطلب">Suivi statut de commande</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="experience-visual">
+                    <!-- Carousel pour Pharmacie -->
+                    <div class="carousel" id="pharmacyCarousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="https://i.imgur.com/sFxprtM.png" alt="Pharmacie 1">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://i.imgur.com/QFkNrym.png" alt="Pharmacie 2">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://i.imgur.com/Typ62iM.png" alt="Pharmacie 3">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://i.imgur.com/3YuNZsb.png" alt="Pharmacie 4">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://i.imgur.com/hNwl0ON.png" alt="Pharmacie 5">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://i.imgur.com/1fHBoDK.png" alt="Pharmacie 6">
+                            </div>
+                        </div>
+                        <button class="carousel-control prev" onclick="moveCarousel('pharmacyCarousel', -1)">&#10094;</button>
+                        <button class="carousel-control next" onclick="moveCarousel('pharmacyCarousel', 1)">&#10095;</button>
+                        <div class="carousel-indicators" id="pharmacyIndicators">
+                            <!-- Indicators will be added by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Distributeur -->
+            <div class="experience-block">
+                <div class="experience-content">
+                    <div class="experience-card">
+                        <h3>🏭 <span data-fr="Distributeur" data-en="Supplier" data-ar="الموزع">Distributeur</span></h3>
+                        <ul>
+                            <li data-fr="Stats simples" data-en="Simple statistics" data-ar="إحصائيات بسيطة">Stats simples</li>
+                            <li data-fr="Réception des commandes" data-en="Order reception" data-ar="استقبال الطلبات">Réception des commandes</li>
+                            <li data-fr="Statuts de traitement" data-en="Processing statuses" data-ar="حالات المعالجة">Statuts de traitement</li>
+                            <li data-fr="Historique" data-en="History" data-ar="سجل">Historique</li>
+                        </ul>
+                        <!-- Bouton supprimé comme demandé -->
+                    </div>
+                </div>
+                <div class="experience-visual">
+                    <!-- Carousel pour Distributeur -->
+                    <div class="carousel" id="distributorCarousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="https://i.imgur.com/ZryC4Nt.png" alt="Distributeur 1">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://i.imgur.com/RdpcxwI.png" alt="Distributeur 2">
+                            </div>
+                        </div>
+                        <button class="carousel-control prev" onclick="moveCarousel('distributorCarousel', -1)">&#10094;</button>
+                        <button class="carousel-control next" onclick="moveCarousel('distributorCarousel', 1)">&#10095;</button>
+                        <div class="carousel-indicators" id="distributorIndicators">
+                            <!-- Indicators will be added by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fonctionnalités principales -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title" data-fr="Fonctionnalités principales" data-en="Main features" data-ar="الميزات الرئيسية">Fonctionnalités principales</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 data-fr="Catalogue produits" data-en="Product catalog" data-ar="كتالوج المنتجات">Catalogue produits</h3>
+                    <p data-fr="Publiez vos articles, descriptions et prix." data-en="Publish your items, descriptions and prices." data-ar="انشر مقالاتك وأوصافك وأسعارك.">Publiez vos articles, descriptions et prix.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛒</div>
+                    <h3 data-fr="Commande en direct" data-en="Direct ordering" data-ar="طلب مباشر">Commande en direct</h3>
+                    <p data-fr="Recevez les commandes dans un espace dédié, sans WhatsApp." data-en="Receive orders in a dedicated space, without WhatsApp." data-ar="استقبل الطلبات في مساحة مخصصة، بدون واتساب.">Recevez les commandes dans un espace dédié, sans WhatsApp.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3 data-fr="Traitement" data-en="Processing" data-ar="معالجة">Traitement</h3>
+                    <p data-fr="Traitez une commande jusqu'à sa livraison." data-en="Process an order until its delivery." data-ar="عالج الطلب حتى تسليمه.">Traitez une commande jusqu'à sa livraison.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 data-fr="Historique" data-en="History" data-ar="سجل">Historique</h3>
+                    <p data-fr="Accédez aux commandes passées, articles, pharmacies, dates." data-en="Access past orders, items, pharmacies, dates." data-ar="الوصول إلى الطلبات السابقة والمقالات والصيدليات والتواريخ.">Accédez aux commandes passées, articles, pharmacies, dates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact pour vous -->
+    <section class="impact-section">
+        <div class="container">
+            <h2 class="section-title" data-fr="Impact pour vous (distributeur)" data-en="Impact for you (supplier)" data-ar="التأثير عليك (الموزع)">Impact pour vous (distributeur)</h2>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="impact-number">1</div>
+                    <h3 data-fr="Gagnez du temps" data-en="Save time" data-ar="وفر الوقت">Gagnez du temps</h3>
+                    <p data-fr="Moins d'appels, moins d'erreurs, moins de ressources, commandes claires." data-en="Fewer calls, fewer errors, fewer resources, clear orders." data-ar="مكالمات أقل، أخطاء أقل، موارد أقل، طلبات واضحة.">Moins d'appels, moins d'erreurs, moins de ressources, commandes claires.</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-number">2</div>
+                    <h3 data-fr="Élargissez votre réseau" data-en="Expand your network" data-ar="وسع شبكتك">Élargissez votre réseau</h3>
+                    <p data-fr="Accédez à un univers de pharmacies sans démarchage manuel." data-en="Access a universe of pharmacies without manual prospecting." data-ar="الوصول إلى عالم من الصيدليات دون تسويق يدوي.">Accédez à un univers de pharmacies sans démarchage manuel.</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-number">3</div>
+                    <h3 data-fr="Standardisez votre process" data-en="Standardize your process" data-ar="قم بتوحيد عملية العمل الخاصة بك">Standardisez votre process</h3>
+                    <p data-fr="Vous arrêtez les conversations dispersées et non traçables." data-en="You stop scattered and untraceable conversations." data-ar="تتوقف عن المحادثات المتناثرة وغير القابلة للتتبع.">Vous arrêtez les conversations dispersées et non traçables.</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-number">4</div>
+                    <h3 data-fr="Vous maîtrisez" data-en="You control" data-ar="أنت تتحكم">Vous maîtrisez</h3>
+                    <p data-fr="Une plateforme professionnelle dédiée à votre métier." data-en="A professional platform dedicated to your business." data-ar="منصة مهنية مخصصة لمهنتك.">Une plateforme professionnelle dédiée à votre métier.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Le futur : Avec l'IA -->
+    <section class="future-section">
+        <div class="container">
+            <h2 class="section-title" data-fr="Le futur : Avec l'IA" data-en="The future: With AI" data-ar="المستقبل: مع الذكاء الاصطناعي">Le futur : Avec l'IA</h2>
+            <p class="future-text" data-fr="L'IA n'est utile que quand il y a des données – elle arrivera avec vous." data-en="AI is only useful when there is data – it will come with you." data-ar="الذكاء الاصطناعي مفيد فقط عندما تكون هناك بيانات - سيأتي معك.">L'IA n'est utile que quand il y a des données – elle arrivera avec vous.</p>
+        </div>
+    </section>
+
+    <!-- Onboarding simple -->
+    <section class="onboarding-section">
+        <div class="container">
+            <h2 class="section-title" data-fr="Onboarding simple" data-en="Simple onboarding" data-ar="الانضمام بسيط">Onboarding simple</h2>
+            <div class="onboarding-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 data-fr="Rejoignez la waitlist" data-en="Join the waitlist" data-ar="انضم إلى قائمة الانتظار">Rejoignez la waitlist</h3>
+                    <p data-fr="Inscrivez-vous pour être parmi les premiers à bénéficier de la plateforme." data-en="Sign up to be among the first to benefit from the platform." data-ar="سجل لتكون من أوائل المستفيدين من المنصة.">Inscrivez-vous pour être parmi les premiers à bénéficier de la plateforme.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 data-fr="Vous serez contactés rapidement" data-en="You will be contacted quickly" data-ar="سيتم الاتصال بك بسرعة">Vous serez contactés rapidement</h3>
+                    <p data-fr="Notre équipe vous contactera pour plus d'explications et pour comprendre vos besoins." data-en="Our team will contact you for more explanations and to understand your needs." data-ar="سيتصل بك فريقنا لمزيد من التوضيحات وفهم احتياجاتك.">Notre équipe vous contactera pour plus d'explications et pour comprendre vos besoins.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 data-fr="Bénéficiez des avantages" data-en="Benefit from advantages" data-ar="استفد من المزايا">Bénéficiez des avantages</h3>
+                    <p data-fr="Au lancement, vous bénéficierez des avantages des early adopters." data-en="At launch, you will benefit from early adopter advantages." data-ar="عند الإطلاق، ستستفيد من مزايا المستخدمين الأوائل.">Au lancement, vous bénéficierez des avantages des early adopters.</p>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeDlWjSPlq8o4fr8KX4IMYsRSlfmyWu_Ci_l4JDiQ3fOeohWg/viewform?usp=dialog" class="btn btn-primary" data-fr="Je rejoins la liste d'attente" data-en="I join the waiting list" data-ar="أنضم إلى قائمة الانتظار">Je rejoins la liste d'attente</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- À qui s'adresse ElSaha-Net ? -->
+    <section class="audience-section">
+        <div class="container">
+            <h2 class="section-title" data-fr="À qui s'adresse ElSaha-Net ?" data-en="Who is ElSaha-Net for?" data-ar="لمن توجه ElSaha-Net ؟">À qui s'adresse ElSaha-Net ?</h2>
+            <ul class="audience-list">
+                <li data-fr="Grossistes répartiteurs pharmaceutique" data-en="Pharmaceutical wholesale distributors" data-ar="موزعي الجملة الصيدلانية">Grossistes répartiteurs pharmaceutique</li>
+                <li data-fr="Distributeurs para-pharmaceutique" data-en="Parapharmaceutical distributors" data-ar="موزعي المستحضرات الصيدلانية المساعدة">Distributeurs para-pharmaceutique</li>
+                <li data-fr="Laboratoires pharmaceutique et para-pharmaceutique" data-en="Pharmaceutical and parapharmaceutical laboratories" data-ar="المختبرات الصيدلانية وشبه الصيدلانية">Laboratoires pharmaceutique et para-pharmaceutique</li>
+                <li data-fr="Importateurs" data-en="Importers" data-ar="المستوردين">Importateurs</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- CTA final -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 data-fr="Digitalisez votre distribution. Accédez à plus de pharmacies." data-en="Digitalize your distribution. Access more pharmacies." data-ar="رقمنة التوزيع الخاص بك. الوصول إلى المزيد من الصيدليات.">Digitalisez votre distribution. Accédez à plus de pharmacies.</h2>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeDlWjSPlq8o4fr8KX4IMYsRSlfmyWu_Ci_l4JDiQ3fOeohWg/viewform?usp=dialog" class="btn btn-primary" data-fr="Rejoindre la liste d'attente" data-en="Join the waiting list" data-ar="انضم إلى قائمة الانتظار">Rejoindre la liste d'attente</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 ELSAHA-NET. <span data-fr="Tous droits réservés." data-en="All rights reserved." data-ar="جميع الحقوق محفوظة.">Tous droits réservés.</span></p>
+        </div>
+    </footer>
+
+    <script>
+        // Détection de la langue du navigateur
+        function detectBrowserLanguage() {
+            const browserLang = navigator.language || navigator.userLanguage;
+            
+            // Extraire le code de langue principal (ex: "fr-FR" -> "fr")
+            const langCode = browserLang.split('-')[0];
+            
+            // Vérifier si la langue est supportée
+            const supportedLangs = ['fr', 'en', 'ar'];
+            
+            // Retourner la langue détectée si supportée, sinon français par défaut
+            return supportedLangs.includes(langCode) ? langCode : 'fr';
+        }
+        
+        // Language switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            
+            // Détecter la langue du navigateur au chargement
+            const defaultLang = detectBrowserLanguage();
+            console.log('Langue du navigateur détectée:', defaultLang);
+            
+            // Appliquer la langue par défaut
+            changeLanguage(defaultLang);
+            
+            // Activer le bouton correspondant
+            langButtons.forEach(button => {
+                if (button.getAttribute('data-lang') === defaultLang) {
+                    button.classList.add('active');
+                }
+            });
+            
+            // Gérer les clics sur les boutons de langue
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    // Update active button
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Change language
+                    changeLanguage(lang);
+                    
+                    // Stocker la préférence dans localStorage
+                    localStorage.setItem('preferred-language', lang);
+                });
+            });
+            
+            // Vérifier si l'utilisateur a une préférence enregistrée
+            const savedLang = localStorage.getItem('preferred-language');
+            if (savedLang && ['fr', 'en', 'ar'].includes(savedLang)) {
+                changeLanguage(savedLang);
+                langButtons.forEach(button => {
+                    button.classList.remove('active');
+                    if (button.getAttribute('data-lang') === savedLang) {
+                        button.classList.add('active');
+                    }
+                });
+            }
+            
+            // Initialize carousels
+            initCarousel('pharmacyCarousel');
+            initCarousel('distributorCarousel');
+        });
+        
+        function changeLanguage(lang) {
+            // Update body direction for RTL
+            if (lang === 'ar') {
+                document.body.classList.add('rtl');
+                document.body.setAttribute('dir', 'rtl');
+                document.documentElement.setAttribute('lang', 'ar');
+                document.documentElement.setAttribute('dir', 'rtl');
+            } else {
+                document.body.classList.remove('rtl');
+                document.body.setAttribute('dir', 'ltr');
+                document.documentElement.setAttribute('lang', lang);
+                document.documentElement.setAttribute('dir', 'ltr');
+            }
+            
+            // Update all elements with data attributes
+            const elements = document.querySelectorAll('[data-fr]');
+            elements.forEach(element => {
+                const translation = element.getAttribute(`data-${lang}`);
+                if (translation) {
+                    element.textContent = translation;
+                }
+            });
+        }
+        
+        // Carousel functionality
+        function initCarousel(carouselId) {
+            const carousel = document.getElementById(carouselId);
+            const inner = carousel.querySelector('.carousel-inner');
+            const items = carousel.querySelectorAll('.carousel-item');
+            const indicatorsContainer = carousel.querySelector('.carousel-indicators');
+            
+            // Create indicators
+            indicatorsContainer.innerHTML = '';
+            items.forEach((_, index) => {
+                const indicator = document.createElement('div');
+                indicator.className = `carousel-indicator ${index === 0 ? 'active' : ''}`;
+                indicator.addEventListener('click', () => {
+                    moveCarouselToIndex(carouselId, index);
+                });
+                indicatorsContainer.appendChild(indicator);
+            });
+        }
+        
+        function moveCarousel(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            const inner = carousel.querySelector('.carousel-inner');
+            const items = carousel.querySelectorAll('.carousel-item');
+            const indicators = carousel.querySelectorAll('.carousel-indicator');
+            
+            let activeIndex = 0;
+            items.forEach((item, index) => {
+                if (item.classList.contains('active')) {
+                    activeIndex = index;
+                }
+            });
+            
+            let newIndex = activeIndex + direction;
+            
+            if (newIndex < 0) {
+                newIndex = items.length - 1;
+            } else if (newIndex >= items.length) {
+                newIndex = 0;
+            }
+            
+            // Update active item
+            items[activeIndex].classList.remove('active');
+            items[newIndex].classList.add('active');
+            
+            // Update indicators
+            indicators[activeIndex].classList.remove('active');
+            indicators[newIndex].classList.add('active');
+            
+            // Move the inner container
+            inner.style.transform = `translateX(-${newIndex * 100}%)`;
+        }
+        
+        function moveCarouselToIndex(carouselId, index) {
+            const carousel = document.getElementById(carouselId);
+            const inner = carousel.querySelector('.carousel-inner');
+            const items = carousel.querySelectorAll('.carousel-item');
+            const indicators = carousel.querySelectorAll('.carousel-indicator');
+            
+            // Remove active class from all items and indicators
+            items.forEach(item => item.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            // Add active class to selected item and indicator
+            items[index].classList.add('active');
+            indicators[index].classList.add('active');
+            
+            // Move the inner container
+            inner.style.transform = `translateX(-${index * 100}%)`;
+        }
+        
+        // Auto-advance carousels
+        setInterval(() => {
+            moveCarousel('pharmacyCarousel', 1);
+        }, 5000);
+        
+        setInterval(() => {
+            moveCarousel('distributorCarousel', 1);
+        }, 4000);
+    </script>
+</body>
+</html>
