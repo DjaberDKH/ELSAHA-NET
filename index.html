@@ -219,6 +219,14 @@
             border-radius: 30px;
             margin-top: 20px;
             font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .trust-badge .flag {
+            font-size: 1.2rem;
         }
         
         /* Section Styles */
@@ -344,11 +352,17 @@
             flex: 1;
         }
         
+        /* Cadres Pharmacy et Supplier agrandis pour mobile */
         .experience-card {
             background-color: var(--white);
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         .experience-card h3 {
@@ -356,6 +370,28 @@
             align-items: center;
             gap: 10px;
             margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+        
+        .experience-card ul {
+            list-style-type: none;
+            margin-top: 15px;
+        }
+        
+        .experience-card li {
+            margin-bottom: 15px;
+            padding-left: 35px;
+            position: relative;
+            font-size: 1.1rem;
+        }
+        
+        .experience-card li:before {
+            content: "•";
+            color: var(--orange);
+            font-size: 1.8rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
         }
         
         /* Carousel Styles */
@@ -624,6 +660,12 @@
             .hero-image img {
                 max-width: 60%;
             }
+            
+            /* Cadres Pharmacy et Supplier agrandis sur tablette */
+            .experience-card {
+                min-height: 300px;
+                padding: 35px;
+            }
         }
         
         @media (max-width: 768px) {
@@ -692,12 +734,33 @@
             .experience-card,
             .feature-card,
             .impact-card {
-                padding: 20px;
+                padding: 25px;
             }
             
             .shock-phrase {
                 padding: 20px;
                 font-size: 1.2rem;
+            }
+            
+            /* Cadres Pharmacy et Supplier encore plus grands sur mobile */
+            .experience-card {
+                min-height: 280px;
+                padding: 30px 25px;
+            }
+            
+            .experience-card h3 {
+                font-size: 1.6rem;
+                margin-bottom: 20px;
+            }
+            
+            .experience-card li {
+                font-size: 1rem;
+                margin-bottom: 12px;
+                padding-left: 30px;
+            }
+            
+            .experience-card li:before {
+                font-size: 1.5rem;
             }
         }
         
@@ -732,16 +795,17 @@
             }
             
             .trust-badge {
-                padding: 8px 16px;
-                font-size: 0.8rem;
+                padding: 10px 18px;
+                font-size: 0.9rem;
                 text-align: center;
-                display: block;
+                display: inline-flex;
                 margin: 20px auto 0;
             }
             
             /* Ajustements pour les petites cartes sur mobile */
             .experience-card {
-                padding: 20px 15px;
+                padding: 25px 20px;
+                min-height: 260px;
             }
             
             .carousel-control {
@@ -757,10 +821,26 @@
             
             .experience-block {
                 margin-bottom: 60px;
+                gap: 30px;
             }
             
             .onboarding-steps {
                 margin: 30px 0;
+            }
+            
+            /* Cadres Pharmacy et Supplier maximisés sur très petits écrans */
+            .experience-card {
+                width: 100%;
+                min-height: 250px;
+            }
+            
+            .experience-card h3 {
+                font-size: 1.5rem;
+            }
+            
+            .experience-card li {
+                font-size: 0.95rem;
+                padding-left: 28px;
             }
         }
         
@@ -784,6 +864,23 @@
             .lang-btn {
                 padding: 6px 12px;
                 font-size: 0.8rem;
+            }
+            
+            /* Derniers ajustements pour très petits écrans */
+            .experience-card {
+                padding: 20px 15px;
+                min-height: 240px;
+            }
+            
+            .experience-card h3 {
+                font-size: 1.4rem;
+                margin-bottom: 15px;
+            }
+            
+            .experience-card li {
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+                padding-left: 25px;
             }
         }
         
@@ -818,10 +915,36 @@
             left: -50%;
         }
         
+        body.rtl .experience-card li {
+            padding-left: 0;
+            padding-right: 35px;
+        }
+        
+        body.rtl .experience-card li:before {
+            left: auto;
+            right: 0;
+        }
+        
         /* Améliorations spécifiques pour mobile en RTL */
         @media (max-width: 768px) {
             body.rtl .hero-text {
                 text-align: center;
+            }
+            
+            body.rtl .experience-card li {
+                padding-right: 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body.rtl .experience-card li {
+                padding-right: 28px;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            body.rtl .experience-card li {
+                padding-right: 25px;
             }
         }
     </style>
@@ -851,7 +974,10 @@
                 <h1 data-fr="Digitalisez vos commandes avec les pharmacies — simplement." data-en="Digitalize your orders with pharmacies — simply." data-ar="رقمنة طلباتك مع الصيدليات — ببساطة.">Digitalisez vos commandes avec les pharmacies — simplement.</h1>
                 <p data-fr="ElSaha-Net connecte distributeurs / grossistes et pharmacies à travers une plateforme B2B dédiée. Arrêtez les appels, messages et PDF. Passez en commandes organisées, traçables et centralisées." data-en="ElSaha-Net connects distributors / wholesalers and pharmacies through a dedicated B2B platform. Stop calls, messages and PDFs. Switch to organized, traceable and centralized orders." data-ar="ElSaha-Net تربط الموزعين / الجملة والصيدليات عبر منصة B2B مخصصة. توقف عن المكالمات والرسائل وملفات PDF. انتقل إلى طلبات منظمة وقابلة للتتبع ومركزية.">ElSaha-Net connecte distributeurs / grossistes et pharmacies à travers une plateforme B2B dédiée. Arrêtez les appels, messages et PDF. Passez en commandes organisées, traçables et centralisées.</p>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSeDlWjSPlq8o4fr8KX4IMYsRSlfmyWu_Ci_l4JDiQ3fOeohWg/viewform?usp=dialog" class="btn btn-primary" data-fr="Rejoindre la liste d'attente pour bénéficier des avantages des early adopters" data-en="Join the waiting list to benefit from early adopter advantages" data-ar="انضم إلى قائمة الانتظار للاستفادة من مزايا المستخدمين الأوائل">Rejoindre la liste d'attente pour bénéficier des avantages des early adopters</a>
-                <div class="trust-badge" data-fr="Conçu pour le marché algérien. Une plateforme centrée sur la gestion des commandes." data-en="Designed for the Algerian market. A platform focused on order management." data-ar="مصمم للسوق الجزائرية. منصة تركز على إدارة الطلبات.">Conçu pour le marché algérien. Une plateforme centrée sur la gestion des commandes.</div>
+                <div class="trust-badge" data-fr="🇩🇿 Conçu pour le marché algérien" data-en="🇩🇿 Designed for the Algerian market" data-ar="🇩🇿 مصمم للسوق الجزائرية">
+                    <span class="flag">🇩🇿</span>
+                    <span class="text">Conçu pour le marché algérien</span>
+                </div>
             </div>
             <div class="hero-image">
                 <img src="https://i.imgur.com/sFxprtM.png" alt="ELSAHA-NET Application">
