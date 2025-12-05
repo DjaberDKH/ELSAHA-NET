@@ -3,18 +3,22 @@
 <head>
 
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XYDGZHB6YG"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-XYDGZHB6YG');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XYDGZHB6YG"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XYDGZHB6YG');
+    </script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ELSAHA-NET - Digitizing pharma businesses through an integrated and reliable pharmaceutical B2B marketplace</title>
+    <title>ELSAHA-NET - Digitizing pharma businesses through an integrated and reliable pharmaceutical B2B marketplace</title>
+    
+    <!-- Favicon/Logo pour l'onglet de navigation -->
+    <link rel="icon" type="image/png" href="https://i.imgur.com/Jd8sRQb.png">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/Jd8sRQb.png">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -226,18 +230,19 @@
         .trust-badge {
             display: inline-block;
             background-color: rgba(255, 255, 255, 0.1);
-            padding: 10px 20px;
+            padding: 15px 25px;
             border-radius: 30px;
             margin-top: 20px;
-            font-size: 0.9rem;
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             justify-content: center;
+            font-weight: 600;
         }
         
         .trust-badge .flag {
-            font-size: 1.2rem;
+            font-size: 1.8rem;
         }
         
         /* Section Styles */
@@ -337,6 +342,20 @@
             padding: 30px;
             border-radius: 10px;
             text-align: center;
+        }
+        
+        .solution-copy p {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .solution-copy .check {
+            color: #4CAF50;
+            font-weight: bold;
         }
         
         /* Experiences Section */
@@ -677,6 +696,16 @@
                 min-height: 300px;
                 padding: 35px;
             }
+            
+            /* Trust badge ajusté sur tablette */
+            .trust-badge {
+                font-size: 1.1rem;
+                padding: 12px 22px;
+            }
+            
+            .trust-badge .flag {
+                font-size: 1.5rem;
+            }
         }
         
         @media (max-width: 768px) {
@@ -806,11 +835,15 @@
             }
             
             .trust-badge {
-                padding: 10px 18px;
-                font-size: 0.9rem;
+                padding: 12px 20px;
+                font-size: 1rem;
                 text-align: center;
                 display: inline-flex;
                 margin: 20px auto 0;
+            }
+            
+            .trust-badge .flag {
+                font-size: 1.4rem;
             }
             
             /* Ajustements pour les petites cartes sur mobile */
@@ -892,6 +925,16 @@
                 font-size: 0.9rem;
                 margin-bottom: 10px;
                 padding-left: 25px;
+            }
+            
+            /* Trust badge pour très petits écrans */
+            .trust-badge {
+                padding: 10px 18px;
+                font-size: 0.95rem;
+            }
+            
+            .trust-badge .flag {
+                font-size: 1.3rem;
             }
         }
         
@@ -978,25 +1021,24 @@
         </div>
     </header>
 
-<!-- Hero Section -->
-<section class="hero">
-    <div class="container hero-content">
-        <div class="hero-text">
-            <!-- Changer ce titre h1 -->
-            <h1 data-fr="Digitizing pharma businesses through an integrated and reliable pharmaceutical B2B marketplace." data-en="Digitizing pharma businesses through an integrated and reliable pharmaceutical B2B marketplace." data-ar="رقمنة الأعمال الصيدلانية من خلال سوق B2B صيدلاني متكامل وموثوق.">Digitizing pharma businesses through an integrated and reliable pharmaceutical B2B marketplace.</h1>
-            
-            <p data-fr="ElSaha-Net connecte distributeurs / grossistes et pharmacies à travers une plateforme B2B dédiée. Arrêtez les appels, messages et PDF. Passez en commandes organisées, traçables et centralisées." data-en="ElSaha-Net connects distributors / wholesalers and pharmacies through a dedicated B2B platform. Stop calls, messages and PDFs. Switch to organized, traceable and centralized orders." data-ar="ElSaha-Net تربط الموزعين / الجملة والصيدليات عبر منصة B2B مخصصة. توقف عن المكالمات والرسائل وملفات PDF. انتقل إلى طلبات منظمة وقابلة للتتبع ومركزية.">ElSaha-Net connecte distributeurs / grossistes et pharmacies à travers une plateforme B2B dédiée. Arrêtez les appels, messages et PDF. Passez en commandes organisées, traçables et centralisées.</p>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeDlWjSPlq8o4fr8KX4IMYsRSlfmyWu_Ci_l4JDiQ3fOeohWg/viewform?usp=dialog" class="btn btn-primary" data-fr="Rejoindre la liste d'attente pour bénéficier des avantages des early adopters" data-en="Join the waiting list to benefit from early adopter advantages" data-ar="انضم إلى قائمة الانتظار للاستفادة من مزايا المستخدمين الأوائل">Rejoindre la liste d'attente pour bénéficier des avantages des early adopters</a>
-            <div class="trust-badge" data-fr="🇩🇿 Conçu pour le marché algérien" data-en="🇩🇿 Designed for the Algerian market" data-ar="🇩🇿 مصمم للسوق الجزائرية">
-                <span class="flag">🇩🇿</span>
-                <span class="text">Conçu pour le marché algérien</span>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+               <h1 data-fr="Digitalisez le secteur pharmaceutique grâce à une marketplace B2B pharmaceutique intégrée et fiable." data-en="Digitizing pharma businesses through an integrated and reliable pharmaceutical B2B marketplace." data-ar="رقمنة القطاع الصيدلاني من خلال سوق B2B صيدلاني متكامل وموثوق.">Digitalisez le secteur pharmaceutique grâce à une marketplace B2B pharmaceutique intégrée et fiable.</h1>
+                
+                <p data-fr="ElSaha-Net connecte distributeurs / grossistes et pharmacies à travers une plateforme B2B dédiée. Arrêtez les appels, messages et PDF. Passez en commandes organisées, traçables et centralisées." data-en="ElSaha-Net connects distributors / wholesalers and pharmacies through a dedicated B2B platform. Stop calls, messages and PDFs. Switch to organized, traceable and centralized orders." data-ar="ElSaha-Net تربط الموزعين / الجملة والصيدليات عبر منصة B2B مخصصة. توقف عن المكالمات والرسائل وملفات PDF. انتقل إلى طلبات منظمة وقابلة للتتبع ومركزية.">ElSaha-Net connecte distributeurs / grossistes et pharmacies à travers une plateforme B2B dédiée. Arrêtez les appels, messages et PDF. Passez en commandes organisées, traçables et centralisées.</p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeDlWjSPlq8o4fr8KX4IMYsRSlfmyWu_Ci_l4JDiQ3fOeohWg/viewform?usp=dialog" class="btn btn-primary" data-fr="Rejoindre la liste d'attente pour bénéficier des avantages des early adopters" data-en="Join the waiting list to benefit from early adopter advantages" data-ar="انضم إلى قائمة الانتظار للاستفادة من مزايا المستخدمين الأوائل">Rejoindre la liste d'attente pour bénéficier des avantages des early adopters</a>
+                <div class="trust-badge" data-fr="🇩🇿 Conçu pour le marché algérien" data-en="🇩🇿 Designed for the Algerian market" data-ar="🇩🇿 مصمم للسوق الجزائرية">
+                    <span class="flag">🇩🇿</span>
+                    <span class="text">Conçu pour le marché algérien</span>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://i.imgur.com/sFxprtM.png" alt="ELSAHA-NET Application">
             </div>
         </div>
-        <div class="hero-image">
-            <img src="https://i.imgur.com/sFxprtM.png" alt="ELSAHA-NET Application">
-        </div>
-    </div>
-</section>
+    </section>
 
     <!-- Pourquoi ElSaha-Net ? -->
     <section class="problem-section">
@@ -1036,8 +1078,7 @@
                     </ul>
                 </div>
                 <div class="solution-copy">
-                    <p>❌ <span data-fr="pas marketplace grand public" data-en="not a public marketplace" data-ar="ليس سوقًا للجمهور العام">pas marketplace grand public</span></p>
-                    <p>❌ <span data-fr="pas boutique en ligne" data-en="not an online store" data-ar="ليس متجرًا إلكترونيًا">pas boutique en ligne</span></p>
+                    <p>✔️ <span data-fr="une marketplace B2B" data-en="a B2B marketplace" data-ar="سوق B2B">une marketplace B2B</span></p>
                     <p>✔️ <span data-fr="un outil métier" data-en="a professional tool" data-ar="أداة مهنية">un outil métier</span></p>
                 </div>
             </div>
@@ -1143,7 +1184,7 @@
                 <div class="feature-card">
                     <div class="feature-icon">🛒</div>
                     <h3 data-fr="Commande en direct" data-en="Direct ordering" data-ar="طلب مباشر">Commande en direct</h3>
-                    <p data-fr="Recevez les commandes dans un espace dédié, sans WhatsApp." data-en="Receive orders in a dedicated space, without WhatsApp." data-ar="استقبل الطلبات في مساحة مخصصة، بدون واتساب.">Recevez les commandes dans un espace dédié, sans WhatsApp.</p>
+                    <p data-fr="Recevez les commandes dans une application pour centralisez ces dernières." data-en="Receive orders in an application to centralize them." data-ar="استقبل الطلبات في تطبيق لمركزتها.">Recevez les commandes dans une application pour centralisez ces dernières.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">⚙️</div>
