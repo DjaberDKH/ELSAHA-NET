@@ -589,7 +589,7 @@
             text-align: center;
         }
         
-        /* Responsive */
+        /* Responsive - Améliorations pour mobile */
         @media (max-width: 992px) {
             .hero-content, 
             .problem-grid,
@@ -622,13 +622,14 @@
             }
             
             .hero-image img {
-                max-width: 70%;
+                max-width: 60%;
             }
         }
         
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.2rem;
+                text-align: center;
             }
             
             h2 {
@@ -642,6 +643,29 @@
             
             .hero {
                 padding-top: 180px;
+                padding-bottom: 60px;
+            }
+            
+            /* Changement majeur : sur mobile, le screenshot passe EN DESSOUS du texte */
+            .hero-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .hero-text {
+                order: 1;
+                text-align: center;
+            }
+            
+            .hero-image {
+                order: 2;
+                width: 100%;
+            }
+            
+            /* Screenshot plus grand et centré sur mobile */
+            .hero-image img {
+                max-width: 80%;
+                margin: 0 auto;
             }
             
             .experiences-section .carousel-item img {
@@ -658,18 +682,108 @@
                 height: 40px;
             }
             
-            .hero-image img {
-                max-width: 80%;
+            /* Ajustements pour les sections sur mobile */
+            section {
+                padding: 60px 0;
+            }
+            
+            .problem-card, 
+            .solution-copy,
+            .experience-card,
+            .feature-card,
+            .impact-card {
+                padding: 20px;
+            }
+            
+            .shock-phrase {
+                padding: 20px;
+                font-size: 1.2rem;
             }
         }
         
         @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            h3 {
+                font-size: 1.3rem;
+            }
+            
             .hero-image img {
                 max-width: 90%;
             }
             
             .experiences-section .carousel-item img {
                 height: 280px;
+            }
+            
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+                width: 100%;
+                max-width: 300px;
+                display: block;
+                margin: 0 auto;
+            }
+            
+            .trust-badge {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+                text-align: center;
+                display: block;
+                margin: 20px auto 0;
+            }
+            
+            /* Ajustements pour les petites cartes sur mobile */
+            .experience-card {
+                padding: 20px 15px;
+            }
+            
+            .carousel-control {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            /* Meilleure gestion des marges sur mobile */
+            .section-title {
+                margin-bottom: 30px;
+            }
+            
+            .experience-block {
+                margin-bottom: 60px;
+            }
+            
+            .onboarding-steps {
+                margin: 30px 0;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .hero {
+                padding-top: 160px;
+            }
+            
+            .logo span {
+                font-size: 1.2rem;
+            }
+            
+            .logo img {
+                height: 30px;
+            }
+            
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
             }
         }
         
@@ -702,6 +816,13 @@
         body.rtl .step:not(:last-child):after {
             right: auto;
             left: -50%;
+        }
+        
+        /* Améliorations spécifiques pour mobile en RTL */
+        @media (max-width: 768px) {
+            body.rtl .hero-text {
+                text-align: center;
+            }
         }
     </style>
 </head>
