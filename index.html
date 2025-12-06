@@ -440,6 +440,11 @@
         .carousel-item {
             min-width: 100%;
             transition: opacity 0.5s ease;
+            display: none;
+        }
+        
+        .carousel-item.active {
+            display: block;
         }
         
         /* Screenshots augmentés de 70% dans la section expériences */
@@ -1415,7 +1420,6 @@
         
         function moveCarousel(carouselId, direction) {
             const carousel = document.getElementById(carouselId);
-            const inner = carousel.querySelector('.carousel-inner');
             const items = carousel.querySelectorAll('.carousel-item');
             const indicators = carousel.querySelectorAll('.carousel-indicator');
             
@@ -1441,14 +1445,10 @@
             // Update indicators
             indicators[activeIndex].classList.remove('active');
             indicators[newIndex].classList.add('active');
-            
-            // Move the inner container
-            inner.style.transform = `translateX(-${newIndex * 100}%)`;
         }
         
         function moveCarouselToIndex(carouselId, index) {
             const carousel = document.getElementById(carouselId);
-            const inner = carousel.querySelector('.carousel-inner');
             const items = carousel.querySelectorAll('.carousel-item');
             const indicators = carousel.querySelectorAll('.carousel-indicator');
             
@@ -1459,9 +1459,6 @@
             // Add active class to selected item and indicator
             items[index].classList.add('active');
             indicators[index].classList.add('active');
-            
-            // Move the inner container
-            inner.style.transform = `translateX(-${index * 100}%)`;
         }
         
         // Auto-advance carousels
