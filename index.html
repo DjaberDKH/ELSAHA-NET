@@ -152,12 +152,106 @@
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 30px;
         }
         
-        .language-switcher {
+        /* Navigation principale */
+        .main-nav {
+            display: flex;
+            gap: 25px;
+            margin-right: 20px;
+        }
+        
+        .nav-link {
+            color: var(--dark-blue);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: var(--orange);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--orange);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Sélecteur de langue desktop */
+        .desktop-language-switcher {
             display: flex;
             gap: 10px;
+        }
+        
+        /* Menu mobile */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark-blue);
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 999;
+        }
+        
+        .mobile-menu.active {
+            display: flex;
+        }
+        
+        .mobile-nav-link {
+            color: var(--dark-blue);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+            transition: color 0.3s ease;
+        }
+        
+        .mobile-nav-link:hover {
+            color: var(--orange);
+        }
+        
+        .mobile-language-switcher {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .mobile-language-switcher .lang-btn {
+            width: 100%;
+            text-align: center;
+            justify-content: center;
         }
         
         .lang-btn {
@@ -168,6 +262,9 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .lang-btn:hover {
@@ -757,6 +854,27 @@
             .screenshots-tabs {
                 flex-wrap: wrap;
             }
+            
+            /* Navigation responsive */
+            .main-nav {
+                display: none;
+            }
+            
+            .desktop-language-switcher {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .mobile-language-switcher {
+                display: flex;
+            }
+            
+            .nav-right {
+                gap: 15px;
+            }
         }
         
         @media (max-width: 768px) {
@@ -828,6 +946,14 @@
             .screenshot-item {
                 height: 350px;
             }
+            
+            .logo span {
+                font-size: 1.2rem;
+            }
+            
+            .logo img {
+                height: 30px;
+            }
         }
         
         /* RTL Support */
@@ -857,6 +983,16 @@
         body.rtl .hero-screenshot {
             justify-content: flex-start;
         }
+        
+        body.rtl .nav-link::after {
+            left: auto;
+            right: 0;
+        }
+        
+        body.rtl .mobile-menu-btn {
+            margin-right: 0;
+            margin-left: 15px;
+        }
     </style>
 </head>
 <body>
@@ -868,11 +1004,44 @@
                 <span>ELSAHA-NET</span>
             </div>
             <div class="nav-right">
-                <div class="language-switcher">
+                <!-- Navigation principale -->
+                <nav class="main-nav">
+                    <a href="#copilot" class="nav-link" data-fr="Copilot IA" data-en="AI Copilot" data-ar="المساعد الذكي">Copilot IA</a>
+                    <a href="#problem" class="nav-link" data-fr="Problèmes" data-en="Problems" data-ar="المشاكل">Problèmes</a>
+                    <a href="#benefits" class="nav-link" data-fr="Bénéfices" data-en="Benefits" data-ar="الفوائد">Bénéfices</a>
+                    <a href="#screenshots" class="nav-link" data-fr="Captures" data-en="Screenshots" data-ar="لقطات الشاشة">Captures</a>
+                    <a href="#results" class="nav-link" data-fr="Résultats" data-en="Results" data-ar="النتائج">Résultats</a>
+                    <a href="#demo" class="nav-link" data-fr="Démo" data-en="Demo" data-ar="عرض تجريبي">Démo</a>
+                </nav>
+                
+                <!-- Sélecteur de langue desktop -->
+                <div class="desktop-language-switcher">
                     <button class="lang-btn" data-lang="fr">FR</button>
                     <button class="lang-btn" data-lang="en">EN</button>
                     <button class="lang-btn" data-lang="ar">AR</button>
                 </div>
+                
+                <!-- Bouton menu mobile -->
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Menu mobile -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#copilot" class="mobile-nav-link" data-fr="Copilot IA" data-en="AI Copilot" data-ar="المساعد الذكي" onclick="closeMobileMenu()">Copilot IA</a>
+            <a href="#problem" class="mobile-nav-link" data-fr="Problèmes" data-en="Problems" data-ar="المشاكل" onclick="closeMobileMenu()">Problèmes</a>
+            <a href="#benefits" class="mobile-nav-link" data-fr="Bénéfices" data-en="Benefits" data-ar="الفوائد" onclick="closeMobileMenu()">Bénéfices</a>
+            <a href="#screenshots" class="mobile-nav-link" data-fr="Captures" data-en="Screenshots" data-ar="لقطات الشاشة" onclick="closeMobileMenu()">Captures</a>
+            <a href="#results" class="mobile-nav-link" data-fr="Résultats" data-en="Results" data-ar="النتائج" onclick="closeMobileMenu()">Résultats</a>
+            <a href="#demo" class="mobile-nav-link" data-fr="Démo" data-en="Demo" data-ar="عرض تجريبي" onclick="closeMobileMenu()">Démo</a>
+            
+            <!-- Sélecteur de langue mobile -->
+            <div class="mobile-language-switcher">
+                <button class="lang-btn" data-lang="fr">FR</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ar">AR</button>
             </div>
         </div>
     </header>
@@ -899,7 +1068,7 @@
     </section>
 
     <!-- Copilot Section - Juste après le header -->
-    <section class="copilot-section">
+    <section class="copilot-section" id="copilot">
         <div class="container">
             <div class="copilot-content">
                 <div class="copilot-text">
@@ -939,7 +1108,7 @@
     </section>
 
     <!-- Problem Section -->
-    <section class="problem-section">
+    <section class="problem-section" id="problem">
         <div class="container">
             <h2 class="section-title" data-fr="Gérer les commandes ne devrait pas freiner votre croissance" data-en="Managing orders shouldn't slow down your growth" data-ar="إدارة الطلبات لا ينبغي أن تعيق نموك">Gérer les commandes ne devrait pas freiner votre croissance</h2>
             <div class="problem-grid">
@@ -972,7 +1141,7 @@
     </section>
 
     <!-- Benefits Section -->
-    <section class="benefits-section">
+    <section class="benefits-section" id="benefits">
         <div class="container">
             <h2 class="section-title" data-fr="Bénéfices clés" data-en="Key Benefits" data-ar="الفوائد الرئيسية">Bénéfices clés</h2>
             <div class="benefits-grid">
@@ -1009,7 +1178,7 @@
     </section>
 
     <!-- Screenshots Section -->
-    <section class="screenshots-section">
+    <section class="screenshots-section" id="screenshots">
         <div class="container">
             <h2 class="section-title" data-fr="Découvrez la plateforme en images" data-en="Discover the platform in images" data-ar="اكتشف المنصة بالصور">Découvrez la plateforme en images</h2>
             
@@ -1143,7 +1312,7 @@
     </section>
 
     <!-- Results Section -->
-    <section class="results-section">
+    <section class="results-section" id="results">
         <div class="container">
             <h2 class="section-title" data-fr="Résultat final : augmentation des ventes" data-en="Final result: increased sales" data-ar="النتيجة النهائية: زيادة المبيعات">Résultat final : augmentation des ventes</h2>
             
@@ -1252,10 +1421,17 @@
                 
                 button.addEventListener('click', function() {
                     const lang = this.getAttribute('data-lang');
-                    langButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
+                    const allLangButtons = document.querySelectorAll('.lang-btn');
+                    allLangButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Activer le bouton dans les deux sélecteurs (desktop et mobile)
+                    document.querySelectorAll(`.lang-btn[data-lang="${lang}"]`).forEach(btn => {
+                        btn.classList.add('active');
+                    });
+                    
                     changeLanguage(lang);
                     localStorage.setItem('preferred-language', lang);
+                    closeMobileMenu();
                 });
             });
             
@@ -1275,6 +1451,22 @@
             screenshotImages.forEach(img => {
                 img.addEventListener('click', function() {
                     openModal(this.src);
+                });
+            });
+            
+            // Add smooth scroll for navigation links
+            document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        closeMobileMenu();
+                    }
                 });
             });
         });
@@ -1307,6 +1499,17 @@
                     }
                 }
             });
+        }
+        
+        // Mobile menu functions
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('active');
+        }
+        
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.remove('active');
         }
         
         // Smooth scroll for demo CTA
@@ -1362,6 +1565,7 @@
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeModal();
+                closeMobileMenu();
             }
         });
         
