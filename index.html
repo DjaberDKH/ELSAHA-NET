@@ -187,7 +187,18 @@
             color: var(--white);
             padding-top: 150px;
             padding-bottom: 100px;
-            text-align: center;
+            text-align: left;
+        }
+        
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .hero-content {
+            max-width: 600px;
         }
         
         .hero h1 {
@@ -197,14 +208,30 @@
         .hero .subtitle {
             font-size: 1.4rem;
             margin-bottom: 40px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
             line-height: 1.6;
         }
         
         .hero-cta {
             margin-top: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .hero-screenshot {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        
+        .hero-app-image {
+            max-width: 100%;
+            width: 350px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+        }
+        
+        .hero-app-image:hover {
+            transform: scale(1.02);
         }
         
         /* Problem Section */
@@ -360,25 +387,38 @@
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 500px;
         }
         
         .screenshot-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .screenshot-image-container {
+            flex: 1;
+            overflow: hidden;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .screenshot-item img {
             width: 100%;
-            height: 400px;
-            object-fit: cover;
+            height: 100%;
+            object-fit: contain;
             display: block;
+            padding: 10px;
         }
         
         .screenshot-caption {
             padding: 20px;
             text-align: center;
             background-color: var(--white);
+            flex-shrink: 0;
         }
         
         .screenshot-caption h3 {
@@ -674,6 +714,20 @@
         
         /* Responsive */
         @media (max-width: 992px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 40px;
+            }
+            
+            .hero-screenshot {
+                justify-content: center;
+            }
+            
+            .hero-app-image {
+                width: 280px;
+            }
+            
             .problem-grid,
             .benefits-grid,
             .results-grid {
@@ -694,6 +748,10 @@
             
             .screenshots-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .screenshot-item {
+                height: 450px;
             }
             
             .screenshots-tabs {
@@ -719,6 +777,10 @@
                 font-size: 1.2rem;
             }
             
+            .hero-app-image {
+                width: 250px;
+            }
+            
             section {
                 padding: 60px 0;
             }
@@ -731,8 +793,8 @@
                 grid-template-columns: 1fr;
             }
             
-            .screenshot-item img {
-                height: 300px;
+            .screenshot-item {
+                height: 400px;
             }
             
             .tab-btn {
@@ -758,6 +820,14 @@
             .hero .subtitle {
                 font-size: 1.1rem;
             }
+            
+            .hero-app-image {
+                width: 220px;
+            }
+            
+            .screenshot-item {
+                height: 350px;
+            }
         }
         
         /* RTL Support */
@@ -778,6 +848,14 @@
         
         body.rtl .platform-item {
             flex-direction: row-reverse;
+        }
+        
+        body.rtl .hero {
+            text-align: right;
+        }
+        
+        body.rtl .hero-screenshot {
+            justify-content: flex-start;
         }
     </style>
 </head>
@@ -802,11 +880,60 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1 data-fr="ELSAHA-NET" data-en="ELSAHA-NET" data-ar="ELSAHA-NET">ELSAHA-NET</h1>
-            <h1 data-fr="La plateforme qui fait vendre plus, plus vite." data-en="The platform that helps you sell more, faster." data-ar="المنصة التي تساعدك على البيع أكثر وأسرع.">La plateforme qui fait vendre plus, plus vite.</h1>
-            <p class="subtitle" data-fr="Centralisez vos commandes, gagnez du temps et augmentez vos ventes grâce à une plateforme intelligente, assistée par ELSAHA-Copilot." data-en="Centralize your orders, save time and increase your sales with an intelligent platform, powered by ELSAHA-Copilot." data-ar="مركز طلباتك، وفر الوقت وزد مبيعاتك بفضل منصة ذكية مدعومة بـ ELSAHA-Copilot.">Centralisez vos commandes, gagnez du temps et augmentez vos ventes grâce à une plateforme intelligente, assistée par ELSAHA-Copilot.</p>
-            <div class="hero-cta">
-                <a href="#demo" class="btn btn-primary" data-fr="👉 Demander une démo gratuite" data-en="👉 Request a free demo" data-ar="👉 اطلب عرضًا توضيحيًا مجانيًا">👉 Demander une démo gratuite</a>
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 data-fr="ELSAHA-NET" data-en="ELSAHA-NET" data-ar="ELSAHA-NET">ELSAHA-NET</h1>
+                    <h1 data-fr="La plateforme qui fait vendre plus, plus vite." data-en="The platform that helps you sell more, faster." data-ar="المنصة التي تساعدك على البيع أكثر وأسرع.">La plateforme qui fait vendre plus, plus vite.</h1>
+                    <p class="subtitle" data-fr="Centralisez vos commandes, gagnez du temps et augmentez vos ventes grâce à une plateforme intelligente, assistée par ELSAHA-Copilot." data-en="Centralize your orders, save time and increase your sales with an intelligent platform, powered by ELSAHA-Copilot." data-ar="مركز طلباتك، وفر الوقت وزد مبيعاتك بفضل منصة ذكية مدعومة بـ ELSAHA-Copilot.">Centralisez vos commandes, gagnez du temps et augmentez vos ventes grâce à une plateforme intelligente, assistée par ELSAHA-Copilot.</p>
+                    <div class="hero-cta">
+                        <a href="#demo" class="btn btn-primary" data-fr="👉 Demander une démo gratuite" data-en="👉 Request a free demo" data-ar="👉 اطلب عرضًا توضيحيًا مجانيًا">👉 Demander une démo gratuite</a>
+                    </div>
+                </div>
+                
+                <!-- Screenshot de la page d'accueil -->
+                <div class="hero-screenshot">
+                    <img src="https://i.imgur.com/sFxprtM.png" alt="ELSAHA-NET Page d'accueil" class="hero-app-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Copilot Section - Juste après le header -->
+    <section class="copilot-section">
+        <div class="container">
+            <div class="copilot-content">
+                <div class="copilot-text">
+                    <h2 data-fr="ELSAHA-Copilot : l'IA qui travaille pour vous" data-en="ELSAHA-Copilot: AI working for you" data-ar="ELSAHA-Copilot: الذكاء الاصطناعي يعمل من أجلك">ELSAHA-Copilot : l'IA qui travaille pour vous</h2>
+                    <p data-fr="ELSAHA-Copilot automatise les échanges courants avec les pharmacies et facilite la prise de commande." data-en="ELSAHA-Copilot automates common exchanges with pharmacies and facilitates order taking." data-ar="يقوم ELSAHA-Copilot بأتمتة التبادلات الشائعة مع الصيدليات ويسهل تلقي الطلبات.">ELSAHA-Copilot automatise les échanges courants avec les pharmacies et facilite la prise de commande.</p>
+                    
+                    <div class="copilot-features">
+                        <h3 data-fr="Déployable partout" data-en="Deployable everywhere" data-ar="قابل للنشر في كل مكان">Déployable partout</h3>
+                        <div class="platform-list">
+                            <div class="platform-item">
+                                <span>💬</span>
+                                <span data-fr="WhatsApp" data-en="WhatsApp" data-ar="واتساب">WhatsApp</span>
+                            </div>
+                            <div class="platform-item">
+                                <span>📲</span>
+                                <span data-fr="Telegram" data-en="Telegram" data-ar="تيليجرام">Telegram</span>
+                            </div>
+                            <div class="platform-item">
+                                <span>💻</span>
+                                <span data-fr="Plateforme ELSAHA-NET" data-en="ELSAHA-NET Platform" data-ar="منصة ELSAHA-NET">Plateforme ELSAHA-NET</span>
+                            </div>
+                        </div>
+                        
+                        <h3 data-fr="Résultat" data-en="Result" data-ar="النتيجة">Résultat</h3>
+                        <ul class="result-list">
+                            <li data-fr="✔ Réponses instantanées" data-en="✔ Instant responses" data-ar="✔ ردود فورية">✔ Réponses instantanées</li>
+                            <li data-fr="✔ Commandes automatisées" data-en="✔ Automated orders" data-ar="✔ طلبات آلية">✔ Commandes automatisées</li>
+                            <li data-fr="✔ Disponibilité 24/7" data-en="✔ 24/7 Availability" data-ar="✔ التوفر على مدار الساعة">✔ Disponibilité 24/7</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="copilot-visual">
+                    <img src="https://i.imgur.com/aAJ5ZI9.png" alt="ELSAHA-Copilot Agent IA" class="copilot-image">
+                </div>
             </div>
         </div>
     </section>
@@ -894,48 +1021,60 @@
             
             <!-- Pharmacy Screenshots -->
             <div id="pharmacy-screenshots" class="screenshots-grid active">
-                <div class="screenshot-item" onclick="openModal('https://i.imgur.com/sFxprtM.png')">
-                    <img src="https://i.imgur.com/sFxprtM.png" alt="Page d'accueil Pharmacie">
+                <div class="screenshot-item">
+                    <div class="screenshot-image-container">
+                        <img src="https://i.imgur.com/sFxprtM.png" alt="Page d'accueil Pharmacie">
+                    </div>
                     <div class="screenshot-caption">
                         <h3 data-fr="Page d'accueil" data-en="Home Page" data-ar="الصفحة الرئيسية">Page d'accueil</h3>
                         <p data-fr="Interface principale de la pharmacie" data-en="Main pharmacy interface" data-ar="الواجهة الرئيسية للصيدلية">Interface principale de la pharmacie</p>
                     </div>
                 </div>
                 
-                <div class="screenshot-item" onclick="openModal('https://i.imgur.com/QFkNrym.png')">
-                    <img src="https://i.imgur.com/QFkNrym.png" alt="Catalogue Pharmacie">
+                <div class="screenshot-item">
+                    <div class="screenshot-image-container">
+                        <img src="https://i.imgur.com/QFkNrym.png" alt="Catalogue Pharmacie">
+                    </div>
                     <div class="screenshot-caption">
                         <h3 data-fr="Catalogue des produits" data-en="Product Catalog" data-ar="كتالوج المنتجات">Catalogue des produits</h3>
                         <p data-fr="Parcourez facilement tous les produits disponibles" data-en="Easily browse all available products" data-ar="تصفح جميع المنتجات المتاحة بسهولة">Parcourez facilement tous les produits disponibles</p>
                     </div>
                 </div>
                 
-                <div class="screenshot-item" onclick="openModal('https://i.imgur.com/Typ62iM.png')">
-                    <img src="https://i.imgur.com/Typ62iM.png" alt="Liste Distributeurs">
+                <div class="screenshot-item">
+                    <div class="screenshot-image-container">
+                        <img src="https://i.imgur.com/Typ62iM.png" alt="Liste Distributeurs">
+                    </div>
                     <div class="screenshot-caption">
                         <h3 data-fr="Liste des distributeurs" data-en="Distributors List" data-ar="قائمة الموزعين">Liste des distributeurs</h3>
                         <p data-fr="Accédez à tous vos distributeurs partenaires" data-en="Access all your partner distributors" data-ar="الوصول إلى جميع الموزعين الشركاء">Accédez à tous vos distributeurs partenaires</p>
                     </div>
                 </div>
                 
-                <div class="screenshot-item" onclick="openModal('https://i.imgur.com/3YuNZsb.png')">
-                    <img src="https://i.imgur.com/3YuNZsb.png" alt="Suivi Commandes">
+                <div class="screenshot-item">
+                    <div class="screenshot-image-container">
+                        <img src="https://i.imgur.com/3YuNZsb.png" alt="Suivi Commandes">
+                    </div>
                     <div class="screenshot-caption">
                         <h3 data-fr="Suivi des commandes" data-en="Order Tracking" data-ar="تتبع الطلبات">Suivi des commandes</h3>
                         <p data-fr="Suivez l'état de vos commandes en temps réel" data-en="Track your orders in real time" data-ar="تتبع طلباتك في الوقت الفعلي">Suivez l'état de vos commandes en temps réel</p>
                     </div>
                 </div>
                 
-                <div class="screenshot-item" onclick="openModal('https://i.imgur.com/hNwl0ON.png')">
-                    <img src="https://i.imgur.com/hNwl0ON.png" alt="Historique Commandes">
+                <div class="screenshot-item">
+                    <div class="screenshot-image-container">
+                        <img src="https://i.imgur.com/hNwl0ON.png" alt="Historique Commandes">
+                    </div>
                     <div class="screenshot-caption">
                         <h3 data-fr="Historique des commandes" data-en="Order History" data-ar="سجل الطلبات">Historique des commandes</h3>
                         <p data-fr="Consultez toutes vos commandes passées" data-en="View all your past orders" data-ar="عرض جميع طلباتك السابقة">Consultez toutes vos commandes passées</p>
                     </div>
                 </div>
                 
-                <div class="screenshot-item" onclick="openModal('https://i.imgur.com/1fHBoDK.png')">
-                    <img src="https://i.imgur.com/1fHBoDK.png" alt="Détails Commande">
+                <div class="screenshot-item">
+                    <div class="screenshot-image-container">
+                        <img src="https://i.imgur.com/1fHBoDK.png" alt="Détails Commande">
+                    </div>
                     <div class="screenshot-caption">
                         <h3 data-fr="Détails d'une commande" data-en="Order Details" data-ar="تفاصيل الطلب">Détails d'une commande</h3>
                         <p data-fr="Informations complètes sur chaque commande" data-en="Complete information on each order" data-ar="معلومات كاملة عن كل طلب">Informations complètes sur chaque commande</p>
@@ -945,16 +1084,20 @@
             
             <!-- Distributor Screenshots -->
             <div id="distributor-screenshots" class="screenshots-grid">
-                <div class="screenshot-item" onclick="openModal('https://i.imgur.com/ZryC4Nt.png')">
-                    <img src="https://i.imgur.com/ZryC4Nt.png" alt="Dashboard Distributeur">
+                <div class="screenshot-item">
+                    <div class="screenshot-image-container">
+                        <img src="https://i.imgur.com/ZryC4Nt.png" alt="Dashboard Distributeur">
+                    </div>
                     <div class="screenshot-caption">
                         <h3 data-fr="Tableau de bord" data-en="Dashboard" data-ar="لوحة التحكم">Tableau de bord</h3>
                         <p data-fr="Vue d'ensemble de votre activité" data-en="Overview of your activity" data-ar="نظرة عامة على نشاطك">Vue d'ensemble de votre activité</p>
                     </div>
                 </div>
                 
-                <div class="screenshot-item" onclick="openModal('https://i.imgur.com/RdpcxwI.png')">
-                    <img src="https://i.imgur.com/RdpcxwI.png" alt="Gestion Commandes Distributeur">
+                <div class="screenshot-item">
+                    <div class="screenshot-image-container">
+                        <img src="https://i.imgur.com/RdpcxwI.png" alt="Gestion Commandes Distributeur">
+                    </div>
                     <div class="screenshot-caption">
                         <h3 data-fr="Gestion des commandes" data-en="Order Management" data-ar="إدارة الطلبات">Gestion des commandes</h3>
                         <p data-fr="Traitez et suivez toutes vos commandes" data-en="Process and track all your orders" data-ar="معالجة وتتبع جميع طلباتك">Traitez et suivez toutes vos commandes</p>
@@ -971,46 +1114,6 @@
             <img id="modal-image" src="" alt="Screenshot agrandi">
         </div>
     </div>
-
-    <!-- Copilot Section -->
-    <section class="copilot-section">
-        <div class="container">
-            <div class="copilot-content">
-                <div class="copilot-text">
-                    <h2 data-fr="ELSAHA-Copilot : l'IA qui travaille pour vous" data-en="ELSAHA-Copilot: AI working for you" data-ar="ELSAHA-Copilot: الذكاء الاصطناعي يعمل من أجلك">ELSAHA-Copilot : l'IA qui travaille pour vous</h2>
-                    <p data-fr="ELSAHA-Copilot automatise les échanges courants avec les pharmacies et facilite la prise de commande." data-en="ELSAHA-Copilot automates common exchanges with pharmacies and facilitates order taking." data-ar="يقوم ELSAHA-Copilot بأتمتة التبادلات الشائعة مع الصيدليات ويسهل تلقي الطلبات.">ELSAHA-Copilot automatise les échanges courants avec les pharmacies et facilite la prise de commande.</p>
-                    
-                    <div class="copilot-features">
-                        <h3 data-fr="Déployable partout" data-en="Deployable everywhere" data-ar="قابل للنشر في كل مكان">Déployable partout</h3>
-                        <div class="platform-list">
-                            <div class="platform-item">
-                                <span>💬</span>
-                                <span data-fr="WhatsApp" data-en="WhatsApp" data-ar="واتساب">WhatsApp</span>
-                            </div>
-                            <div class="platform-item">
-                                <span>📲</span>
-                                <span data-fr="Telegram" data-en="Telegram" data-ar="تيليجرام">Telegram</span>
-                            </div>
-                            <div class="platform-item">
-                                <span>💻</span>
-                                <span data-fr="Plateforme ELSAHA-NET" data-en="ELSAHA-NET Platform" data-ar="منصة ELSAHA-NET">Plateforme ELSAHA-NET</span>
-                            </div>
-                        </div>
-                        
-                        <h3 data-fr="Résultat" data-en="Result" data-ar="النتيجة">Résultat</h3>
-                        <ul class="result-list">
-                            <li data-fr="✔ Réponses instantanées" data-en="✔ Instant responses" data-ar="✔ ردود فورية">✔ Réponses instantanées</li>
-                            <li data-fr="✔ Commandes automatisées" data-en="✔ Automated orders" data-ar="✔ طلبات آلية">✔ Commandes automatisées</li>
-                            <li data-fr="✔ Disponibilité 24/7" data-en="✔ 24/7 Availability" data-ar="✔ التوفر على مدار الساعة">✔ Disponibilité 24/7</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="copilot-visual">
-                    <img src="https://i.imgur.com/sFxprtM.png" alt="ELSAHA-Copilot" class="copilot-image">
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Insights Section -->
     <section class="insights-section">
@@ -1166,6 +1269,14 @@
                     }
                 });
             }
+            
+            // Add click handlers to screenshots for modal
+            const screenshotImages = document.querySelectorAll('.screenshot-item img');
+            screenshotImages.forEach(img => {
+                img.addEventListener('click', function() {
+                    openModal(this.src);
+                });
+            });
         });
         
         function changeLanguage(lang) {
@@ -1279,7 +1390,7 @@
             
             try {
                 // Send to webhook
-                const response = await fetch('http://vps6f2cq1.oct-xpd1.xyz:5678/webhook-test/landing-page-lead', {
+                const response = await fetch('http://vps6f2cq1.oct-xpd1.xyz:5678/webhook/landing-page-lead', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
