@@ -1571,82 +1571,102 @@
         
         // Handle demo form submission
         async function handleDemoSubmit(event) {
-            event.preventDefault();
+    event.preventDefault();
+    
+    const submitBtn = document.getElementById('submit-btn');
+    const formMessage = document.getElementById('form-message');
+    const originalBtnText = submitBtn.innerHTML;
+    
+    // Disable button and show loading
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span data-fr="⏳ Envoi en cours..." data-en="⏳ Sending..." data-ar="⏳ جارٍ الإرسال...">⏳ Envoi en cours...</span>';
+    
+    // Get form data
+    const formData = {
+        company_name: document.getElementById('company-name').value,
+        contact_name: document.getElementById('contact-name').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value,
+        timestamp: new Date().toISOString(),
+        source: 'landing_page',
+        language: document.documentElement.getAttribute('lang') || 'fr'
+    };
+    
+    try {
+        // Option A: Utiliser un service proxy comme CORS Anywhere (pour test uniquement)
+        // const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        // const targetUrl = 'http://vps6f2cq1.oct-xpd1.xyz:5678/webhook/landing-page-lead';
+        
+        // Option B: Créer votre propre endpoint proxy (recommandé pour production)
+        // Exemple avec un service serverless (à créer)
+        // const proxyUrl = 'https://your-domain.com/api/webhook-proxy';
+        
+        // Pour l'instant, utilisons directement votre serveur
+        const response = await fetch('http://vps6f2cq1.oct-xpd1.xyz:5678/webhook/landing-page-lead', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Ajoutez des headers CORS
+                'Accept': 'application/json',
+                // Si votre serveur le supporte, vous pouvez essayer ce header
+                // 'Origin': window.location.origin
+            },
+            mode: 'cors', // Explicitement demander le mode CORS
+            body: JSON.stringify(formData)
+        });
+        
+        if (response.ok) {
+            // Success
+            formMessage.style.display = 'block';
+            formMessage.style.color = 'var(--success-green)';
+            formMessage.innerHTML = '<strong data-fr="✅ Merci ! Nous vous contacterons très bientôt." data-en="✅ Thank you! We will contact you very soon." data-ar="✅ شكرا! سنتصل بك قريبا جدا.">✅ Merci ! Nous vous contacterons très bientôt.</strong>';
             
-            const submitBtn = document.getElementById('submit-btn');
-            const formMessage = document.getElementById('form-message');
-            const originalBtnText = submitBtn.innerHTML;
-            
-            // Disable button and show loading
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span data-fr="⏳ Envoi en cours..." data-en="⏳ Sending..." data-ar="⏳ جارٍ الإرسال...">⏳ Envoi en cours...</span>';
-            
-            // Get form data
-            const formData = {
-                company_name: document.getElementById('company-name').value,
-                contact_name: document.getElementById('contact-name').value,
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value,
-                timestamp: new Date().toISOString(),
-                source: 'landing_page',
-                language: document.documentElement.getAttribute('lang') || 'fr'
-            };
-            
-            try {
-                // Send to webhook - LIEN DE PRODUCTION
-                const response = await fetch('http://vps6f2cq1.oct-xpd1.xyz:5678/webhook/landing-page-lead', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
+            // Track with Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'Demo_Request', {
+                    event_category: 'CTA',
+                    event_label: 'demo_form_submit_success'
                 });
-                
-                if (response.ok) {
-                    // Success
-                    formMessage.style.display = 'block';
-                    formMessage.style.color = 'var(--success-green)';
-                    formMessage.innerHTML = '<strong data-fr="✅ Merci ! Nous vous contacterons très bientôt." data-en="✅ Thank you! We will contact you very soon." data-ar="✅ شكرا! سنتصل بك قريبا جدا.">✅ Merci ! Nous vous contacterons très bientôt.</strong>';
-                    
-                    // Track with Google Analytics
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'Demo_Request', {
-                            event_category: 'CTA',
-                            event_label: 'demo_form_submit_success'
-                        });
-                    }
-                    
-                    // Reset form
-                    document.getElementById('demo-form').reset();
-                    
-                    // Hide message after 5 seconds
-                    setTimeout(() => {
-                        formMessage.style.display = 'none';
-                    }, 5000);
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-            } catch (error) {
-                // Error
-                console.error('Error:', error);
-                formMessage.style.display = 'block';
-                formMessage.style.color = '#dc3545';
-                formMessage.innerHTML = '<strong data-fr="❌ Une erreur est survenue. Veuillez réessayer." data-en="❌ An error occurred. Please try again." data-ar="❌ حدث خطأ. يرجى المحاولة مرة أخرى.">❌ Une erreur est survenue. Veuillez réessayer.</strong>';
-                
-                // Track error with Google Analytics
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'Demo_Request_Error', {
-                        event_category: 'CTA',
-                        event_label: 'demo_form_submit_error'
-                    });
-                }
-            } finally {
-                // Re-enable button
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
             }
             
-            return false;
+            // Reset form
+            document.getElementById('demo-form').reset();
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                formMessage.style.display = 'none';
+            }, 5000);
+        } else {
+            throw new Error(`Erreur serveur: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Erreur détaillée:', error);
+        
+        // Afficher un message d'erreur plus informatif
+        formMessage.style.display = 'block';
+        formMessage.style.color = '#dc3545';
+        
+        if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+            // Problème réseau ou CORS
+            formMessage.innerHTML = '<strong data-fr="❌ Problème de connexion. Veuillez nous contacter directement." data-en="❌ Connection issue. Please contact us directly." data-ar="❌ مشكلة في الاتصال. يرجى الاتصال بنا مباشرة.">❌ Problème de connexion. Veuillez nous contacter directement.</strong>';
+        } else {
+            formMessage.innerHTML = '<strong data-fr="❌ Une erreur est survenue. Veuillez réessayer." data-en="❌ An error occurred. Please try again." data-ar="❌ حدث خطأ. يرجى المحاولة مرة أخرى.">❌ Une erreur est survenue. Veuillez réessayer.</strong>';
+        }
+        
+        // Track error with Google Analytics
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'Demo_Request_Error', {
+                event_category: 'CTA',
+                event_label: error.message
+            });
+        }
+    } finally {
+        // Re-enable button
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+    }
+    
+    return false;
         }
     </script>
 </body>
