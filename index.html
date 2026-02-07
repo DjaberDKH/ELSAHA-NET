@@ -1570,165 +1570,84 @@
         });
         
         // Handle demo form submission
-    async function handleDemoSubmit(event) {
-    event.preventDefault();
-    
-    const submitBtn = document.getElementById('submit-btn');
-    const formMessage = document.getElementById('form-message');
-    const originalBtnText = submitBtn.innerHTML;
-    
-    // Disable button and show loading
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span data-fr="⏳ Envoi en cours..." data-en="⏳ Sending..." data-ar="⏳ جارٍ الإرسال...">⏳ Envoi en cours...</span>';
-    
-    // Get form data
-    const formData = {
-        company_name: document.getElementById('company-name').value,
-        contact_name: document.getElementById('contact-name').value,
-        phone: document.getElementById('phone').value,
-        email: document.getElementById('email').value,
-        timestamp: new Date().toISOString(),
-        source: 'landing_page',
-        language: document.documentElement.getAttribute('lang') || 'fr'
-    };
-    
-    console.log('Envoi des données:', formData);
-    
-    try {
-        // OPTION 1: Utiliser un proxy CORS/HTTPS
-        // Plusieurs options de proxy gratuits:
-        
-        // Option A: corsproxy.io
-        const proxyUrl = 'https://corsproxy.io/?';
-        const targetUrl = encodeURIComponent('http://vps6f2cq1.oct-xpd1.xyz:5678/webhook/landing-page-lead');
-        
-        // Option B: allorigins.win
-        // const proxyUrl = 'https://api.allorigins.win/raw?url=';
-        // const targetUrl = encodeURIComponent('http://vps6f2cq1.oct-xpd1.xyz:5678/webhook/landing-page-lead');
-        
-        // Option C: votre propre proxy (voir option 4 ci-dessous)
-        
-        console.log('URL complète:', proxyUrl + targetUrl);
-        
-        const response = await fetch(proxyUrl + targetUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: JSON.stringify(formData)
-        });
-        
-        console.log('Réponse:', response.status, response.statusText);
-        
-        if (response.ok) {
-            // Success
-            const responseText = await response.text();
-            console.log('Réponse du serveur:', responseText);
+        async function handleDemoSubmit(event) {
+            event.preventDefault();
             
-            formMessage.style.display = 'block';
-            formMessage.style.color = 'var(--success-green)';
-            formMessage.innerHTML = '<strong data-fr="✅ Merci ! Nous vous contacterons très bientôt." data-en="✅ Thank you! We will contact you very soon." data-ar="✅ شكرا! سنتصل بك قريبا جدا.">✅ Merci ! Nous vous contacterons très bientôt.</strong>';
+            const submitBtn = document.getElementById('submit-btn');
+            const formMessage = document.getElementById('form-message');
+            const originalBtnText = submitBtn.innerHTML;
             
-            // Track with Google Analytics
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'Demo_Request', {
-                    event_category: 'CTA',
-                    event_label: 'demo_form_submit_success'
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span data-fr="⏳ Envoi en cours..." data-en="⏳ Sending..." data-ar="⏳ جارٍ الإرسال...">⏳ Envoi en cours...</span>';
+            
+            // Get form data
+            const formData = {
+                company_name: document.getElementById('company-name').value,
+                contact_name: document.getElementById('contact-name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                timestamp: new Date().toISOString(),
+                source: 'landing_page',
+                language: document.documentElement.getAttribute('lang') || 'fr'
+            };
+            
+            try {
+                // Send to webhook - LIEN DE PRODUCTION
+                const response = await fetch('http://vps6f2cq1.oct-xpd1.xyz:5678/webhook/landing-page-lead', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
                 });
+                
+                if (response.ok) {
+                    // Success
+                    formMessage.style.display = 'block';
+                    formMessage.style.color = 'var(--success-green)';
+                    formMessage.innerHTML = '<strong data-fr="✅ Merci ! Nous vous contacterons très bientôt." data-en="✅ Thank you! We will contact you very soon." data-ar="✅ شكرا! سنتصل بك قريبا جدا.">✅ Merci ! Nous vous contacterons très bientôt.</strong>';
+                    
+                    // Track with Google Analytics
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'Demo_Request', {
+                            event_category: 'CTA',
+                            event_label: 'demo_form_submit_success'
+                        });
+                    }
+                    
+                    // Reset form
+                    document.getElementById('demo-form').reset();
+                    
+                    // Hide message after 5 seconds
+                    setTimeout(() => {
+                        formMessage.style.display = 'none';
+                    }, 5000);
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            } catch (error) {
+                // Error
+                console.error('Error:', error);
+                formMessage.style.display = 'block';
+                formMessage.style.color = '#dc3545';
+                formMessage.innerHTML = '<strong data-fr="❌ Une erreur est survenue. Veuillez réessayer." data-en="❌ An error occurred. Please try again." data-ar="❌ حدث خطأ. يرجى المحاولة مرة أخرى.">❌ Une erreur est survenue. Veuillez réessayer.</strong>';
+                
+                // Track error with Google Analytics
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'Demo_Request_Error', {
+                        event_category: 'CTA',
+                        event_label: 'demo_form_submit_error'
+                    });
+                }
+            } finally {
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
             }
             
-            // Reset form
-            document.getElementById('demo-form').reset();
-            
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                formMessage.style.display = 'none';
-            }, 5000);
-        } else {
-            throw new Error(`Erreur HTTP ${response.status}`);
+            return false;
         }
-        
-    } catch (error) {
-        console.error('Erreur avec le proxy:', error);
-        
-        // OPTION 2: Fallback - utiliser Formspree ou autre service
-        showFallbackOption(formData, formMessage);
-        
-    } finally {
-        // Re-enable button
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
-    }
-    
-    return false;
-}
-
-function showFallbackOption(formData, formMessage) {
-    // Montrer les infos pour contact manuel
-    const infoHTML = `
-        <div style="text-align: left; margin: 15px 0;">
-            <strong>Vos informations :</strong><br>
-            <div style="background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 5px;">
-                <strong>Entreprise:</strong> ${formData.company_name}<br>
-                <strong>Contact:</strong> ${formData.contact_name}<br>
-                <strong>Téléphone/WhatsApp:</strong> ${formData.phone}<br>
-                <strong>Email:</strong> ${formData.email}
-            </div>
-        </div>
-    `;
-    
-    formMessage.style.display = 'block';
-    formMessage.style.color = '#007bff';
-    formMessage.innerHTML = `
-        <strong>📝 Contactez-nous directement :</strong><br>
-        ${infoHTML}
-        <button onclick="copyContactInfo()" class="btn btn-secondary" style="margin: 5px;">
-            📋 Copier les informations
-        </button>
-        <a href="https://wa.me/213XXXXXXXXX?text=${encodeURIComponent(`Bonjour, je suis ${formData.contact_name} de ${formData.company_name}. Je suis intéressé par une démo d'ELSAHA-NET.`)}" 
-           target="_blank" class="btn btn-primary" style="margin: 5px;">
-            💬 Nous contacter sur WhatsApp
-        </a>
-    `;
-    
-    // Ajouter la fonction de copie
-    window.copyContactInfo = function() {
-        const textToCopy = `
-Entreprise: ${formData.company_name}
-Contact: ${formData.contact_name}
-Téléphone: ${formData.phone}
-Email: ${formData.email}
-Date: ${new Date().toLocaleString()}
-        `.trim();
-        
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            alert('✅ Informations copiées ! Vous pouvez les coller dans un email ou WhatsApp.');
-        });
-    };
-}
-
-function showSuccessMessage(formMessage) {
-    formMessage.style.display = 'block';
-    formMessage.style.color = 'var(--success-green)';
-    formMessage.innerHTML = '<strong data-fr="✅ Merci ! Votre demande a été envoyée." data-en="✅ Thank you! Your request has been sent." data-ar="✅ شكرا! تم إرسال طلبك.">✅ Merci ! Votre demande a été envoyée.</strong>';
-    
-    // Reset form
-    document.getElementById('demo-form').reset();
-    
-    // Track with Google Analytics
-    if (typeof gtag !== 'undefined') {
-        gtag('event', 'Demo_Request_Fallback', {
-            event_category: 'CTA',
-            event_label: 'fallback_method_used'
-        });
-    }
-    
-    // Hide message after 5 seconds
-    setTimeout(() => {
-        formMessage.style.display = 'none';
-    }, 5000);
-}
     </script>
 </body>
 </html>
