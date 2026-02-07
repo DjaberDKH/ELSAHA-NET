@@ -1570,8 +1570,7 @@
         });
         
         // Handle demo form submission
-    // Handle demo form submission
-async function handleDemoSubmit(event) {
+    async function handleDemoSubmit(event) {
     event.preventDefault();
     
     const submitBtn = document.getElementById('submit-btn');
@@ -1596,23 +1595,37 @@ async function handleDemoSubmit(event) {
     console.log('Envoi des données:', formData);
     
     try {
-        // ESSAYER LE WEBHOOK DIRECT
-        const response = await fetch('http://vps6f2cq1.oct-xpd1.xyz:5678/webhook/landing-page-lead', {
+        // OPTION 1: Utiliser un proxy CORS/HTTPS
+        // Plusieurs options de proxy gratuits:
+        
+        // Option A: corsproxy.io
+        const proxyUrl = 'https://corsproxy.io/?';
+        const targetUrl = encodeURIComponent('http://vps6f2cq1.oct-xpd1.xyz:5678/webhook/landing-page-lead');
+        
+        // Option B: allorigins.win
+        // const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        // const targetUrl = encodeURIComponent('http://vps6f2cq1.oct-xpd1.xyz:5678/webhook/landing-page-lead');
+        
+        // Option C: votre propre proxy (voir option 4 ci-dessous)
+        
+        console.log('URL complète:', proxyUrl + targetUrl);
+        
+        const response = await fetch(proxyUrl + targetUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
             },
             body: JSON.stringify(formData)
         });
         
-        console.log('Réponse du serveur:', {
-            status: response.status,
-            statusText: response.statusText,
-            ok: response.ok
-        });
+        console.log('Réponse:', response.status, response.statusText);
         
         if (response.ok) {
             // Success
+            const responseText = await response.text();
+            console.log('Réponse du serveur:', responseText);
+            
             formMessage.style.display = 'block';
             formMessage.style.color = 'var(--success-green)';
             formMessage.innerHTML = '<strong data-fr="✅ Merci ! Nous vous contacterons très bientôt." data-en="✅ Thank you! We will contact you very soon." data-ar="✅ شكرا! سنتصل بك قريبا جدا.">✅ Merci ! Nous vous contacterons très bientôt.</strong>';
@@ -1633,18 +1646,15 @@ async function handleDemoSubmit(event) {
                 formMessage.style.display = 'none';
             }, 5000);
         } else {
-            // Le serveur a répondu avec une erreur HTTP
-            const errorText = await response.text();
-            console.error('Erreur serveur:', response.status, errorText);
-            
-            // Essayer le fallback
-            await tryFallbackMethods(formData, formMessage);
+            throw new Error(`Erreur HTTP ${response.status}`);
         }
-    } catch (error) {
-        console.error('Erreur réseau/CORS:', error);
         
-        // Erreur réseau ou CORS - utiliser les méthodes de secours
-        await tryFallbackMethods(formData, formMessage);
+    } catch (error) {
+        console.error('Erreur avec le proxy:', error);
+        
+        // OPTION 2: Fallback - utiliser Formspree ou autre service
+        showFallbackOption(formData, formMessage);
+        
     } finally {
         // Re-enable button
         submitBtn.disabled = false;
@@ -1654,53 +1664,48 @@ async function handleDemoSubmit(event) {
     return false;
 }
 
-// Méthodes de secours si le webhook principal échoue
-async function tryFallbackMethods(formData, formMessage) {
-    // Méthode 1: Essayer avec mode 'no-cors' (mais ne pourra pas lire la réponse)
-    try {
-        await fetch('http://vps6f2cq1.oct-xpd1.xyz:5678/webhook/landing-page-lead', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            mode: 'no-cors',
-            body: JSON.stringify(formData)
+function showFallbackOption(formData, formMessage) {
+    // Montrer les infos pour contact manuel
+    const infoHTML = `
+        <div style="text-align: left; margin: 15px 0;">
+            <strong>Vos informations :</strong><br>
+            <div style="background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 5px;">
+                <strong>Entreprise:</strong> ${formData.company_name}<br>
+                <strong>Contact:</strong> ${formData.contact_name}<br>
+                <strong>Téléphone/WhatsApp:</strong> ${formData.phone}<br>
+                <strong>Email:</strong> ${formData.email}
+            </div>
+        </div>
+    `;
+    
+    formMessage.style.display = 'block';
+    formMessage.style.color = '#007bff';
+    formMessage.innerHTML = `
+        <strong>📝 Contactez-nous directement :</strong><br>
+        ${infoHTML}
+        <button onclick="copyContactInfo()" class="btn btn-secondary" style="margin: 5px;">
+            📋 Copier les informations
+        </button>
+        <a href="https://wa.me/213XXXXXXXXX?text=${encodeURIComponent(`Bonjour, je suis ${formData.contact_name} de ${formData.company_name}. Je suis intéressé par une démo d'ELSAHA-NET.`)}" 
+           target="_blank" class="btn btn-primary" style="margin: 5px;">
+            💬 Nous contacter sur WhatsApp
+        </a>
+    `;
+    
+    // Ajouter la fonction de copie
+    window.copyContactInfo = function() {
+        const textToCopy = `
+Entreprise: ${formData.company_name}
+Contact: ${formData.contact_name}
+Téléphone: ${formData.phone}
+Email: ${formData.email}
+Date: ${new Date().toLocaleString()}
+        `.trim();
+        
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            alert('✅ Informations copiées ! Vous pouvez les coller dans un email ou WhatsApp.');
         });
-        
-        // Avec 'no-cors', on ne peut pas savoir si ça a marché
-        // Mais on peut supposer que c'est envoyé
-        showSuccessMessage(formMessage);
-        return true;
-        
-    } catch (error) {
-        console.log('Mode no-cors a aussi échoué:', error);
-    }
-    
-    // Méthode 2: Essayer avec un formulaire HTML traditionnel
-    const fallbackForm = document.createElement('form');
-    fallbackForm.style.display = 'none';
-    fallbackForm.method = 'POST';
-    fallbackForm.action = 'http://vps6f2cq1.oct-xpd1.xyz:5678/webhook/landing-page-lead';
-    fallbackForm.enctype = 'application/json';
-    
-    const dataInput = document.createElement('input');
-    dataInput.type = 'hidden';
-    dataInput.name = 'data';
-    dataInput.value = JSON.stringify(formData);
-    
-    fallbackForm.appendChild(dataInput);
-    document.body.appendChild(fallbackForm);
-    
-    // Cette méthode peut contourner CORS mais nécessite que le serveur accepte les formulaires HTML
-    setTimeout(() => {
-        fallbackForm.submit();
-        // On suppose que ça a marché
-        showSuccessMessage(formMessage);
-        // Nettoyer après envoi
-        setTimeout(() => document.body.removeChild(fallbackForm), 1000);
-    }, 100);
-    
-    return true;
+    };
 }
 
 function showSuccessMessage(formMessage) {
