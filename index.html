@@ -12,7 +12,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELSAHA-NET - La plateforme qui fait vendre plus, plus vite | Distributeurs pharmaceutiques</title>
+    <title>ELSAHA-NET - Intelligence Artificielle au service de votre distribution pharmaceutique</title>
     
     <link rel="icon" type="image/png" href="https://i.imgur.com/Jd8sRQb.png">
     <link rel="apple-touch-icon" href="https://i.imgur.com/Jd8sRQb.png">
@@ -21,11 +21,13 @@
     <style>
         :root {
             --dark-blue: #2e3244;
-            --light-gray: #f8f9fa;
+            --light-gray: #c5c6c6;
             --white: #ffffff;
             --orange: #f1895c;
             --blue-gray: #516079;
             --success-green: #4CAF50;
+            --ai-primary: #f1895c;
+            --ai-secondary: #516079;
         }
         
         * {
@@ -95,25 +97,60 @@
         }
         
         .btn-primary {
-            background-color: var(--orange);
+            background: var(--orange);
             color: var(--white);
             box-shadow: 0 6px 20px rgba(241, 137, 92, 0.4);
+            animation: pulse-btn 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-btn {
+            0%, 100% {
+                transform: translateY(0);
+                box-shadow: 0 6px 20px rgba(241, 137, 92, 0.4);
+            }
+            50% {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 30px rgba(241, 137, 92, 0.5);
+            }
         }
         
         .btn-primary:hover {
-            background-color: #e07a4f;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(241, 137, 92, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(241, 137, 92, 0.6);
+            animation: none;
         }
         
         .btn-secondary {
-            background-color: var(--blue-gray);
+            background-color: var(--orange);
             color: var(--white);
         }
         
         .btn-secondary:hover {
-            background-color: #47536a;
+            background-color: #e07a4f;
             transform: translateY(-2px);
+        }
+        
+        .ai-badge {
+            display: inline-block;
+            background: var(--orange);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            animation: slideInDown 0.8s ease-out;
+        }
+        
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         /* Header */
@@ -155,7 +192,6 @@
             gap: 30px;
         }
         
-        /* Navigation principale */
         .main-nav {
             display: flex;
             gap: 25px;
@@ -174,6 +210,7 @@
         
         .nav-link:hover {
             color: var(--orange);
+            transform: translateY(-2px);
         }
         
         .nav-link::after {
@@ -183,7 +220,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background-color: var(--orange);
+            background: var(--orange);
             transition: width 0.3s ease;
         }
         
@@ -191,13 +228,11 @@
             width: 100%;
         }
         
-        /* Sélecteur de langue desktop */
         .desktop-language-switcher {
             display: flex;
             gap: 10px;
         }
         
-        /* Menu mobile */
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -273,18 +308,31 @@
         }
         
         .lang-btn.active {
-            background-color: var(--blue-gray);
+            background: var(--orange);
             color: white;
-            border-color: var(--blue-gray);
+            border-color: var(--orange);
         }
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--dark-blue) 0%, #3d4254 100%);
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #1e1e30 100%);
             color: var(--white);
             padding-top: 150px;
             padding-bottom: 100px;
-            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(241, 137, 92, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(81, 96, 121, 0.15) 0%, transparent 50%);
+            pointer-events: none;
         }
         
         .hero-container {
@@ -292,31 +340,89 @@
             grid-template-columns: 1fr 1fr;
             gap: 60px;
             align-items: center;
+            position: relative;
+            z-index: 1;
         }
         
         .hero-content {
             max-width: 600px;
+            animation: fadeInLeft 1s ease-out;
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
         
         .hero h1 {
             margin-bottom: 30px;
         }
         
+        .typewriter-text {
+            display: inline-block;
+            border-right: 3px solid var(--orange);
+            padding-right: 5px;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--orange); }
+        }
+        
         .hero .subtitle {
             font-size: 1.4rem;
             margin-bottom: 40px;
             line-height: 1.6;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 0.95; }
         }
         
         .hero-cta {
             margin-top: 40px;
             margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .hero-screenshot {
             display: flex;
             justify-content: flex-end;
             align-items: center;
+            animation: fadeInRight 1s ease-out 0.5s both;
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
         
         .hero-app-image {
@@ -325,112 +431,386 @@
             border-radius: 15px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             transition: transform 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
         }
         
         .hero-app-image:hover {
-            transform: scale(1.02);
+            transform: scale(1.05) translateY(0);
+            animation: none;
         }
         
-        /* Problem Section */
-        .problem-section {
-            background-color: var(--light-gray);
+        /* AI Copilot Section */
+        .copilot-hero-section {
+            background: var(--blue-gray);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
         }
         
-        .section-title {
+        .copilot-hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="2" height="2" fill="white" opacity="0.1"/></svg>');
+            background-size: 50px 50px;
+            pointer-events: none;
+            animation: moveBackground 20s linear infinite;
+        }
+        
+        @keyframes moveBackground {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+        
+        .copilot-hero-content {
+            display: block;
+            max-width: 900px;
+            margin: 0 auto;
             text-align: center;
-            margin-bottom: 50px;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1s ease-out;
         }
         
-        .problem-grid {
+        .copilot-hero-text h2 {
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        .copilot-hero-text .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+        
+        .ai-capabilities {
+            display: grid;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .ai-capability-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out both;
+        }
+        
+        .ai-capability-item:nth-child(1) { animation-delay: 0.6s; }
+        .ai-capability-item:nth-child(2) { animation-delay: 0.7s; }
+        .ai-capability-item:nth-child(3) { animation-delay: 0.8s; }
+        .ai-capability-item:nth-child(4) { animation-delay: 0.9s; }
+        
+        .ai-capability-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(10px);
+            border-color: var(--orange);
+        }
+        
+        .ai-capability-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .ai-capability-item p {
+            opacity: 0.9;
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        
+        .copilot-hero-visual {
+            text-align: center;
+        }
+        
+        .copilot-hero-image {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* AI Features Grid */
+        .ai-features-section {
+            background-color: #f5f5f5;
+        }
+        
+        .ai-features-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 30px;
-            max-width: 900px;
-            margin: 0 auto;
+            margin-top: 50px;
         }
         
-        .problem-card {
-            background-color: var(--white);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .problem-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .problem-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-        
-        /* Solution Section */
-        .solution-section {
-            background-color: var(--white);
-            text-align: center;
-        }
-        
-        .solution-text {
-            max-width: 800px;
-            margin: 0 auto;
-            font-size: 1.3rem;
-            color: var(--blue-gray);
-        }
-        
-        /* Benefits Section */
-        .benefits-section {
-            background-color: var(--light-gray);
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-        }
-        
-        .benefit-card {
-            background-color: var(--white);
+        .ai-feature-card {
+            background: white;
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
+            border-top: 4px solid transparent;
         }
         
-        .benefit-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        .ai-feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(241, 137, 92, 0.2);
+            border-top-color: var(--orange);
         }
         
-        .benefit-icon {
+        .ai-feature-icon {
             font-size: 3rem;
             margin-bottom: 20px;
+            color: var(--orange);
+            animation: bounce 2s ease-in-out infinite;
         }
         
-        .benefit-card ul {
-            list-style: none;
-            margin-top: 15px;
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
         
-        .benefit-card ul li {
-            padding: 8px 0;
-            padding-left: 30px;
+        .ai-feature-card:hover .ai-feature-icon {
+            animation: spin 0.6s ease-in-out;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.2);
+            }
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+        
+        /* How AI Works Section */
+        .how-ai-works-section {
+            background-color: var(--white);
+        }
+        
+        .ai-workflow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 50px;
             position: relative;
         }
         
-        .benefit-card ul li:before {
+        .ai-workflow::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 12.5%;
+            right: 12.5%;
+            height: 2px;
+            background: var(--orange);
+            z-index: 0;
+            animation: expandLine 2s ease-out;
+        }
+        
+        @keyframes expandLine {
+            from {
+                width: 0;
+                left: 50%;
+            }
+            to {
+                width: 75%;
+                left: 12.5%;
+            }
+        }
+        
+        .workflow-step {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out both;
+        }
+        
+        .workflow-step:nth-child(1) { animation-delay: 0.2s; }
+        .workflow-step:nth-child(2) { animation-delay: 0.4s; }
+        .workflow-step:nth-child(3) { animation-delay: 0.6s; }
+        .workflow-step:nth-child(4) { animation-delay: 0.8s; }
+        
+        .workflow-number {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            background: var(--orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(241, 137, 92, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .workflow-step:hover .workflow-number {
+            transform: scale(1.1) rotate(360deg);
+            background: var(--blue-gray);
+        }
+        
+        .workflow-step h3 {
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+        }
+        
+        .workflow-step p {
+            color: var(--blue-gray);
+            font-size: 1rem;
+        }
+        
+        /* AI vs Traditional Section */
+        .comparison-section {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .comparison-card.traditional {
+            border-left: 5px solid #dc3545;
+        }
+        
+        .comparison-card.ai-powered {
+            border-left: 5px solid var(--orange);
+            background: rgba(241, 137, 92, 0.05);
+            animation: slideInRight 1s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .comparison-card.traditional {
+            animation: slideInLeft 1s ease-out;
+        }
+        
+        .comparison-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .comparison-list {
+            list-style: none;
+        }
+        
+        .comparison-list li {
+            padding: 12px 0;
+            padding-left: 35px;
+            position: relative;
+            font-size: 1.05rem;
+        }
+        
+        .comparison-card.traditional .comparison-list li:before {
+            content: "✗";
+            color: #dc3545;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.3rem;
+        }
+        
+        .comparison-card.ai-powered .comparison-list li:before {
             content: "✓";
             color: var(--success-green);
             font-weight: bold;
             position: absolute;
             left: 0;
+            font-size: 1.3rem;
+        }
+        
+        /* Platform Integration Section */
+        .platform-section {
+            background-color: var(--white);
+        }
+        
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .platform-card {
+            background: var(--light-gray);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .platform-card:hover {
+            border-color: var(--orange);
+            transform: scale(1.05);
+            background: white;
+            box-shadow: 0 10px 30px rgba(241, 137, 92, 0.15);
+        }
+        
+        .platform-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .platform-card h3 {
+            color: var(--dark-blue);
+            margin-bottom: 15px;
         }
         
         /* Screenshots Section */
         .screenshots-section {
-            background-color: var(--white);
+            background-color: #f5f5f5;
         }
         
         .screenshots-tabs {
@@ -443,7 +823,7 @@
         .tab-btn {
             background-color: transparent;
             color: var(--dark-blue);
-            border: 2px solid var(--light-gray);
+            border: 2px solid #ddd;
             padding: 15px 40px;
             border-radius: 50px;
             cursor: pointer;
@@ -458,9 +838,22 @@
         }
         
         .tab-btn.active {
-            background-color: var(--orange);
+            background: var(--orange);
             color: var(--white);
             border-color: var(--orange);
+            animation: tabPulse 0.5s ease-out;
+        }
+        
+        @keyframes tabPulse {
+            0% {
+                transform: scale(0.95);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
         
         .screenshots-content {
@@ -471,15 +864,15 @@
             display: none;
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
-            animation: fadeIn 0.5s ease-out;
         }
         
         .screenshots-grid.active {
             display: grid;
+            animation: fadeIn 0.5s ease-out;
         }
         
         .screenshot-item {
-            background-color: var(--light-gray);
+            background-color: white;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
@@ -487,11 +880,31 @@
             display: flex;
             flex-direction: column;
             height: 500px;
+            cursor: pointer;
+            animation: zoomIn 0.6s ease-out both;
+        }
+        
+        .screenshot-item:nth-child(1) { animation-delay: 0.1s; }
+        .screenshot-item:nth-child(2) { animation-delay: 0.2s; }
+        .screenshot-item:nth-child(3) { animation-delay: 0.3s; }
+        .screenshot-item:nth-child(4) { animation-delay: 0.4s; }
+        .screenshot-item:nth-child(5) { animation-delay: 0.5s; }
+        .screenshot-item:nth-child(6) { animation-delay: 0.6s; }
+        
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
         
         .screenshot-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(241, 137, 92, 0.3);
         }
         
         .screenshot-image-container {
@@ -530,7 +943,7 @@
             margin-bottom: 0;
         }
         
-        /* Modal pour agrandir les screenshots */
+        /* Modal */
         .screenshot-modal {
             display: none;
             position: fixed;
@@ -576,143 +989,100 @@
             transform: scale(1.2);
         }
         
-        /* Copilot Section */
-        .copilot-section {
-            background: linear-gradient(135deg, var(--blue-gray) 0%, #47536a 100%);
-            color: var(--white);
-        }
-        
-        .copilot-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-        
-        .copilot-text h2 {
-            margin-bottom: 30px;
-        }
-        
-        .copilot-features {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 10px;
-            margin-top: 30px;
-        }
-        
-        .copilot-features h3 {
-            margin-bottom: 20px;
-        }
-        
-        .platform-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .platform-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 1.2rem;
-        }
-        
-        .result-list {
-            list-style: none;
-        }
-        
-        .result-list li {
-            padding: 8px 0;
-            font-size: 1.1rem;
-        }
-        
-        .copilot-visual {
-            text-align: center;
-        }
-        
-        .copilot-image {
-            max-width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Insights Section */
-        .insights-section {
-            background-color: var(--white);
-        }
-        
-        .insights-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .insight-card {
-            text-align: center;
-            padding: 30px;
-            background-color: var(--light-gray);
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-        
-        .insight-card:hover {
-            transform: scale(1.05);
-        }
-        
-        .insight-icon {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-        }
-        
-        .insights-cta {
-            text-align: center;
-            margin-top: 50px;
-            padding: 40px;
-            background: linear-gradient(135deg, var(--orange) 0%, #e07a4f 100%);
-            color: var(--white);
-            border-radius: 15px;
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-        
         /* Results Section */
         .results-section {
-            background-color: var(--light-gray);
-            text-align: center;
+            background: var(--orange);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .results-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: rotateBackground 30s linear infinite;
+        }
+        
+        @keyframes rotateBackground {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
         
         .results-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 30px;
-            max-width: 800px;
-            margin: 40px auto;
-        }
-        
-        .result-item {
-            background-color: var(--white);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .result-check {
-            color: var(--success-green);
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-        
-        .key-phrase {
             margin-top: 50px;
-            font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .result-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out both;
+        }
+        
+        .result-card:nth-child(1) { animation-delay: 0.2s; }
+        .result-card:nth-child(2) { animation-delay: 0.4s; }
+        .result-card:nth-child(3) { animation-delay: 0.6s; }
+        .result-card:nth-child(4) { animation-delay: 0.8s; }
+        
+        .result-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-10px) scale(1.05);
+            border-color: white;
+        }
+        
+        .result-number {
+            font-size: 3.5rem;
             font-weight: bold;
-            color: var(--dark-blue);
-            padding: 30px;
-            background-color: var(--white);
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            display: block;
+            animation: countUp 2s ease-out;
+        }
+        
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .result-card h3 {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        .key-message {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         /* Demo Section */
@@ -781,7 +1151,7 @@
         
         /* Footer */
         footer {
-            background-color: var(--blue-gray);
+            background-color: var(--dark-blue);
             color: var(--white);
             padding: 60px 0 30px;
         }
@@ -801,12 +1171,31 @@
             font-size: 2.5rem;
             margin-bottom: 15px;
             color: var(--orange);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
         }
         
         .footer-bottom {
             text-align: center;
             padding-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
         
         /* Responsive */
@@ -817,6 +1206,10 @@
                 gap: 40px;
             }
             
+            .copilot-hero-content {
+                text-align: center;
+            }
+            
             .hero-screenshot {
                 justify-content: center;
             }
@@ -825,17 +1218,21 @@
                 width: 280px;
             }
             
-            .problem-grid,
-            .benefits-grid,
+            .ai-features-grid,
+            .platform-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .ai-workflow {
+                grid-template-columns: 1fr;
+            }
+            
+            .ai-workflow::before {
+                display: none;
+            }
+            
+            .comparison-grid,
             .results-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .copilot-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .insights-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -855,7 +1252,6 @@
                 flex-wrap: wrap;
             }
             
-            /* Navigation responsive */
             .main-nav {
                 display: none;
             }
@@ -919,6 +1315,15 @@
                 padding: 12px 30px;
                 font-size: 1rem;
             }
+            
+            .result-number {
+                font-size: 2.5rem;
+            }
+            
+            .key-message {
+                font-size: 1.3rem;
+                padding: 30px 20px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -962,18 +1367,16 @@
             margin-left: 10px;
         }
         
-        body.rtl .benefit-card ul li {
+        body.rtl .comparison-list li,
+        body.rtl .ai-capability-item {
             padding-left: 0;
-            padding-right: 30px;
+            padding-right: 35px;
         }
         
-        body.rtl .benefit-card ul li:before {
+        body.rtl .comparison-list li:before,
+        body.rtl .ai-capability-item:before {
             left: auto;
             right: 0;
-        }
-        
-        body.rtl .platform-item {
-            flex-direction: row-reverse;
         }
         
         body.rtl .hero {
@@ -989,9 +1392,437 @@
             right: 0;
         }
         
-        body.rtl .mobile-menu-btn {
-            margin-right: 0;
-            margin-left: 15px;
+        body.rtl .ai-capability-item:hover {
+            transform: translateX(-10px);
+        }
+        
+        /* Chat Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+        }
+        
+        .chat-bubble {
+            width: 60px;
+            height: 60px;
+            background: var(--orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(241, 137, 92, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            animation: bounceIn 1s ease-out, floatBubble 3s ease-in-out 1s infinite;
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes floatBubble {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .chat-bubble:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(241, 137, 92, 0.6);
+            animation: none;
+        }
+        
+        .chat-bubble i {
+            color: white;
+            font-size: 28px;
+        }
+        
+        .chat-bubble-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--orange);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+            white-space: nowrap;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
+        .chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 380px;
+            height: 600px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 10000;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        .chat-window.active {
+            display: flex;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .chat-header {
+            background: var(--orange);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .chat-avatar {
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .chat-header-text h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .chat-header-text p {
+            margin: 0;
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-close:hover {
+            transform: rotate(90deg);
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .chat-message {
+            margin-bottom: 15px;
+            display: flex;
+            animation: messageSlide 0.3s ease-out;
+        }
+        
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+        
+        .chat-message.bot {
+            justify-content: flex-start;
+        }
+        
+        .message-content {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            word-wrap: break-word;
+        }
+        
+        .chat-message.user .message-content {
+            background: var(--orange);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .chat-message.bot .message-content {
+            background: white;
+            color: var(--dark-blue);
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .message-time {
+            font-size: 0.75rem;
+            opacity: 0.6;
+            margin-top: 4px;
+            text-align: right;
+        }
+        
+        .chat-message.bot .message-time {
+            text-align: left;
+        }
+        
+        .typing-indicator {
+            display: none;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 12px;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            max-width: 75%;
+        }
+        
+        .typing-indicator.active {
+            display: block;
+            animation: messageSlide 0.3s ease-out;
+        }
+        
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            background: var(--orange);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+        
+        .chat-input-container {
+            padding: 15px 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .chat-input-form {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-input:focus {
+            border-color: var(--orange);
+        }
+        
+        .chat-send-btn {
+            width: 45px;
+            height: 45px;
+            background: var(--orange);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-send-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 4px 15px rgba(241, 137, 92, 0.4);
+        }
+        
+        .chat-send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+        
+        .chat-send-btn i {
+            font-size: 18px;
+        }
+        
+        .welcome-message {
+            background: rgba(241, 137, 92, 0.1);
+            border-left: 4px solid var(--orange);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            animation: slideInLeft 0.6s ease-out;
+        }
+        
+        .welcome-message h4 {
+            margin: 0 0 8px 0;
+            color: var(--orange);
+            font-size: 1rem;
+        }
+        
+        .welcome-message p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--blue-gray);
+        }
+        
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .quick-action-btn {
+            background: white;
+            border: 2px solid var(--orange);
+            color: var(--orange);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-action-btn:hover {
+            background: var(--orange);
+            color: white;
+        }
+        
+        /* RTL Support for Chat */
+        body.rtl .chat-widget {
+            left: 30px;
+            right: auto;
+        }
+        
+        body.rtl .chat-window {
+            left: 30px;
+            right: auto;
+        }
+        
+        body.rtl .chat-message.user {
+            justify-content: flex-start;
+        }
+        
+        body.rtl .chat-message.bot {
+            justify-content: flex-end;
+        }
+        
+        body.rtl .chat-message.user .message-content {
+            border-bottom-right-radius: 12px;
+            border-bottom-left-radius: 4px;
+        }
+        
+        body.rtl .chat-message.bot .message-content {
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 4px;
+        }
+        
+        /* Responsive Chat Widget */
+        @media (max-width: 480px) {
+            .chat-window {
+                width: calc(100vw - 20px);
+                height: calc(100vh - 120px);
+                right: 10px;
+                bottom: 80px;
+            }
+            
+            .chat-widget {
+                right: 20px;
+                bottom: 20px;
+            }
+            
+            body.rtl .chat-window {
+                left: 10px;
+                right: auto;
+            }
+            
+            body.rtl .chat-widget {
+                left: 20px;
+                right: auto;
+            }
         }
     </style>
 </head>
@@ -1004,40 +1835,35 @@
                 <span>ELSAHA-NET</span>
             </div>
             <div class="nav-right">
-                <!-- Navigation principale -->
                 <nav class="main-nav">
-                    <a href="#copilot" class="nav-link" data-fr="Copilot IA" data-en="AI Copilot" data-ar="المساعد الذكي">Copilot IA</a>
-                    <a href="#problem" class="nav-link" data-fr="Problèmes" data-en="Problems" data-ar="المشاكل">Problèmes</a>
-                    <a href="#benefits" class="nav-link" data-fr="Bénéfices" data-en="Benefits" data-ar="الفوائد">Bénéfices</a>
+                    <a href="#copilot" class="nav-link" data-fr="IA Copilot" data-en="AI Copilot" data-ar="المساعد الذكي">IA Copilot</a>
+                    <a href="#ai-features" class="nav-link" data-fr="Fonctionnalités IA" data-en="AI Features" data-ar="ميزات الذكاء الاصطناعي">Fonctionnalités IA</a>
+                    <a href="#how-it-works" class="nav-link" data-fr="Comment ça marche" data-en="How it works" data-ar="كيف يعمل">Comment ça marche</a>
                     <a href="#screenshots" class="nav-link" data-fr="Captures" data-en="Screenshots" data-ar="لقطات الشاشة">Captures</a>
                     <a href="#results" class="nav-link" data-fr="Résultats" data-en="Results" data-ar="النتائج">Résultats</a>
                     <a href="#demo" class="nav-link" data-fr="Démo" data-en="Demo" data-ar="عرض تجريبي">Démo</a>
                 </nav>
                 
-                <!-- Sélecteur de langue desktop -->
                 <div class="desktop-language-switcher">
                     <button class="lang-btn" data-lang="fr">FR</button>
                     <button class="lang-btn" data-lang="en">EN</button>
                     <button class="lang-btn" data-lang="ar">AR</button>
                 </div>
                 
-                <!-- Bouton menu mobile -->
                 <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
         
-        <!-- Menu mobile -->
         <div class="mobile-menu" id="mobileMenu">
-            <a href="#copilot" class="mobile-nav-link" data-fr="Copilot IA" data-en="AI Copilot" data-ar="المساعد الذكي" onclick="closeMobileMenu()">Copilot IA</a>
-            <a href="#problem" class="mobile-nav-link" data-fr="Problèmes" data-en="Problems" data-ar="المشاكل" onclick="closeMobileMenu()">Problèmes</a>
-            <a href="#benefits" class="mobile-nav-link" data-fr="Bénéfices" data-en="Benefits" data-ar="الفوائد" onclick="closeMobileMenu()">Bénéfices</a>
+            <a href="#copilot" class="mobile-nav-link" data-fr="IA Copilot" data-en="AI Copilot" data-ar="المساعد الذكي" onclick="closeMobileMenu()">IA Copilot</a>
+            <a href="#ai-features" class="mobile-nav-link" data-fr="Fonctionnalités IA" data-en="AI Features" data-ar="ميزات الذكاء الاصطناعي" onclick="closeMobileMenu()">Fonctionnalités IA</a>
+            <a href="#how-it-works" class="mobile-nav-link" data-fr="Comment ça marche" data-en="How it works" data-ar="كيف يعمل" onclick="closeMobileMenu()">Comment ça marche</a>
             <a href="#screenshots" class="mobile-nav-link" data-fr="Captures" data-en="Screenshots" data-ar="لقطات الشاشة" onclick="closeMobileMenu()">Captures</a>
             <a href="#results" class="mobile-nav-link" data-fr="Résultats" data-en="Results" data-ar="النتائج" onclick="closeMobileMenu()">Résultats</a>
             <a href="#demo" class="mobile-nav-link" data-fr="Démo" data-en="Demo" data-ar="عرض تجريبي" onclick="closeMobileMenu()">Démo</a>
             
-            <!-- Sélecteur de langue mobile -->
             <div class="mobile-language-switcher">
                 <button class="lang-btn" data-lang="fr">FR</button>
                 <button class="lang-btn" data-lang="en">EN</button>
@@ -1051,127 +1877,214 @@
         <div class="container">
             <div class="hero-container">
                 <div class="hero-content">
-                    <h1 data-fr="ELSAHA-NET" data-en="ELSAHA-NET" data-ar="ELSAHA-NET">ELSAHA-NET</h1>
-                    <h1 data-fr="La plateforme qui fait vendre plus, plus vite." data-en="The platform that helps you sell more, faster." data-ar="المنصة التي تساعدك على البيع أكثر وأسرع.">La plateforme qui fait vendre plus, plus vite.</h1>
-                    <p class="subtitle" data-fr="Centralisez vos commandes, gagnez du temps et augmentez vos ventes grâce à une plateforme intelligente, assistée par ELSAHA-Copilot." data-en="Centralize your orders, save time and increase your sales with an intelligent platform, powered by ELSAHA-Copilot." data-ar="مركز طلباتك، وفر الوقت وزد مبيعاتك بفضل منصة ذكية مدعومة بـ ELSAHA-Copilot.">Centralisez vos commandes, gagnez du temps et augmentez vos ventes grâce à une plateforme intelligente, assistée par ELSAHA-Copilot.</p>
+                    <span class="ai-badge" data-fr="🤖 Propulsé par l'Intelligence Artificielle" data-en="🤖 Powered by Artificial Intelligence" data-ar="🤖 مدعوم بالذكاء الاصطناعي">🤖 Propulsé par l'Intelligence Artificielle</span>
+                    <h1>
+                        <span class="typewriter-text" id="typewriterText" data-fr="L'IA qui révolutionne la distribution pharmaceutique" data-en="AI revolutionizing pharmaceutical distribution" data-ar="الذكاء الاصطناعي الذي يُحدث ثورة في توزيع الأدوية"></span>
+                    </h1>
+                    <p class="subtitle" data-fr="ELSAHA-NET utilise l'intelligence artificielle pour automatiser vos prises de commandes, optimiser vos opérations et multiplier vos ventes 24/7." data-en="ELSAHA-NET uses artificial intelligence to automate your order taking, optimize your operations and multiply your sales 24/7." data-ar="يستخدم ELSAHA-NET الذكاء الاصطناعي لأتمتة أخذ طلباتك وتحسين عملياتك ومضاعفة مبيعاتك على مدار الساعة.">ELSAHA-NET utilise l'intelligence artificielle pour automatiser vos prises de commandes, optimiser vos opérations et multiplier vos ventes 24/7.</p>
                     <div class="hero-cta">
-                        <a href="#demo" class="btn btn-primary" data-fr="👉 Demander une démo gratuite" data-en="👉 Request a free demo" data-ar="👉 اطلب عرضًا توضيحيًا مجانيًا">👉 Demander une démo gratuite</a>
+                        <a href="#demo" class="btn btn-primary" data-fr="🚀 Découvrir l'IA en action" data-en="🚀 Discover AI in action" data-ar="🚀 اكتشف الذكاء الاصطناعي أثناء العمل">🚀 Découvrir l'IA en action</a>
                     </div>
                 </div>
                 
-                <!-- Screenshot de la page d'accueil -->
                 <div class="hero-screenshot">
-                    <img src="https://i.imgur.com/sFxprtM.png" alt="ELSAHA-NET Page d'accueil" class="hero-app-image">
+                    <img src="https://i.imgur.com/aAJ5ZI9.png" alt="ELSAHA-Copilot Agent IA" class="hero-app-image">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Copilot Section - Juste après le header -->
-    <section class="copilot-section" id="copilot">
+    <!-- Copilot Hero Section -->
+    <section class="copilot-hero-section" id="copilot">
         <div class="container">
-            <div class="copilot-content">
-                <div class="copilot-text">
-                    <h2 data-fr="ELSAHA-Copilot : l'IA qui travaille pour vous" data-en="ELSAHA-Copilot: AI working for you" data-ar="ELSAHA-Copilot: الذكاء الاصطناعي يعمل من أجلك">ELSAHA-Copilot : l'IA qui travaille pour vous</h2>
-                    <p data-fr="ELSAHA-Copilot automatise les échanges courants avec les pharmacies et facilite la prise de commande." data-en="ELSAHA-Copilot automates common exchanges with pharmacies and facilitates order taking." data-ar="يقوم ELSAHA-Copilot بأتمتة التبادلات الشائعة مع الصيدليات ويسهل تلقي الطلبات.">ELSAHA-Copilot automatise les échanges courants avec les pharmacies et facilite la prise de commande.</p>
+            <div class="copilot-hero-content">
+                <div class="copilot-hero-text">
+                    <h2 data-fr="ELSAHA-Copilot : Votre commercial IA qui ne dort jamais" data-en="ELSAHA-Copilot: Your AI salesperson that never sleeps" data-ar="ELSAHA-Copilot: مندوب المبيعات بالذكاء الاصطناعي الذي لا ينام أبدًا">ELSAHA-Copilot : Votre commercial IA qui ne dort jamais</h2>
+                    <p class="subtitle" data-fr="Un assistant intelligent qui traite les demandes de vos pharmacies automatiquement, génère des commandes et maximise vos ventes sans effort humain." data-en="An intelligent assistant that processes your pharmacies' requests automatically, generates orders and maximizes your sales without human effort." data-ar="مساعد ذكي يعالج طلبات صيدلياتك تلقائيًا، وينشئ الطلبات ويزيد مبيعاتك دون جهد بشري.">Un assistant intelligent qui traite les demandes de vos pharmacies automatiquement, génère des commandes et maximise vos ventes sans effort humain.</p>
                     
-                    <div class="copilot-features">
-                        <h3 data-fr="Déployable partout" data-en="Deployable everywhere" data-ar="قابل للنشر في كل مكان">Déployable partout</h3>
-                        <div class="platform-list">
-                            <div class="platform-item">
-                                <span>💬</span>
-                                <span data-fr="WhatsApp" data-en="WhatsApp" data-ar="واتساب">WhatsApp</span>
-                            </div>
-                            <div class="platform-item">
-                                <span>📲</span>
-                                <span data-fr="Telegram" data-en="Telegram" data-ar="تيليجرام">Telegram</span>
-                            </div>
-                            <div class="platform-item">
-                                <span>💻</span>
-                                <span data-fr="Plateforme ELSAHA-NET" data-en="ELSAHA-NET Platform" data-ar="منصة ELSAHA-NET">Plateforme ELSAHA-NET</span>
-                            </div>
+                    <div class="ai-capabilities">
+                        <div class="ai-capability-item">
+                            <h4><span>🧠</span> <span data-fr="Compréhension naturelle du langage" data-en="Natural language understanding" data-ar="فهم اللغة الطبيعية">Compréhension naturelle du langage</span></h4>
+                            <p data-fr="Comprend les demandes de vos clients en arabe et français" data-en="Understands your customers' requests in Arabic and French" data-ar="يفهم طلبات عملائك بالعربية والفرنسية">Comprend les demandes de vos clients en arabe et français</p>
                         </div>
                         
-                        <h3 data-fr="Résultat" data-en="Result" data-ar="النتيجة">Résultat</h3>
-                        <ul class="result-list">
-                            <li data-fr="✔ Réponses instantanées" data-en="✔ Instant responses" data-ar="✔ ردود فورية">✔ Réponses instantanées</li>
-                            <li data-fr="✔ Commandes automatisées" data-en="✔ Automated orders" data-ar="✔ طلبات آلية">✔ Commandes automatisées</li>
-                            <li data-fr="✔ Disponibilité 24/7" data-en="✔ 24/7 Availability" data-ar="✔ التوفر على مدار الساعة">✔ Disponibilité 24/7</li>
-                        </ul>
+                        <div class="ai-capability-item">
+                            <h4><span>⚡</span> <span data-fr="Génération de commandes 24/7" data-en="24/7 order generation" data-ar="توليد الطلبات على مدار الساعة">Génération de commandes 24/7</span></h4>
+                            <p data-fr="Convertit automatiquement chaque demande en commande, jour et nuit" data-en="Automatically converts every request into an order, day and night" data-ar="يحول تلقائيًا كل طلب إلى أمر، ليلاً ونهارًا">Convertit automatiquement chaque demande en commande, jour et nuit</p>
+                        </div>
+                        
+                        <div class="ai-capability-item">
+                            <h4><span>🎯</span> <span data-fr="Validation et structuration automatique" data-en="Automatic validation and structuring" data-ar="التحقق والتنظيم التلقائي">Validation et structuration automatique</span></h4>
+                            <p data-fr="Structure et valide chaque commande pour un traitement immédiat par vos équipes" data-en="Structures and validates each order for immediate processing by your teams" data-ar="ينظم ويتحقق من كل طلب للمعالجة الفورية من قبل فرقك">Structure et valide chaque commande pour un traitement immédiat par vos équipes</p>
+                        </div>
+                        
+                        <div class="ai-capability-item">
+                            <h4><span>📊</span> <span data-fr="Maximisation des revenus" data-en="Revenue maximization" data-ar="تعظيم الإيرادات">Maximisation des revenus</span></h4>
+                            <p data-fr="Suggère automatiquement des produits complémentaires et alternatives pour augmenter votre panier moyen" data-en="Automatically suggests complementary products and alternatives to increase your average basket" data-ar="يقترح تلقائيًا منتجات تكميلية وبدائل لزيادة متوسط سلتك">Suggère automatiquement des produits complémentaires et alternatives pour augmenter votre panier moyen</p>
+                        </div>
                     </div>
                 </div>
-                <div class="copilot-visual">
-                    <img src="https://i.imgur.com/aAJ5ZI9.png" alt="ELSAHA-Copilot Agent IA" class="copilot-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Features Section -->
+    <section class="ai-features-section" id="ai-features">
+        <div class="container">
+            <h2 class="section-title" data-fr="Les super-pouvoirs de votre distribution" data-en="Your distribution's superpowers" data-ar="القوى الخارقة للتوزيع الخاص بك">Les super-pouvoirs de votre distribution</h2>
+            <p style="text-align: center; font-size: 1.2rem; max-width: 800px; margin: 0 auto;" data-fr="ELSAHA-Copilot transforme radicalement la façon dont vous gérez vos relations commerciales avec les pharmacies." data-en="ELSAHA-Copilot radically transforms the way you manage your business relationships with pharmacies." data-ar="يُحدث ELSAHA-Copilot تحولًا جذريًا في طريقة إدارتك لعلاقاتك التجارية مع الصيدليات.">ELSAHA-Copilot transforme radicalement la façon dont vous gérez vos relations commerciales avec les pharmacies.</p>
+            
+            <div class="ai-features-grid">
+                <div class="ai-feature-card">
+                    <div class="ai-feature-icon">📦</div>
+                    <h3 data-fr="Catalogue produits temps réel" data-en="Real-time product catalog" data-ar="كتالوج المنتجات في الوقت الفعلي">Catalogue produits temps réel</h3>
+                    <p data-fr="Vos arrivages du jour sont instantanément accessibles à toutes vos pharmacies clientes 24/7." data-en="Your daily arrivals are instantly accessible to all your pharmacy customers 24/7." data-ar="تكون وصولاتك اليومية متاحة على الفور لجميع عملاء الصيدليات على مدار الساعة.">Vos arrivages du jour sont instantanément accessibles à toutes vos pharmacies clientes 24/7.</p>
+                </div>
+                
+                <div class="ai-feature-card">
+                    <div class="ai-feature-icon">🛒</div>
+                    <h3 data-fr="Génération automatique de commandes" data-en="Automatic order generation" data-ar="توليد الطلبات التلقائي">Génération automatique de commandes</h3>
+                    <p data-fr="L'IA convertit chaque demande client en commande structurée prête pour vos équipes de préparation." data-en="AI converts every customer request into a structured order ready for your preparation teams." data-ar="يحول الذكاء الاصطناعي كل طلب عميل إلى طلب منظم جاهز لفرق الإعداد الخاصة بك.">L'IA convertit chaque demande client en commande structurée prête pour vos équipes de préparation.</p>
+                </div>
+                
+                <div class="ai-feature-card">
+                    <div class="ai-feature-icon">📍</div>
+                    <h3 data-fr="Suivi et traçabilité complète" data-en="Complete tracking and traceability" data-ar="التتبع والتتبع الكامل">Suivi et traçabilité complète</h3>
+                    <p data-fr="Suivez toutes vos commandes en temps réel et offrez une transparence totale à vos clients." data-en="Track all your orders in real time and offer complete transparency to your customers." data-ar="تتبع جميع طلباتك في الوقت الفعلي وقدم شفافية كاملة لعملائك.">Suivez toutes vos commandes en temps réel et offrez une transparence totale à vos clients.</p>
+                </div>
+                
+                <div class="ai-feature-card">
+                    <div class="ai-feature-icon">❌</div>
+                    <h3 data-fr="Gestion flexible des commandes" data-en="Flexible order management" data-ar="إدارة الطلبات المرنة">Gestion flexible des commandes</h3>
+                    <p data-fr="Modifications et annulations gérées automatiquement par l'IA sans surcharger vos équipes." data-en="Modifications and cancellations managed automatically by AI without overloading your teams." data-ar="التعديلات والإلغاءات التي يديرها الذكاء الاصطناعي تلقائيًا دون إرهاق فرقك.">Modifications et annulations gérées automatiquement par l'IA sans surcharger vos équipes.</p>
+                </div>
+                
+                <div class="ai-feature-card">
+                    <div class="ai-feature-icon">📞</div>
+                    <h3 data-fr="Information distributeur accessible" data-en="Accessible distributor information" data-ar="معلومات الموزع المتاحة">Information distributeur accessible</h3>
+                    <p data-fr="Vos coordonnées, horaires et informations mises à jour automatiquement pour vos clients." data-en="Your contact details, hours and information automatically updated for your customers." data-ar="تفاصيل الاتصال والساعات والمعلومات الخاصة بك يتم تحديثها تلقائيًا لعملائك.">Vos coordonnées, horaires et informations mises à jour automatiquement pour vos clients.</p>
+                </div>
+                
+                <div class="ai-feature-card">
+                    <div class="ai-feature-icon">🧾</div>
+                    <h3 data-fr="Facturation automatisée" data-en="Automated invoicing" data-ar="الفوترة الآلية">Facturation automatisée</h3>
+                    <p data-fr="Génération et envoi automatique de factures électroniques à vos clients pharmaciens." data-en="Automatic generation and sending of electronic invoices to your pharmacy customers." data-ar="التوليد والإرسال التلقائي للفواتير الإلكترونية لعملاء الصيدليات.">Génération et envoi automatique de factures électroniques à vos clients pharmaciens.</p>
+                </div>
+                
+                <div class="ai-feature-card">
+                    <div class="ai-feature-icon">💡</div>
+                    <h3 data-fr="Upselling et cross-selling IA" data-en="AI upselling and cross-selling" data-ar="البيع الإضافي والبيع المتقاطع بالذكاء الاصطناعي">Upselling et cross-selling IA</h3>
+                    <p data-fr="L'IA suggère automatiquement des produits complémentaires pour augmenter votre panier moyen." data-en="AI automatically suggests complementary products to increase your average basket." data-ar="يقترح الذكاء الاصطناعي تلقائيًا منتجات تكميلية لزيادة متوسط سلتك.">L'IA suggère automatiquement des produits complémentaires pour augmenter votre panier moyen.</p>
+                </div>
+                
+                <div class="ai-feature-card">
+                    <div class="ai-feature-icon">🌐</div>
+                    <h3 data-fr="Service multilingue automatique" data-en="Automatic multilingual service" data-ar="الخدمة متعددة اللغات التلقائية">Service multilingue automatique</h3>
+                    <p data-fr="Vos clients interagissent en arabe ou français - l'IA s'adapte automatiquement à leur langue." data-en="Your customers interact in Arabic or French - AI automatically adapts to their language." data-ar="يتفاعل عملاؤك بالعربية أو الفرنسية - يتكيف الذكاء الاصطناعي تلقائيًا مع لغتهم.">Vos clients interagissent en arabe ou français - l'IA s'adapte automatiquement à leur langue.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Problem Section -->
-    <section class="problem-section" id="problem">
+    <!-- How AI Works Section -->
+    <section class="how-ai-works-section" id="how-it-works">
         <div class="container">
-            <h2 class="section-title" data-fr="Gérer les commandes ne devrait pas freiner votre croissance" data-en="Managing orders shouldn't slow down your growth" data-ar="إدارة الطلبات لا ينبغي أن تعيق نموك">Gérer les commandes ne devrait pas freiner votre croissance</h2>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-icon">📞</div>
-                    <h3 data-fr="Trop d'appels, de messages et de relances" data-en="Too many calls, messages and follow-ups" data-ar="عدد كبير جدًا من المكالمات والرسائل والمتابعات">Trop d'appels, de messages et de relances</h3>
+            <h2 class="section-title" data-fr="Comment l'IA booste vos ventes" data-en="How AI boosts your sales" data-ar="كيف يعزز الذكاء الاصطناعي مبيعاتك">Comment l'IA booste vos ventes</h2>
+            <p style="text-align: center; font-size: 1.2rem; max-width: 800px; margin: 0 auto 50px;" data-fr="Un processus automatisé qui transforme chaque demande en commande, sans intervention de vos équipes" data-en="An automated process that turns every request into an order, without your teams' intervention" data-ar="عملية آلية تحول كل طلب إلى أمر، دون تدخل فرقك">Un processus automatisé qui transforme chaque demande en commande, sans intervention de vos équipes</p>
+            
+            <div class="ai-workflow">
+                <div class="workflow-step">
+                    <div class="workflow-number">1</div>
+                    <h3 data-fr="Contact client" data-en="Customer contact" data-ar="اتصال العميل">Contact client</h3>
+                    <p data-fr="La pharmacie contacte le Copilot via WhatsApp, Viber ou la plateforme web" data-en="The pharmacy contacts Copilot via WhatsApp, Viber or the web platform" data-ar="تتصل الصيدلية بـ Copilot عبر واتساب أو Viber أو المنصة على الويب">La pharmacie contacte le Copilot via WhatsApp, Viber ou la plateforme web</p>
                 </div>
-                <div class="problem-card">
-                    <div class="problem-icon">⏱️</div>
-                    <h3 data-fr="Perte de temps pour vos équipes commerciales" data-en="Time waste for your sales teams" data-ar="إهدار الوقت لفرق المبيعات الخاصة بك">Perte de temps pour vos équipes commerciales</h3>
+                
+                <div class="workflow-step">
+                    <div class="workflow-number">2</div>
+                    <h3 data-fr="Analyse IA" data-en="AI Analysis" data-ar="تحليل الذكاء الاصطناعي">Analyse IA</h3>
+                    <p data-fr="L'IA comprend la demande, vérifie la disponibilité dans votre stock et suggère des alternatives" data-en="AI understands the request, checks availability in your stock and suggests alternatives" data-ar="يفهم الذكاء الاصطناعي الطلب، ويتحقق من التوفر في مخزونك ويقترح البدائل">L'IA comprend la demande, vérifie la disponibilité dans votre stock et suggère des alternatives</p>
                 </div>
-                <div class="problem-card">
-                    <div class="problem-icon">❌</div>
-                    <h3 data-fr="Manque de visibilité sur les produits demandés" data-en="Lack of visibility on requested products" data-ar="نقص الرؤية بشأن المنتجات المطلوبة">Manque de visibilité sur les produits demandés</h3>
+                
+                <div class="workflow-step">
+                    <div class="workflow-number">3</div>
+                    <h3 data-fr="Génération commande" data-en="Order generation" data-ar="إنشاء الطلب">Génération commande</h3>
+                    <p data-fr="La commande est créée automatiquement, structurée et envoyée à vos équipes pour traitement" data-en="The order is created automatically, structured and sent to your teams for processing" data-ar="يتم إنشاء الطلب تلقائيًا، وتنظيمه وإرساله إلى فرقك للمعالجة">La commande est créée automatiquement, structurée et envoyée à vos équipes pour traitement</p>
                 </div>
-                <div class="problem-card">
-                    <div class="problem-icon">📉</div>
-                    <h3 data-fr="Opportunités de vente manquées" data-en="Missed sales opportunities" data-ar="فرص مبيعات ضائعة">Opportunités de vente manquées</h3>
+                
+                <div class="workflow-step">
+                    <div class="workflow-number">4</div>
+                    <h3 data-fr="Confirmation & Suivi" data-en="Confirmation & Tracking" data-ar="التأكيد والتتبع">Confirmation & Suivi</h3>
+                    <p data-fr="Confirmation automatique envoyée au client avec suivi en temps réel jusqu'à la livraison" data-en="Automatic confirmation sent to customer with real-time tracking until delivery" data-ar="تأكيد تلقائي يُرسل إلى العميل مع التتبع في الوقت الفعلي حتى التسليم">Confirmation automatique envoyée au client avec suivi en temps réel jusqu'à la livraison</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Solution Section -->
-    <section class="solution-section">
+    <!-- AI vs Traditional Comparison -->
+    <section class="comparison-section">
         <div class="container">
-            <h2 class="section-title" data-fr="Une plateforme pensée pour les distributeurs" data-en="A platform designed for distributors" data-ar="منصة مصممة للموزعين">Une plateforme pensée pour les distributeurs</h2>
-            <p class="solution-text" data-fr="ELSAHA-NET vous permet de centraliser toutes vos commandes, de suivre votre activité en temps réel et d'optimiser vos ressources, sans complexité." data-en="ELSAHA-NET allows you to centralize all your orders, track your activity in real time and optimize your resources, without complexity." data-ar="تتيح لك ELSAHA-NET مركزة جميع طلباتك ومتابعة نشاطك في الوقت الفعلي وتحسين مواردك دون تعقيد.">ELSAHA-NET vous permet de centraliser toutes vos commandes, de suivre votre activité en temps réel et d'optimiser vos ressources, sans complexité.</p>
-        </div>
-    </section>
-
-    <!-- Benefits Section -->
-    <section class="benefits-section" id="benefits">
-        <div class="container">
-            <h2 class="section-title" data-fr="Bénéfices clés" data-en="Key Benefits" data-ar="الفوائد الرئيسية">Bénéfices clés</h2>
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="benefit-icon">📦</div>
-                    <h3 data-fr="Accessibilité 24/7 aux produits" data-en="24/7 Product Accessibility" data-ar="إمكانية الوصول إلى المنتجات على مدار الساعة">Accessibilité 24/7 aux produits</h3>
-                    <p data-fr="Vos pharmacies consultent vos produits disponibles en temps réel, à tout moment, sans passer par des appels ou messages." data-en="Your pharmacies view your available products in real time, at any time, without calls or messages." data-ar="تعرض صيدلياتك منتجاتك المتاحة في الوقت الفعلي، في أي وقت، دون مكالمات أو رسائل.">Vos pharmacies consultent vos produits disponibles en temps réel, à tout moment, sans passer par des appels ou messages.</p>
-                </div>
-
-                <div class="benefit-card">
-                    <div class="benefit-icon">⚡</div>
-                    <h3 data-fr="Processus de commande simplifié" data-en="Simplified Order Process" data-ar="عملية طلب مبسطة">Processus de commande simplifié</h3>
-                    <p data-fr="Commandes claires, structurées et prêtes à traiter." data-en="Clear, structured orders ready to process." data-ar="طلبات واضحة ومنظمة وجاهزة للمعالجة.">Commandes claires, structurées et prêtes à traiter.</p>
-                    <p data-fr="Moins d'erreurs, plus de fluidité." data-en="Fewer errors, more fluidity." data-ar="أخطاء أقل، سلاسة أكبر.">Moins d'erreurs, plus de fluidité.</p>
-                </div>
-
-                <div class="benefit-card">
-                    <div class="benefit-icon">⏱️</div>
-                    <h3 data-fr="Gain de temps & optimisation des ressources" data-en="Time Savings & Resource Optimization" data-ar="توفير الوقت وتحسين الموارد">Gain de temps & optimisation des ressources</h3>
-                    <p data-fr="Vos équipes se concentrent sur ce qui compte vraiment : la vente et la relation client." data-en="Your teams focus on what really matters: sales and customer relationships." data-ar="تركز فرقك على ما يهم حقًا: المبيعات والعلاقات مع العملاء.">Vos équipes se concentrent sur ce qui compte vraiment : la vente et la relation client.</p>
-                </div>
-
-                <div class="benefit-card">
-                    <div class="benefit-icon">📊</div>
-                    <h3 data-fr="Centralisation & traçabilité" data-en="Centralization & Traceability" data-ar="المركزية والتتبع">Centralisation & traçabilité</h3>
-                    <ul>
-                        <li data-fr="Historique complet des commandes" data-en="Complete order history" data-ar="سجل كامل للطلبات">Historique complet des commandes</li>
-                        <li data-fr="Suivi clair des échanges" data-en="Clear tracking of exchanges" data-ar="تتبع واضح للتبادلات">Suivi clair des échanges</li>
-                        <li data-fr="Données organisées et accessibles" data-en="Organized and accessible data" data-ar="بيانات منظمة وقابلة للوصول">Données organisées et accessibles</li>
+            <h2 class="section-title" data-fr="Pourquoi les distributeurs adoptent l'IA" data-en="Why distributors adopt AI" data-ar="لماذا يعتمد الموزعون الذكاء الاصطناعي">Pourquoi les distributeurs adoptent l'IA</h2>
+            <p style="text-align: center; font-size: 1.2rem; max-width: 800px; margin: 0 auto 50px;" data-fr="L'impact mesurable de l'automatisation sur votre activité de distribution" data-en="The measurable impact of automation on your distribution business" data-ar="التأثير القابل للقياس للأتمتة على أعمال التوزيع الخاصة بك">L'impact mesurable de l'automatisation sur votre activité de distribution</p>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card traditional">
+                    <h3><span>❌</span> <span data-fr="Sans automatisation" data-en="Without automation" data-ar="بدون الأتمتة">Sans automatisation</span></h3>
+                    <ul class="comparison-list">
+                        <li data-fr="Perte de commandes hors heures de bureau" data-en="Loss of orders outside business hours" data-ar="فقدان الطلبات خارج ساعات العمل">Perte de commandes hors heures de bureau</li>
+                        <li data-fr="Équipes commerciales débordées par les appels répétitifs" data-en="Sales teams overwhelmed by repetitive calls" data-ar="فرق المبيعات مثقلة بالمكالمات المتكررة">Équipes commerciales débordées par les appels répétitifs</li>
+                        <li data-fr="Aucune traçabilité des échanges clients" data-en="No traceability of customer exchanges" data-ar="لا يوجد تتبع لتبادلات العملاء">Aucune traçabilité des échanges clients</li>
+                        <li data-fr="Croissance limitée par vos ressources humaines" data-en="Growth limited by your human resources" data-ar="النمو محدود بمواردك البشرية">Croissance limitée par vos ressources humaines</li>
                     </ul>
+                </div>
+                
+                <div class="comparison-card ai-powered">
+                    <h3><span>✨</span> <span data-fr="Avec ELSAHA-Copilot IA" data-en="With ELSAHA-Copilot AI" data-ar="مع ELSAHA-Copilot AI">Avec ELSAHA-Copilot IA</span></h3>
+                    <ul class="comparison-list">
+                        <li data-fr="Génération de commandes 24/7, même la nuit et le week-end" data-en="Order generation 24/7, even at night and on weekends" data-ar="توليد الطلبات على مدار الساعة، حتى في الليل وعطلات نهاية الأسبوع">Génération de commandes 24/7, même la nuit et le week-end</li>
+                        <li data-fr="Vos équipes se concentrent sur la vraie valeur ajoutée" data-en="Your teams focus on real added value" data-ar="تركز فرقك على القيمة المضافة الحقيقية">Vos équipes se concentrent sur la vraie valeur ajoutée</li>
+                        <li data-fr="Historique complet et données exploitables pour piloter vos ventes" data-en="Complete history and actionable data to drive your sales" data-ar="سجل كامل وبيانات قابلة للتنفيذ لتوجيه مبيعاتك">Historique complet et données exploitables pour piloter vos ventes</li>
+                        <li data-fr="Croissance illimitée sans embauche supplémentaire" data-en="Unlimited growth without additional hiring" data-ar="نمو غير محدود دون توظيف إضافي">Croissance illimitée sans embauche supplémentaire</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Integration Section -->
+    <section class="platform-section">
+        <div class="container">
+            <h2 class="section-title" data-fr="Une solution complète pour les distributeurs" data-en="A complete solution for distributors" data-ar="حل كامل للموزعين">Une solution complète pour les distributeurs</h2>
+            
+            <div style="max-width: 900px; margin: 0 auto 50px; text-align: center; background: rgba(241, 137, 92, 0.1); padding: 30px; border-radius: 15px; border-left: 5px solid var(--orange);">
+                <h3 style="color: var(--orange); margin-bottom: 20px; font-size: 1.4rem;" data-fr="Qu'est-ce qu'ELSAHA-NET ?" data-en="What is ELSAHA-NET?" data-ar="ما هو ELSAHA-NET؟">Qu'est-ce qu'ELSAHA-NET ?</h3>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark-blue); margin-bottom: 0;" data-fr="ELSAHA-NET est une plateforme digitale dédiée aux distributeurs pharmaceutiques qui centralise les commandes et rend leurs produits accessibles aux pharmacies 24/7 en temps réel. Elle permet de simplifier le processus de commande, d'optimiser le temps et les ressources, et d'augmenter les ventes grâce à une meilleure visibilité et des données exploitables." data-en="ELSAHA-NET is a digital platform dedicated to pharmaceutical distributors that centralizes orders and makes their products accessible to pharmacies 24/7 in real time. It simplifies the ordering process, optimizes time and resources, and increases sales through better visibility and actionable data." data-ar="ELSAHA-NET هي منصة رقمية مخصصة لموزعي الأدوية تعمل على مركزة الطلبات وجعل منتجاتهم في متناول الصيدليات على مدار الساعة في الوقت الفعلي. فهي تبسط عملية الطلب، وتحسن الوقت والموارد، وتزيد المبيعات من خلال رؤية أفضل وبيانات قابلة للتنفيذ.">ELSAHA-NET est une plateforme digitale dédiée aux distributeurs pharmaceutiques qui centralise les commandes et rend leurs produits accessibles aux pharmacies 24/7 en temps réel. Elle permet de simplifier le processus de commande, d'optimiser le temps et les ressources, et d'augmenter les ventes grâce à une meilleure visibilité et des données exploitables.</p>
+            </div>
+            
+            <p style="text-align: center; font-size: 1.3rem; max-width: 800px; margin: 0 auto 50px; font-weight: 600; color: var(--blue-gray);" data-fr="Solution complémentaire multi-plateforme" data-en="Complementary multi-platform solution" data-ar="حل تكميلي متعدد المنصات">Solution complémentaire multi-plateforme</p>
+            
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <div class="platform-icon">💬</div>
+                    <h3>WhatsApp</h3>
+                    <p data-fr="Vos clients pharmaciens commandent directement via WhatsApp - l'IA traite et vous envoie les commandes" data-en="Your pharmacy customers order directly via WhatsApp - AI processes and sends you orders" data-ar="عملاء الصيدليات يطلبون مباشرة عبر واتساب - الذكاء الاصطناعي يعالج ويرسل لك الطلبات">Vos clients pharmaciens commandent directement via WhatsApp - l'IA traite et vous envoie les commandes</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">📲</div>
+                    <h3>Viber</h3>
+                    <p data-fr="Canal supplémentaire pour vos pharmacies - commandes automatisées sur Viber également" data-en="Additional channel for your pharmacies - automated orders on Viber too" data-ar="قناة إضافية لصيدلياتك - طلبات آلية على Viber أيضًا">Canal supplémentaire pour vos pharmacies - commandes automatisées sur Viber également</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">📱</div>
+                    <h3 data-fr="App Mobile Pharmaciens" data-en="Pharmacist Mobile App" data-ar="تطبيق جوال للصيادلة">App Mobile Pharmaciens</h3>
+                    <p data-fr="Application mobile dédiée permettant à vos clients de parcourir vos produits et commander facilement" data-en="Dedicated mobile app allowing your customers to browse your products and order easily" data-ar="تطبيق جوال مخصص يسمح لعملائك بتصفح منتجاتك والطلب بسهولة">Application mobile dédiée permettant à vos clients de parcourir vos produits et commander facilement</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">💻</div>
+                    <h3 data-fr="Plateforme Web Distributeur" data-en="Distributor Web Platform" data-ar="منصة الويب للموزع">Plateforme Web Distributeur</h3>
+                    <p data-fr="Votre tableau de bord central pour gérer les commandes, analyser les données et piloter votre activité" data-en="Your central dashboard to manage orders, analyze data and drive your business" data-ar="لوحة التحكم المركزية الخاصة بك لإدارة الطلبات وتحليل البيانات وتوجيه عملك">Votre tableau de bord central pour gérer les commandes, analyser les données et piloter votre activité</p>
                 </div>
             </div>
         </div>
@@ -1180,23 +2093,22 @@
     <!-- Screenshots Section -->
     <section class="screenshots-section" id="screenshots">
         <div class="container">
-            <h2 class="section-title" data-fr="Découvrez la plateforme en images" data-en="Discover the platform in images" data-ar="اكتشف المنصة بالصور">Découvrez la plateforme en images</h2>
+            <h2 class="section-title" data-fr="ELSAHA-NET en images" data-en="ELSAHA-NET in images" data-ar="ELSAHA-NET بالصور">ELSAHA-NET en images</h2>
+            <p style="text-align: center; font-size: 1.2rem; max-width: 800px; margin: 0 auto 50px;" data-fr="Découvrez notre plateforme web et mobile" data-en="Discover our web and mobile platform" data-ar="اكتشف منصتنا على الويب والجوال">Découvrez notre plateforme web et mobile</p>
             
-            <!-- Tabs -->
             <div class="screenshots-tabs">
-                <button class="tab-btn active" onclick="switchTab('pharmacy')" data-fr="👤 Pharmacie" data-en="👤 Pharmacy" data-ar="👤 الصيدلية">👤 Pharmacie</button>
-                <button class="tab-btn" onclick="switchTab('distributor')" data-fr="🏭 Distributeur" data-en="🏭 Distributor" data-ar="🏭 الموزع">🏭 Distributeur</button>
+                <button class="tab-btn active" onclick="switchTab('pharmacy')" data-fr="📱 App Mobile & Web - Pharmacie" data-en="📱 Mobile & Web App - Pharmacy" data-ar="📱 تطبيق الجوال والويب - الصيدلية">📱 App Mobile & Web - Pharmacie</button>
+                <button class="tab-btn" onclick="switchTab('distributor')" data-fr="💻 App Mobile & Web - Distributeur" data-en="💻 Mobile & Web App - Distributor" data-ar="💻 تطبيق الجوال والويب - الموزع">💻 App Mobile & Web - Distributeur</button>
             </div>
             
-            <!-- Pharmacy Screenshots -->
             <div id="pharmacy-screenshots" class="screenshots-grid active">
                 <div class="screenshot-item">
                     <div class="screenshot-image-container">
                         <img src="https://i.imgur.com/sFxprtM.png" alt="Page d'accueil Pharmacie">
                     </div>
                     <div class="screenshot-caption">
-                        <h3 data-fr="Page d'accueil" data-en="Home Page" data-ar="الصفحة الرئيسية">Page d'accueil</h3>
-                        <p data-fr="Interface principale de la pharmacie" data-en="Main pharmacy interface" data-ar="الواجهة الرئيسية للصيدلية">Interface principale de la pharmacie</p>
+                        <h3 data-fr="Interface intelligente" data-en="Intelligent interface" data-ar="واجهة ذكية">Interface intelligente</h3>
+                        <p data-fr="Tableau de bord avec assistance IA" data-en="Dashboard with AI assistance" data-ar="لوحة التحكم مع مساعدة الذكاء الاصطناعي">Tableau de bord avec assistance IA</p>
                     </div>
                 </div>
                 
@@ -1205,8 +2117,8 @@
                         <img src="https://i.imgur.com/QFkNrym.png" alt="Catalogue Pharmacie">
                     </div>
                     <div class="screenshot-caption">
-                        <h3 data-fr="Catalogue des produits" data-en="Product Catalog" data-ar="كتالوج المنتجات">Catalogue des produits</h3>
-                        <p data-fr="Parcourez facilement tous les produits disponibles" data-en="Easily browse all available products" data-ar="تصفح جميع المنتجات المتاحة بسهولة">Parcourez facilement tous les produits disponibles</p>
+                        <h3 data-fr="Recherche IA" data-en="AI Search" data-ar="البحث بالذكاء الاصطناعي">Recherche IA</h3>
+                        <p data-fr="Trouvez vos produits instantanément" data-en="Find your products instantly" data-ar="اعثر على منتجاتك على الفور">Trouvez vos produits instantanément</p>
                     </div>
                 </div>
                 
@@ -1215,8 +2127,8 @@
                         <img src="https://i.imgur.com/Typ62iM.png" alt="Liste Distributeurs">
                     </div>
                     <div class="screenshot-caption">
-                        <h3 data-fr="Liste des distributeurs" data-en="Distributors List" data-ar="قائمة الموزعين">Liste des distributeurs</h3>
-                        <p data-fr="Accédez à tous vos distributeurs partenaires" data-en="Access all your partner distributors" data-ar="الوصول إلى جميع الموزعين الشركاء">Accédez à tous vos distributeurs partenaires</p>
+                        <h3 data-fr="Distributeurs intelligents" data-en="Intelligent distributors" data-ar="موزعون أذكياء">Distributeurs intelligents</h3>
+                        <p data-fr="Recommandations personnalisées par IA" data-en="Personalized AI recommendations" data-ar="توصيات مخصصة بالذكاء الاصطناعي">Recommandations personnalisées par IA</p>
                     </div>
                 </div>
                 
@@ -1225,8 +2137,8 @@
                         <img src="https://i.imgur.com/3YuNZsb.png" alt="Suivi Commandes">
                     </div>
                     <div class="screenshot-caption">
-                        <h3 data-fr="Suivi des commandes" data-en="Order Tracking" data-ar="تتبع الطلبات">Suivi des commandes</h3>
-                        <p data-fr="Suivez l'état de vos commandes en temps réel" data-en="Track your orders in real time" data-ar="تتبع طلباتك في الوقت الفعلي">Suivez l'état de vos commandes en temps réel</p>
+                        <h3 data-fr="Suivi intelligent" data-en="Intelligent tracking" data-ar="التتبع الذكي">Suivi intelligent</h3>
+                        <p data-fr="Notifications IA en temps réel" data-en="Real-time AI notifications" data-ar="إشعارات الذكاء الاصطناعي في الوقت الفعلي">Notifications IA en temps réel</p>
                     </div>
                 </div>
                 
@@ -1235,8 +2147,8 @@
                         <img src="https://i.imgur.com/hNwl0ON.png" alt="Historique Commandes">
                     </div>
                     <div class="screenshot-caption">
-                        <h3 data-fr="Historique des commandes" data-en="Order History" data-ar="سجل الطلبات">Historique des commandes</h3>
-                        <p data-fr="Consultez toutes vos commandes passées" data-en="View all your past orders" data-ar="عرض جميع طلباتك السابقة">Consultez toutes vos commandes passées</p>
+                        <h3 data-fr="Analytics IA" data-en="AI Analytics" data-ar="تحليلات الذكاء الاصطناعي">Analytics IA</h3>
+                        <p data-fr="Insights intelligents sur vos achats" data-en="Smart insights on your purchases" data-ar="رؤى ذكية حول مشترياتك">Insights intelligents sur vos achats</p>
                     </div>
                 </div>
                 
@@ -1245,21 +2157,20 @@
                         <img src="https://i.imgur.com/1fHBoDK.png" alt="Détails Commande">
                     </div>
                     <div class="screenshot-caption">
-                        <h3 data-fr="Détails d'une commande" data-en="Order Details" data-ar="تفاصيل الطلب">Détails d'une commande</h3>
-                        <p data-fr="Informations complètes sur chaque commande" data-en="Complete information on each order" data-ar="معلومات كاملة عن كل طلب">Informations complètes sur chaque commande</p>
+                        <h3 data-fr="Détails augmentés" data-en="Enhanced details" data-ar="تفاصيل محسنة">Détails augmentés</h3>
+                        <p data-fr="Information enrichie par l'IA" data-en="AI-enriched information" data-ar="معلومات غنية بالذكاء الاصطناعي">Information enrichie par l'IA</p>
                     </div>
                 </div>
             </div>
             
-            <!-- Distributor Screenshots -->
             <div id="distributor-screenshots" class="screenshots-grid">
                 <div class="screenshot-item">
                     <div class="screenshot-image-container">
                         <img src="https://i.imgur.com/ZryC4Nt.png" alt="Dashboard Distributeur">
                     </div>
                     <div class="screenshot-caption">
-                        <h3 data-fr="Tableau de bord" data-en="Dashboard" data-ar="لوحة التحكم">Tableau de bord</h3>
-                        <p data-fr="Vue d'ensemble de votre activité" data-en="Overview of your activity" data-ar="نظرة عامة على نشاطك">Vue d'ensemble de votre activité</p>
+                        <h3 data-fr="Dashboard IA" data-en="AI Dashboard" data-ar="لوحة تحكم الذكاء الاصطناعي">Dashboard IA</h3>
+                        <p data-fr="Analytics prédictifs en temps réel" data-en="Real-time predictive analytics" data-ar="التحليلات التنبؤية في الوقت الفعلي">Analytics prédictifs en temps réel</p>
                     </div>
                 </div>
                 
@@ -1268,15 +2179,14 @@
                         <img src="https://i.imgur.com/RdpcxwI.png" alt="Gestion Commandes Distributeur">
                     </div>
                     <div class="screenshot-caption">
-                        <h3 data-fr="Gestion des commandes" data-en="Order Management" data-ar="إدارة الطلبات">Gestion des commandes</h3>
-                        <p data-fr="Traitez et suivez toutes vos commandes" data-en="Process and track all your orders" data-ar="معالجة وتتبع جميع طلباتك">Traitez et suivez toutes vos commandes</p>
+                        <h3 data-fr="Gestion automatisée" data-en="Automated management" data-ar="الإدارة الآلية">Gestion automatisée</h3>
+                        <p data-fr="Copilot IA traite pour vous" data-en="AI Copilot processes for you" data-ar="Copilot AI يعالج من أجلك">Copilot IA traite pour vous</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- Modal pour agrandir les images -->
     <div id="screenshot-modal" class="screenshot-modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="modal-close" onclick="closeModal()">&times;</span>
@@ -1284,59 +2194,35 @@
         </div>
     </div>
 
-    <!-- Insights Section -->
-    <section class="insights-section">
-        <div class="container">
-            <h2 class="section-title" data-fr="Des données pour mieux vendre" data-en="Data to sell better" data-ar="بيانات للبيع بشكل أفضل">Des données pour mieux vendre</h2>
-            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 40px;" data-fr="Grâce à ELSAHA-NET, vous obtenez :" data-en="With ELSAHA-NET, you get:" data-ar="مع ELSAHA-NET، تحصل على:">Grâce à ELSAHA-NET, vous obtenez :</p>
-            
-            <div class="insights-grid">
-                <div class="insight-card">
-                    <div class="insight-icon">📈</div>
-                    <h3 data-fr="Visibilité sur les produits les plus demandés" data-en="Visibility on most requested products" data-ar="رؤية حول المنتجات الأكثر طلبًا">Visibilité sur les produits les plus demandés</h3>
-                </div>
-                <div class="insight-card">
-                    <div class="insight-icon">🧠</div>
-                    <h3 data-fr="Meilleure compréhension du comportement des pharmacies" data-en="Better understanding of pharmacy behavior" data-ar="فهم أفضل لسلوك الصيدليات">Meilleure compréhension du comportement des pharmacies</h3>
-                </div>
-                <div class="insight-card">
-                    <div class="insight-icon">🎯</div>
-                    <h3 data-fr="Aide à la prise de décision commerciale" data-en="Support for business decision-making" data-ar="دعم اتخاذ القرار التجاري">Aide à la prise de décision commerciale</h3>
-                </div>
-            </div>
-            
-            <div class="insights-cta">
-                <p data-fr="👉 Des insights concrets pour développer votre activité" data-en="👉 Concrete insights to grow your business" data-ar="👉 رؤى ملموسة لتنمية عملك">👉 Des insights concrets pour développer votre activité</p>
-            </div>
-        </div>
-    </section>
-
     <!-- Results Section -->
     <section class="results-section" id="results">
         <div class="container">
-            <h2 class="section-title" data-fr="Résultat final : augmentation des ventes" data-en="Final result: increased sales" data-ar="النتيجة النهائية: زيادة المبيعات">Résultat final : augmentation des ventes</h2>
+            <h2 class="section-title" data-fr="L'impact mesurable sur votre distribution" data-en="The measurable impact on your distribution" data-ar="التأثير القابل للقياس على توزيعك">L'impact mesurable sur votre distribution</h2>
             
             <div class="results-grid">
-                <div class="result-item">
-                    <div class="result-check">✔</div>
-                    <h3 data-fr="Plus de commandes" data-en="More orders" data-ar="المزيد من الطلبات">Plus de commandes</h3>
+                <div class="result-card">
+                    <span class="result-number">24/7</span>
+                    <h3 data-fr="Prise de commandes" data-en="Order taking" data-ar="أخذ الطلبات">Prise de commandes</h3>
                 </div>
-                <div class="result-item">
-                    <div class="result-check">✔</div>
-                    <h3 data-fr="Moins de friction" data-en="Less friction" data-ar="احتكاك أقل">Moins de friction</h3>
+                
+                <div class="result-card">
+                    <span class="result-number">95%</span>
+                    <h3 data-fr="Commandes automatisées" data-en="Automated orders" data-ar="الطلبات الآلية">Commandes automatisées</h3>
                 </div>
-                <div class="result-item">
-                    <div class="result-check">✔</div>
-                    <h3 data-fr="Meilleure organisation" data-en="Better organization" data-ar="تنظيم أفضل">Meilleure organisation</h3>
+                
+                <div class="result-card">
+                    <span class="result-number">-70%</span>
+                    <h3 data-fr="Charge administrative" data-en="Administrative burden" data-ar="العبء الإداري">Charge administrative</h3>
                 </div>
-                <div class="result-item">
-                    <div class="result-check">✔</div>
-                    <h3 data-fr="Clients plus satisfaits" data-en="More satisfied customers" data-ar="عملاء أكثر رضا">Clients plus satisfaits</h3>
+                
+                <div class="result-card">
+                    <span class="result-number">+40%</span>
+                    <h3 data-fr="Volume de ventes" data-en="Sales volume" data-ar="حجم المبيعات">Volume de ventes</h3>
                 </div>
             </div>
             
-            <div class="key-phrase">
-                <p data-fr="ELSAHA-NET transforme vos opérations quotidiennes en levier de croissance." data-en="ELSAHA-NET transforms your daily operations into a growth lever." data-ar="يحول ELSAHA-NET عملياتك اليومية إلى رافعة نمو.">ELSAHA-NET transforme vos opérations quotidiennes en levier de croissance.</p>
+            <div class="key-message">
+                <p data-fr="🚀 L'intelligence artificielle qui fait vraiment grandir votre distribution" data-en="🚀 The artificial intelligence that really grows your distribution" data-ar="🚀 الذكاء الاصطناعي الذي ينمي توزيعك حقًا">🚀 L'intelligence artificielle qui fait vraiment grandir votre distribution</p>
             </div>
         </div>
     </section>
@@ -1345,8 +2231,9 @@
     <section class="demo-section" id="demo">
         <div class="container">
             <div class="demo-container">
-                <h2 data-fr="Découvrez comment augmenter vos ventes simplement" data-en="Discover how to increase your sales simply" data-ar="اكتشف كيفية زيادة مبيعاتك بسهولة">Découvrez comment augmenter vos ventes simplement</h2>
-                <p data-fr="Demandez une démo gratuite et voyez comment ELSAHA-NET et ELSAHA-Copilot peuvent optimiser votre activité de distribution." data-en="Request a free demo and see how ELSAHA-NET and ELSAHA-Copilot can optimize your distribution activity." data-ar="اطلب عرضًا توضيحيًا مجانيًا وشاهد كيف يمكن لـ ELSAHA-NET و ELSAHA-Copilot تحسين نشاط التوزيع الخاص بك.">Demandez une démo gratuite et voyez comment ELSAHA-NET et ELSAHA-Copilot peuvent optimiser votre activité de distribution.</p>
+                <span class="ai-badge" data-fr="🤖 Démo personnalisée avec IA" data-en="🤖 Personalized demo with AI" data-ar="🤖 عرض توضيحي مخصص مع الذكاء الاصطناعي">🤖 Démo personnalisée avec IA</span>
+                <h2 data-fr="Multipliez vos ventes avec l'IA" data-en="Multiply your sales with AI" data-ar="ضاعف مبيعاتك مع الذكاء الاصطناعي">Multipliez vos ventes avec l'IA</h2>
+                <p data-fr="Demandez une démonstration personnalisée et découvrez comment ELSAHA-Copilot peut automatiser vos prises de commandes et booster votre chiffre d'affaires." data-en="Request a personalized demonstration and discover how ELSAHA-Copilot can automate your order taking and boost your turnover." data-ar="اطلب عرضًا توضيحيًا مخصصًا واكتشف كيف يمكن لـ ELSAHA-Copilot أتمتة أخذ طلباتك وتعزيز معدل دورانك.">Demandez une démonstration personnalisée et découvrez comment ELSAHA-Copilot peut automatiser vos prises de commandes et booster votre chiffre d'affaires.</p>
                 
                 <div class="demo-form">
                     <form id="demo-form" onsubmit="return handleDemoSubmit(event)">
@@ -1367,7 +2254,7 @@
                             <input type="email" id="email" name="email" required placeholder="">
                         </div>
                         <div class="form-submit">
-                            <button type="submit" class="btn btn-primary" id="submit-btn" data-fr="👉 Demander une démo" data-en="👉 Request a demo" data-ar="👉 اطلب عرضًا توضيحيًا">👉 Demander une démo</button>
+                            <button type="submit" class="btn btn-primary" id="submit-btn" data-fr="🚀 Découvrir l'IA en action" data-en="🚀 Discover AI in action" data-ar="🚀 اكتشف الذكاء الاصطناعي أثناء العمل">🚀 Découvrir l'IA en action</button>
                         </div>
                         <div id="form-message" style="margin-top: 20px; text-align: center; display: none;"></div>
                     </form>
@@ -1381,26 +2268,216 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-item">
-                    <div class="footer-icon">🇩🇿</div>
-                    <h3 data-fr="Solution conçue pour le marché algérien" data-en="Solution designed for the Algerian market" data-ar="حل مصمم للسوق الجزائرية">Solution conçue pour le marché algérien</h3>
+                    <div class="footer-icon">🤖</div>
+                    <h3 data-fr="IA spécialisée pour distributeurs pharmaceutiques" data-en="AI specialized for pharmaceutical distributors" data-ar="ذكاء اصطناعي متخصص لموزعي الأدوية">IA spécialisée pour distributeurs pharmaceutiques</h3>
                 </div>
                 <div class="footer-item">
                     <div class="footer-icon">🔒</div>
-                    <h3 data-fr="Sécurité et confidentialité des données" data-en="Data security and confidentiality" data-ar="أمان البيانات وسريتها">Sécurité et confidentialité des données</h3>
+                    <h3 data-fr="Données sécurisées & conformité totale" data-en="Secure data & full compliance" data-ar="بيانات آمنة وامتثال كامل">Données sécurisées & conformité totale</h3>
                 </div>
                 <div class="footer-item">
-                    <div class="footer-icon">💬</div>
-                    <h3 data-fr="Support et accompagnement" data-en="Support and guidance" data-ar="الدعم والتوجيه">Support et accompagnement</h3>
+                    <div class="footer-icon">🇩🇿</div>
+                    <h3 data-fr="Solution algérienne pour le marché local" data-en="Algerian solution for the local market" data-ar="حل جزائري للسوق المحلي">Solution algérienne pour le marché local</h3>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 ELSAHA-NET. <span data-fr="Tous droits réservés." data-en="All rights reserved." data-ar="جميع الحقوق محفوظة.">Tous droits réservés.</span></p>
+                <p>&copy; 2023 ELSAHA-NET. <span data-fr="Propulsé par l'Intelligence Artificielle. Tous droits réservés." data-en="Powered by Artificial Intelligence. All rights reserved." data-ar="مدعوم بالذكاء الاصطناعي. جميع الحقوق محفوظة.">Propulsé par l'Intelligence Artificielle. Tous droits réservés.</span></p>
             </div>
         </div>
     </footer>
 
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <div class="chat-bubble" onclick="toggleChat()">
+            <i class="fas fa-robot"></i>
+            <span class="chat-bubble-badge" id="chatBadge" data-fr="Bonjour" data-en="Hello" data-ar="مرحبًا">Bonjour</span>
+        </div>
+        
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="chat-avatar">🤖</div>
+                    <div class="chat-header-text">
+                        <h3 data-fr="ELSAHA-Copilot" data-en="ELSAHA-Copilot" data-ar="ELSAHA-Copilot">ELSAHA-Copilot</h3>
+                        <p data-fr="Assistant IA en ligne" data-en="AI Assistant online" data-ar="مساعد ذكاء اصطناعي متصل">Assistant IA en ligne</p>
+                    </div>
+                </div>
+                <button class="chat-close" onclick="toggleChat()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome-message">
+                    <h4 data-fr="👋 Bienvenue !" data-en="👋 Welcome!" data-ar="👋 مرحبا!">👋 Bienvenue !</h4>
+                    <p data-fr="Je suis l'assistant IA d'ELSAHA-NET pour distributeurs. Posez-moi vos questions sur la plateforme, l'automatisation ou testez une prise de commande." data-en="I'm ELSAHA-NET's AI assistant for distributors. Ask me questions about the platform, automation or test an order taking." data-ar="أنا مساعد الذكاء الاصطناعي لـ ELSAHA-NET للموزعين. اسألني عن المنصة أو الأتمتة أو اختبر أخذ طلب.">Je suis l'assistant IA d'ELSAHA-NET pour distributeurs. Posez-moi vos questions sur la plateforme, l'automatisation ou testez une prise de commande.</p>
+                    <div class="quick-actions">
+                        <button class="quick-action-btn" onclick="sendQuickMessage(this)" data-fr="Comment ça marche ?" data-en="How does it work?" data-ar="كيف يعمل؟">Comment ça marche ?</button>
+                        <button class="quick-action-btn" onclick="sendQuickMessage(this)" data-fr="Tester une commande" data-en="Test an order" data-ar="اختبار طلب">Tester une commande</button>
+                        <button class="quick-action-btn" onclick="sendQuickMessage(this)" data-fr="Voir les tarifs" data-en="See pricing" data-ar="عرض الأسعار">Voir les tarifs</button>
+                    </div>
+                </div>
+                
+                <div class="chat-message bot typing-indicator" id="typingIndicator">
+                    <div class="message-content">
+                        <div class="typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <form class="chat-input-form" onsubmit="sendMessage(event)">
+                    <input 
+                        type="text" 
+                        class="chat-input" 
+                        id="chatInput" 
+                        placeholder="Tapez votre message..."
+                        data-fr-placeholder="Tapez votre message..."
+                        data-en-placeholder="Type your message..."
+                        data-ar-placeholder="اكتب رسالتك..."
+                    >
+                    <button type="submit" class="chat-send-btn" id="chatSendBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Language detection and switching
+        const CHAT_WEBHOOK_URL = 'https://vps6f2cq1.oct-xpd1.xyz/webhook/79d44017-8a3e-4b26-9a8d-9d3d488f099f/chat';
+        let chatSessionId = generateSessionId();
+        
+        function generateSessionId() {
+            return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+        
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.classList.toggle('active');
+            
+            if (chatWindow.classList.contains('active')) {
+                document.getElementById('chatInput').focus();
+                
+                // Track chat open event
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'Chat_Opened', {
+                        event_category: 'Engagement',
+                        event_label: 'ai_chat_widget'
+                    });
+                }
+            }
+        }
+        
+        function sendQuickMessage(button) {
+            const message = button.textContent.trim();
+            sendChatMessage(message);
+        }
+        
+        async function sendMessage(event) {
+            event.preventDefault();
+            
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            input.value = '';
+            sendChatMessage(message);
+        }
+        
+        async function sendChatMessage(message) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const typingIndicator = document.getElementById('typingIndicator');
+            const sendBtn = document.getElementById('chatSendBtn');
+            
+            // Add user message
+            addMessage(message, 'user');
+            
+            // Disable send button and show typing
+            sendBtn.disabled = true;
+            typingIndicator.classList.add('active');
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            try {
+                const response = await fetch(CHAT_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        session_id: chatSessionId,
+                        timestamp: new Date().toISOString(),
+                        source: 'landing_page_chat_widget',
+                        language: document.documentElement.getAttribute('lang') || 'fr'
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Remove typing indicator
+                    typingIndicator.classList.remove('active');
+                    
+                    // Add bot response
+                    const botMessage = data.response || data.message || "Je suis désolé, je n'ai pas pu traiter votre demande.";
+                    addMessage(botMessage, 'bot');
+                    
+                    // Track successful interaction
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'Chat_Message_Sent', {
+                            event_category: 'Engagement',
+                            event_label: 'ai_chat_interaction'
+                        });
+                    }
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            } catch (error) {
+                console.error('Chat error:', error);
+                typingIndicator.classList.remove('active');
+                
+                const currentLang = document.documentElement.getAttribute('lang') || 'fr';
+                const errorMessages = {
+                    fr: "Désolé, une erreur s'est produite. Veuillez réessayer ou nous contacter directement.",
+                    en: "Sorry, an error occurred. Please try again or contact us directly.",
+                    ar: "عذرًا، حدث خطأ. يرجى المحاولة مرة أخرى أو الاتصال بنا مباشرة."
+                };
+                
+                addMessage(errorMessages[currentLang], 'bot');
+            } finally {
+                sendBtn.disabled = false;
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }
+        
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+            
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    ${text}
+                    <div class="message-time">${timeString}</div>
+                </div>
+            `;
+            
+            // Insert before typing indicator
+            const typingIndicator = document.getElementById('typingIndicator');
+            messagesContainer.insertBefore(messageDiv, typingIndicator);
+        }
+        
         function detectBrowserLanguage() {
             const browserLang = navigator.language || navigator.userLanguage;
             const langCode = browserLang.split('-')[0];
@@ -1424,7 +2501,6 @@
                     const allLangButtons = document.querySelectorAll('.lang-btn');
                     allLangButtons.forEach(btn => btn.classList.remove('active'));
                     
-                    // Activer le bouton dans les deux sélecteurs (desktop et mobile)
                     document.querySelectorAll(`.lang-btn[data-lang="${lang}"]`).forEach(btn => {
                         btn.classList.add('active');
                     });
@@ -1446,7 +2522,6 @@
                 });
             }
             
-            // Add click handlers to screenshots for modal
             const screenshotImages = document.querySelectorAll('.screenshot-item img');
             screenshotImages.forEach(img => {
                 img.addEventListener('click', function() {
@@ -1454,7 +2529,6 @@
                 });
             });
             
-            // Add smooth scroll for navigation links
             document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -1499,9 +2573,27 @@
                     }
                 }
             });
+            
+            // Update chat input placeholder
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                const placeholderAttr = `data-${lang}-placeholder`;
+                const placeholder = chatInput.getAttribute(placeholderAttr);
+                if (placeholder) {
+                    chatInput.setAttribute('placeholder', placeholder);
+                }
+            }
+            
+            // Update chat bubble badge
+            const chatBadge = document.getElementById('chatBadge');
+            if (chatBadge) {
+                const badgeText = chatBadge.getAttribute(`data-${lang}`);
+                if (badgeText) {
+                    chatBadge.textContent = badgeText;
+                }
+            }
         }
         
-        // Mobile menu functions
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobileMenu');
             mobileMenu.classList.toggle('active');
@@ -1512,7 +2604,6 @@
             mobileMenu.classList.remove('active');
         }
         
-        // Smooth scroll for demo CTA
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1526,14 +2617,11 @@
             });
         });
         
-        // Screenshots tabs functionality
         function switchTab(tab) {
-            // Update buttons
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Update content
             const pharmacyGrid = document.getElementById('pharmacy-screenshots');
             const distributorGrid = document.getElementById('distributor-screenshots');
             
@@ -1546,7 +2634,6 @@
             }
         }
         
-        // Modal functionality
         function openModal(imageSrc) {
             const modal = document.getElementById('screenshot-modal');
             const modalImage = document.getElementById('modal-image');
@@ -1561,7 +2648,6 @@
             document.body.style.overflow = 'auto';
         }
         
-        // Close modal on ESC key
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeModal();
@@ -1569,7 +2655,6 @@
             }
         });
         
-        // Handle demo form submission
         async function handleDemoSubmit(event) {
             event.preventDefault();
             
@@ -1577,23 +2662,20 @@
             const formMessage = document.getElementById('form-message');
             const originalBtnText = submitBtn.innerHTML;
             
-            // Disable button and show loading
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span data-fr="⏳ Envoi en cours..." data-en="⏳ Sending..." data-ar="⏳ جارٍ الإرسال...">⏳ Envoi en cours...</span>';
             
-            // Get form data
             const formData = {
                 company_name: document.getElementById('company-name').value,
                 contact_name: document.getElementById('contact-name').value,
                 phone: document.getElementById('phone').value,
                 email: document.getElementById('email').value,
                 timestamp: new Date().toISOString(),
-                source: 'landing_page',
+                source: 'landing_page_ai',
                 language: document.documentElement.getAttribute('lang') || 'fr'
             };
             
             try {
-                // Send to webhook - LIEN DE PRODUCTION
                 const response = await fetch('https://vps6f2cq1.oct-xpd1.xyz/webhook/landing-page-lead', {
                     method: 'POST',
                     headers: {
@@ -1603,23 +2685,19 @@
                 });
                 
                 if (response.ok) {
-                    // Success
                     formMessage.style.display = 'block';
                     formMessage.style.color = 'var(--success-green)';
                     formMessage.innerHTML = '<strong data-fr="✅ Merci ! Nous vous contacterons très bientôt." data-en="✅ Thank you! We will contact you very soon." data-ar="✅ شكرا! سنتصل بك قريبا جدا.">✅ Merci ! Nous vous contacterons très bientôt.</strong>';
                     
-                    // Track with Google Analytics
                     if (typeof gtag !== 'undefined') {
-                        gtag('event', 'Demo_Request', {
+                        gtag('event', 'Demo_Request_AI', {
                             event_category: 'CTA',
-                            event_label: 'demo_form_submit_success'
+                            event_label: 'ai_demo_form_submit_success'
                         });
                     }
                     
-                    // Reset form
                     document.getElementById('demo-form').reset();
                     
-                    // Hide message after 5 seconds
                     setTimeout(() => {
                         formMessage.style.display = 'none';
                     }, 5000);
@@ -1627,27 +2705,87 @@
                     throw new Error('Network response was not ok');
                 }
             } catch (error) {
-                // Error
                 console.error('Error:', error);
                 formMessage.style.display = 'block';
                 formMessage.style.color = '#dc3545';
                 formMessage.innerHTML = '<strong data-fr="❌ Une erreur est survenue. Veuillez réessayer." data-en="❌ An error occurred. Please try again." data-ar="❌ حدث خطأ. يرجى المحاولة مرة أخرى.">❌ Une erreur est survenue. Veuillez réessayer.</strong>';
                 
-                // Track error with Google Analytics
                 if (typeof gtag !== 'undefined') {
                     gtag('event', 'Demo_Request_Error', {
                         event_category: 'CTA',
-                        event_label: 'demo_form_submit_error'
+                        event_label: 'ai_demo_form_submit_error'
                     });
                 }
             } finally {
-                // Re-enable button
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalBtnText;
             }
             
             return false;
         }
+        
+        // Typewriter effect for hero title
+        const typewriterElement = document.getElementById('typewriterText');
+        let typewriterTexts = {
+            fr: "L'IA qui révolutionne la distribution pharmaceutique",
+            en: "AI revolutionizing pharmaceutical distribution",
+            ar: "الذكاء الاصطناعي الذي يُحدث ثورة في توزيع الأدوية"
+        };
+        
+        let currentText = '';
+        let currentIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        
+        function getTypewriterText() {
+            const lang = document.documentElement.getAttribute('lang') || 'fr';
+            return typewriterTexts[lang];
+        }
+        
+        function typeWriter() {
+            const fullText = getTypewriterText();
+            
+            if (isDeleting) {
+                currentText = fullText.substring(0, currentIndex - 1);
+                currentIndex--;
+                typingSpeed = 50;
+            } else {
+                currentText = fullText.substring(0, currentIndex + 1);
+                currentIndex++;
+                typingSpeed = 100;
+            }
+            
+            if (typewriterElement) {
+                typewriterElement.textContent = currentText;
+            }
+            
+            if (!isDeleting && currentIndex === fullText.length) {
+                // Pause at end before deleting
+                typingSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && currentIndex === 0) {
+                // Start typing again
+                isDeleting = false;
+                typingSpeed = 500;
+            }
+            
+            setTimeout(typeWriter, typingSpeed);
+        }
+        
+        // Start typewriter animation after page load
+        window.addEventListener('load', function() {
+            setTimeout(typeWriter, 500);
+        });
+        
+        // Update typewriter text when language changes
+        const originalChangeLanguage = changeLanguage;
+        changeLanguage = function(lang) {
+            originalChangeLanguage(lang);
+            // Reset typewriter
+            currentIndex = 0;
+            isDeleting = false;
+            currentText = '';
+        };
     </script>
 </body>
 </html>
