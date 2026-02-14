@@ -395,7 +395,7 @@
             opacity: 0;
             animation: fadeInUp 1s ease-out 1s forwards;
         }
-        
+    
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -1198,169 +1198,325 @@
             }
         }
         
-        /* Responsive */
-        @media (max-width: 992px) {
-            .hero-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 40px;
-            }
-            
-            .copilot-hero-content {
-                text-align: center;
-            }
-            
-            .hero-screenshot {
-                justify-content: center;
-            }
-            
-            .hero-app-image {
-                width: 280px;
-            }
-            
-            .ai-features-grid,
-            .platform-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .ai-workflow {
-                grid-template-columns: 1fr;
-            }
-            
-            .ai-workflow::before {
-                display: none;
-            }
-            
-            .comparison-grid,
-            .results-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .screenshots-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .screenshot-item {
-                height: 450px;
-            }
-            
-            .screenshots-tabs {
-                flex-wrap: wrap;
-            }
-            
-            .main-nav {
-                display: none;
-            }
-            
-            .desktop-language-switcher {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .mobile-language-switcher {
-                display: flex;
-            }
-            
-            .nav-right {
-                gap: 15px;
-            }
+        /* Ajoutez/Remplacez ces media queries dans la section responsive */
+
+    @media (max-width: 992px) {
+        .hero-container {
+            grid-template-columns: 1fr;
+            text-align: center;
+            gap: 40px;
         }
         
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            h2 {
-                font-size: 1.8rem;
-            }
-            
-            .hero {
-                padding-top: 120px;
-                padding-bottom: 60px;
-            }
-            
-            .hero .subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .hero-app-image {
-                width: 250px;
-            }
-            
-            section {
-                padding: 60px 0;
-            }
-            
-            .demo-form {
-                padding: 30px;
-            }
-            
-            .screenshots-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .screenshot-item {
-                height: 400px;
-            }
-            
-            .tab-btn {
-                padding: 12px 30px;
-                font-size: 1rem;
-            }
-            
-            .result-number {
-                font-size: 2.5rem;
-            }
-            
-            .key-message {
-                font-size: 1.3rem;
-                padding: 30px 20px;
-            }
+        .hero-content {
+            max-width: 100%;
         }
         
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            h2 {
-                font-size: 1.5rem;
-            }
-            
-            .btn {
-                padding: 15px 30px;
-                font-size: 1rem;
-            }
-            
-            .hero .subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .hero-app-image {
-                width: 220px;
-            }
-            
-            .screenshot-item {
-                height: 350px;
-            }
-            
-            .logo span {
-                font-size: 1.2rem;
-            }
-            
-            .logo img {
-                height: 30px;
-            }
+        .copilot-hero-content {
+            text-align: center;
         }
         
+        .hero-screenshot {
+            justify-content: center;
+        }
+        
+        .hero-app-image {
+            width: 280px;
+        }
+        
+        .ai-features-grid,
+        .platform-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .ai-workflow {
+            grid-template-columns: 1fr;
+        }
+        
+        .ai-workflow::before {
+            display: none;
+        }
+        
+        .comparison-grid,
+        .results-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .footer-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .screenshots-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .screenshot-item {
+            height: 400px; /* Réduit de 450px */
+        }
+        
+        .screenshots-tabs {
+            flex-wrap: wrap;
+        }
+        
+        .main-nav {
+            display: none;
+        }
+        
+        .desktop-language-switcher {
+            display: none;
+        }
+        
+        .mobile-menu-btn {
+            display: block;
+        }
+        
+        .mobile-language-switcher {
+            display: flex;
+        }
+        
+        .nav-right {
+            gap: 15px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2rem; /* Réduit de 2.2rem */
+        }
+        
+        h2 {
+            font-size: 1.6rem; /* Réduit de 1.8rem */
+        }
+        
+        .hero {
+            padding-top: 120px;
+            padding-bottom: 60px;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.1rem; /* Réduit de 1.2rem */
+        }
+        
+        .hero-app-image {
+            width: 240px; /* Réduit de 250px */
+        }
+        
+        section {
+            padding: 60px 0;
+        }
+        
+        .demo-form {
+            padding: 30px 20px; /* Ajout padding horizontal réduit */
+        }
+        
+        .screenshots-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .screenshot-item {
+            height: 380px; /* Réduit de 400px */
+        }
+        
+        .tab-btn {
+            padding: 12px 25px; /* Réduit de 30px */
+            font-size: 0.95rem; /* Réduit de 1rem */
+        }
+        
+        .result-number {
+            font-size: 2.5rem;
+        }
+        
+        .key-message {
+            font-size: 1.2rem; /* Réduit de 1.3rem */
+            padding: 25px 15px; /* Réduit padding */
+        }
+        
+        .workflow-number {
+            width: 80px;
+            height: 80px;
+            font-size: 2rem;
+        }
+    }
+
+        /* Améliorations pour très petits écrans (smartphones) */
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 1.8rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        .section-title {
+            font-size: 1.8rem;
+        }
+        section {
+            padding: 40px 0;
+        }
+        .hero {
+            padding-top: 100px;
+            padding-bottom: 40px;
+        }
+        .hero .subtitle {
+            font-size: 1rem;
+        }
+        .hero-app-image {
+            width: 200px;
+        }
+        .btn {
+            padding: 12px 24px;
+            font-size: 1rem;
+        }
+        .ai-features-grid {
+            gap: 15px;
+        }
+        .ai-feature-card {
+            padding: 20px;
+        }
+        .ai-feature-icon {
+            font-size: 2.5rem;
+        }
+        .ai-capability-item {
+            padding: 15px;
+        }
+        .ai-capability-item h4 {
+            font-size: 1rem;
+        }
+        .ai-capability-item p {
+            font-size: 0.9rem;
+        }
+        .workflow-number {
+            width: 80px;
+            height: 80px;
+            font-size: 2rem;
+        }
+        .workflow-step h3 {
+            font-size: 1.2rem;
+        }
+        .workflow-step p {
+            font-size: 0.9rem;
+        }
+        .comparison-card {
+            padding: 25px;
+        }
+        .comparison-list li {
+            font-size: 0.95rem;
+            padding: 8px 0 8px 30px;
+        }
+        .platform-grid {
+            gap: 15px;
+        }
+        .platform-card {
+            padding: 25px;
+        }
+        .platform-icon {
+            font-size: 3rem;
+        }
+        .screenshots-tabs {
+            gap: 10px;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+        .screenshot-item {
+            height: 280px;
+        }
+        .screenshot-caption h3 {
+            font-size: 1rem;
+        }
+        .screenshot-caption p {
+            font-size: 0.85rem;
+        }
+        .results-grid {
+            gap: 15px;
+        }
+        .result-card {
+            padding: 25px;
+        }
+        .result-number {
+            font-size: 2.2rem;
+        }
+        .result-card h3 {
+            font-size: 0.95rem;
+        }
+        .key-message {
+            font-size: 1.2rem;
+            padding: 20px;
+        }
+        .demo-form {
+            padding: 25px;
+        }
+        .form-group input {
+            padding: 12px;
+        }
+        .footer-icon {
+            font-size: 2rem;
+        }
+        .footer-item h3 {
+            font-size: 1rem;
+        }
+        /* Chat widget */
+        .chat-window {
+            width: calc(100vw - 20px);
+            right: 10px;
+            bottom: 70px;
+            height: 500px;
+        }
+        .chat-bubble {
+            width: 50px;
+            height: 50px;
+        }
+        .chat-bubble i {
+            font-size: 24px;
+        }
+        .chat-bubble-badge {
+            font-size: 9px;
+            padding: 3px 6px;
+        }
+        .quick-action-btn {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+        .welcome-message h4 {
+            font-size: 0.95rem;
+        }
+        .welcome-message p {
+            font-size: 0.85rem;
+        }
+    }
+
+    /* Pour les très petits écrans (moins de 360px) */
+    @media (max-width: 360px) {
+        h1 {
+            font-size: 1.5rem;
+        }
+        h2 {
+            font-size: 1.3rem;
+        }
+        .hero .subtitle {
+            font-size: 0.9rem;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+        .hero-app-image {
+            width: 180px;
+        }
+        .ai-feature-card h3 {
+            font-size: 1.1rem;
+        }
+        .ai-feature-card p {
+            font-size: 0.9rem;
+        }
+        .screenshot-item {
+            height: 250px;
+        }
+        .chat-window {
+            height: 450px;
+        }
+    }
+
+
         /* RTL Support */
         body.rtl .logo img {
             margin-right: 0;
@@ -1824,6 +1980,21 @@
                 right: auto;
             }
         }
+
+        /* Grille à deux colonnes pour la première partie */
+.platform-grid-two {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+@media (max-width: 992px) {
+    .platform-grid-two {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -2051,57 +2222,58 @@
     </section>
 
     <!-- Platform Integration Section -->
-    <section class="platform-section">
-        <div class="container">
-            <h2 class="section-title" data-fr="Une solution complète pour les distributeurs" data-en="A complete solution for distributors" data-ar="حل كامل للموزعين">Une solution complète pour les distributeurs</h2>
-            
-            <div style="max-width: 900px; margin: 0 auto 50px; text-align: center; background: rgba(241, 137, 92, 0.1); padding: 30px; border-radius: 15px; border-left: 5px solid var(--orange);">
-                <h3 style="color: var(--orange); margin-bottom: 20px; font-size: 1.4rem;" data-fr="Qu'est-ce qu'ELSAHA-NET ?" data-en="What is ELSAHA-NET?" data-ar="ما هو ELSAHA-NET؟">Qu'est-ce qu'ELSAHA-NET ?</h3>
-                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark-blue); margin-bottom: 0;" data-fr="ELSAHA-NET est une plateforme digitale dédiée aux distributeurs pharmaceutiques qui centralise les commandes et rend leurs produits accessibles aux pharmacies 24/7 en temps réel. Elle permet de simplifier le processus de commande, d'optimiser le temps et les ressources, et d'augmenter les ventes grâce à une meilleure visibilité et des données exploitables." data-en="ELSAHA-NET is a digital platform dedicated to pharmaceutical distributors that centralizes orders and makes their products accessible to pharmacies 24/7 in real time. It simplifies the ordering process, optimizes time and resources, and increases sales through better visibility and actionable data." data-ar="ELSAHA-NET هي منصة رقمية مخصصة لموزعي الأدوية تعمل على مركزة الطلبات وجعل منتجاتهم في متناول الصيدليات على مدار الساعة في الوقت الفعلي. فهي تبسط عملية الطلب، وتحسن الوقت والموارد، وتزيد المبيعات من خلال رؤية أفضل وبيانات قابلة للتنفيذ.">ELSAHA-NET est une plateforme digitale dédiée aux distributeurs pharmaceutiques qui centralise les commandes et rend leurs produits accessibles aux pharmacies 24/7 en temps réel. Elle permet de simplifier le processus de commande, d'optimiser le temps et les ressources, et d'augmenter les ventes grâce à une meilleure visibilité et des données exploitables.</p>
+<section class="platform-section">
+    <div class="container">
+        <h2 class="section-title" data-fr="Une solution complète pour les distributeurs" data-en="A complete solution for distributors" data-ar="حل كامل للموزعين">Une solution complète pour les distributeurs</h2>
+
+        <!-- Bloc explicatif ELSAHA-NET -->
+        <div style="max-width: 900px; margin: 0 auto 50px; text-align: center; background: rgba(241, 137, 92, 0.1); padding: 30px; border-radius: 15px; border-left: 5px solid var(--orange);">
+            <h3 style="color: var(--orange); margin-bottom: 20px; font-size: 1.4rem;" data-fr="Qu'est-ce qu'ELSAHA-NET ?" data-en="What is ELSAHA-NET?" data-ar="ما هو ELSAHA-NET؟">Qu'est-ce qu'ELSAHA-NET ?</h3>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark-blue); margin-bottom: 0;" data-fr="ELSAHA-NET est une plateforme digitale dédiée aux distributeurs pharmaceutiques qui centralise les commandes et rend leurs produits accessibles aux pharmacies 24/7 en temps réel. Elle permet de simplifier le processus de commande, d'optimiser le temps et les ressources, et d'augmenter les ventes grâce à une meilleure visibilité et des données exploitables." data-en="ELSAHA-NET is a digital platform dedicated to pharmaceutical distributors that centralizes orders and makes their products accessible to pharmacies 24/7 in real time. It simplifies the ordering process, optimizes time and resources, and increases sales through better visibility and actionable data." data-ar="ELSAHA-NET هي منصة رقمية مخصصة لموزعي الأدوية تعمل على مركزة الطلبات وجعل منتجاتهم في متناول الصيدليات على مدار الساعة في الوقت الفعلي. فهي تبسط عملية الطلب، وتحسن الوقت والموارد، وتزيد المبيعات من خلال رؤية أفضل وبيانات قابلة للتنفيذ.">ELSAHA-NET est une plateforme digitale dédiée aux distributeurs pharmaceutiques qui centralise les commandes et rend leurs produits accessibles aux pharmacies 24/7 en temps réel. Elle permet de simplifier le processus de commande, d'optimiser le temps et les ressources, et d'augmenter les ventes grâce à une meilleure visibilité et des données exploitables.</p>
+        </div>
+
+        <!-- Grille à deux colonnes (maintenant avec classe dédiée) -->
+        <div class="platform-grid platform-grid-two">
+            <div class="platform-card">
+                <div class="platform-icon">📱</div>
+                <h3 data-fr="App Mobile Pharmaciens" data-en="Pharmacist Mobile App" data-ar="تطبيق جوال للصيادلة">App Mobile Pharmaciens</h3>
+                <p data-fr="Application mobile dédiée permettant à vos clients de parcourir vos produits et commander facilement" data-en="Dedicated mobile app allowing your customers to browse your products and order easily" data-ar="تطبيق جوال مخصص يسمح لعملائك بتصفح منتجاتك والطلب بسهولة">Application mobile dédiée permettant à vos clients de parcourir vos produits et commander facilement</p>
             </div>
-            
-            <div class="platform-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 800px; margin: 0 auto;">
-                <div class="platform-card">
-                    <div class="platform-icon">📱</div>
-                    <h3 data-fr="App Mobile Pharmaciens" data-en="Pharmacist Mobile App" data-ar="تطبيق جوال للصيادلة">App Mobile Pharmaciens</h3>
-                    <p data-fr="Application mobile dédiée permettant à vos clients de parcourir vos produits et commander facilement" data-en="Dedicated mobile app allowing your customers to browse your products and order easily" data-ar="تطبيق جوال مخصص يسمح لعملائك بتصفح منتجاتك والطلب بسهولة">Application mobile dédiée permettant à vos clients de parcourir vos produits et commander facilement</p>
-                </div>
-                
-                <div class="platform-card">
-                    <div class="platform-icon">💻</div>
-                    <h3 data-fr="Plateforme Web Distributeur" data-en="Distributor Web Platform" data-ar="منصة الويب للموزع">Plateforme Web Distributeur</h3>
-                    <p data-fr="Votre tableau de bord central pour gérer les commandes, analyser les données et piloter votre activité" data-en="Your central dashboard to manage orders, analyze data and drive your business" data-ar="لوحة التحكم المركزية الخاصة بك لإدارة الطلبات وتحليل البيانات وتوجيه عملك">Votre tableau de bord central pour gérer les commandes, analyser les données et piloter votre activité</p>
-                </div>
-            </div>
-            
-            <div style="max-width: 900px; margin: 50px auto 0; text-align: center; background: rgba(81, 96, 121, 0.1); padding: 30px; border-radius: 15px; border-left: 5px solid var(--blue-gray);">
-                <h3 style="color: var(--blue-gray); margin-bottom: 20px; font-size: 1.4rem;" data-fr="Qu'est-ce qu'ELSAHA-Copilot ?" data-en="What is ELSAHA-Copilot?" data-ar="ما هو ELSAHA-Copilot؟">Qu'est-ce qu'ELSAHA-Copilot ?</h3>
-                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark-blue); margin-bottom: 0;" data-fr="ELSAHA-Copilot est un assistant commercial basé sur l'intelligence artificielle, déployable sur WhatsApp, Viber, la plateforme ELSAHA-NET et intégrable aux ERP et outils existants des distributeurs sans changement majeur." data-en="ELSAHA-Copilot is an AI-based sales assistant, deployable on WhatsApp, Viber, the ELSAHA-NET platform and integrable with distributors' existing ERPs and tools without major changes." data-ar="ELSAHA-Copilot هو مساعد مبيعات يعتمد على الذكاء الاصطناعي، قابل للنشر على واتساب وViber ومنصة ELSAHA-NET وقابل للتكامل مع أنظمة تخطيط موارد المؤسسات والأدوات الحالية للموزعين دون تغييرات كبيرة.">ELSAHA-Copilot est un assistant commercial basé sur l'intelligence artificielle, déployable sur WhatsApp, Viber, la plateforme ELSAHA-NET et intégrable aux ERP et outils existants des distributeurs sans changement majeur.</p>
-            </div>
-            
-            <p style="text-align: center; font-size: 1.3rem; max-width: 800px; margin: 50px auto 30px; font-weight: 600; color: var(--blue-gray);" data-fr="Canaux de communication disponibles" data-en="Available communication channels" data-ar="قنوات الاتصال المتاحة">Canaux de communication disponibles</p>
-            
-            <div class="platform-grid" style="grid-template-columns: repeat(3, 1fr);">
-                <div class="platform-card">
-                    <div class="platform-icon">💬</div>
-                    <h3>WhatsApp</h3>
-                    <p data-fr="Vos clients pharmaciens commandent directement via WhatsApp - l'IA traite et vous envoie les commandes" data-en="Your pharmacy customers order directly via WhatsApp - AI processes and sends you orders" data-ar="عملاء الصيدليات يطلبون مباشرة عبر واتساب - الذكاء الاصطناعي يعالج ويرسل لك الطلبات">Vos clients pharmaciens commandent directement via WhatsApp - l'IA traite et vous envoie les commandes</p>
-                </div>
-                
-                <div class="platform-card">
-                    <div class="platform-icon">📲</div>
-                    <h3>Viber</h3>
-                    <p data-fr="Canal supplémentaire pour vos pharmacies - commandes automatisées sur Viber également" data-en="Additional channel for your pharmacies - automated orders on Viber too" data-ar="قناة إضافية لصيدلياتك - طلبات آلية على Viber أيضًا">Canal supplémentaire pour vos pharmacies - commandes automatisées sur Viber également</p>
-                </div>
-                
-                <div class="platform-card">
-                    <div class="platform-icon">🔗</div>
-                    <h3 data-fr="Autre plateforme" data-en="Other platform" data-ar="منصة أخرى">Autre plateforme</h3>
-                    <p data-fr="Intégration possible avec d'autres canaux de communication selon vos besoins" data-en="Possible integration with other communication channels according to your needs" data-ar="التكامل المحتمل مع قنوات الاتصال الأخرى حسب احتياجاتك">Intégration possible avec d'autres canaux de communication selon vos besoins</p>
-                </div>
+            <div class="platform-card">
+                <div class="platform-icon">💻</div>
+                <h3 data-fr="Plateforme Web Distributeur" data-en="Distributor Web Platform" data-ar="منصة الويب للموزع">Plateforme Web Distributeur</h3>
+                <p data-fr="Votre tableau de bord central pour gérer les commandes, analyser les données et piloter votre activité" data-en="Your central dashboard to manage orders, analyze data and drive your business" data-ar="لوحة التحكم المركزية الخاصة بك لإدارة الطلبات وتحليل البيانات وتوجيه عملك">Votre tableau de bord central pour gérer les commandes, analyser les données et piloter votre activité</p>
             </div>
         </div>
-    </section>
+
+        <!-- Bloc explicatif ELSAHA-Copilot -->
+        <div style="max-width: 900px; margin: 50px auto 0; text-align: center; background: rgba(81, 96, 121, 0.1); padding: 30px; border-radius: 15px; border-left: 5px solid var(--blue-gray);">
+            <h3 style="color: var(--blue-gray); margin-bottom: 20px; font-size: 1.4rem;" data-fr="Qu'est-ce qu'ELSAHA-Copilot ?" data-en="What is ELSAHA-Copilot?" data-ar="ما هو ELSAHA-Copilot؟">Qu'est-ce qu'ELSAHA-Copilot ?</h3>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: var(--dark-blue); margin-bottom: 0;" data-fr="ELSAHA-Copilot est un assistant commercial basé sur l'intelligence artificielle, déployable sur WhatsApp, Viber, la plateforme ELSAHA-NET et intégrable aux ERP et outils existants des distributeurs sans changement majeur." data-en="ELSAHA-Copilot is an AI-based sales assistant, deployable on WhatsApp, Viber, the ELSAHA-NET platform and integrable with distributors' existing ERPs and tools without major changes." data-ar="ELSAHA-Copilot هو مساعد مبيعات يعتمد على الذكاء الاصطناعي، قابل للنشر على واتساب وViber ومنصة ELSAHA-NET وقابل للتكامل مع أنظمة تخطيط موارد المؤسسات والأدوات الحالية للموزعين دون تغييرات كبيرة.">ELSAHA-Copilot est un assistant commercial basé sur l'intelligence artificielle, déployable sur WhatsApp, Viber, la plateforme ELSAHA-NET et intégrable aux ERP et outils existants des distributeurs sans changement majeur.</p>
+        </div>
+
+        <p style="text-align: center; font-size: 1.3rem; max-width: 800px; margin: 50px auto 30px; font-weight: 600; color: var(--blue-gray);" data-fr="Canaux de communication disponibles" data-en="Available communication channels" data-ar="قنوات الاتصال المتاحة">Canaux de communication disponibles</p>
+
+        <!-- Grille à trois colonnes (utilise la classe platform-grid standard) -->
+        <div class="platform-grid">
+            <div class="platform-card">
+                <div class="platform-icon">💬</div>
+                <h3>WhatsApp</h3>
+                <p data-fr="Vos clients pharmaciens commandent directement via WhatsApp - l'IA traite et vous envoie les commandes" data-en="Your pharmacy customers order directly via WhatsApp - AI processes and sends you orders" data-ar="عملاء الصيدليات يطلبون مباشرة عبر واتساب - الذكاء الاصطناعي يعالج ويرسل لك الطلبات">Vos clients pharmaciens commandent directement via WhatsApp - l'IA traite et vous envoie les commandes</p>
+            </div>
+            <div class="platform-card">
+                <div class="platform-icon">📲</div>
+                <h3>Viber</h3>
+                <p data-fr="Canal supplémentaire pour vos pharmacies - commandes automatisées sur Viber également" data-en="Additional channel for your pharmacies - automated orders on Viber too" data-ar="قناة إضافية لصيدلياتك - طلبات آلية على Viber أيضًا">Canal supplémentaire pour vos pharmacies - commandes automatisées sur Viber également</p>
+            </div>
+            <div class="platform-card">
+                <div class="platform-icon">🔗</div>
+                <h3 data-fr="Autre plateforme" data-en="Other platform" data-ar="منصة أخرى">Autre plateforme</h3>
+                <p data-fr="Intégration possible avec d'autres canaux de communication selon vos besoins" data-en="Possible integration with other communication channels according to your needs" data-ar="التكامل المحتمل مع قنوات الاتصال الأخرى حسب احتياجاتك">Intégration possible avec d'autres canaux de communication selon vos besoins</p>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- Screenshots Section -->
     <section class="screenshots-section" id="screenshots">
