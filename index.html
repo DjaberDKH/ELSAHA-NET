@@ -2534,7 +2534,7 @@
     </div>
 
     <script>
-        const CHAT_WEBHOOK_URL = 'https://vps6f2cq1.oct-xpd1.xyz/webhook-test/web_site_demo_agent';
+        const CHAT_WEBHOOK_URL = 'https://vps6f2cq1.oct-xpd1.xyz/webhook/web_site_demo_agent';
         let chatSessionId = generateSessionId();
         
         function generateSessionId() {
@@ -2575,73 +2575,63 @@
             sendChatMessage(message);
         }
         
-        async function sendChatMessage(message) {
-            const messagesContainer = document.getElementById('chatMessages');
-            const typingIndicator = document.getElementById('typingIndicator');
-            const sendBtn = document.getElementById('chatSendBtn');
-            
-            // Add user message
-            addMessage(message, 'user');
-            
-            // Disable send button and show typing
-            sendBtn.disabled = true;
-            typingIndicator.classList.add('active');
-            
-            // Scroll to bottom
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            
-            try {
-                const response = await fetch(CHAT_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        message: message,
-                        session_id: chatSessionId,
-                        timestamp: new Date().toISOString(),
-                        source: 'landing_page_chat_widget',
-                        language: document.documentElement.getAttribute('lang') || 'fr'
-                    })
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    
-                    // Remove typing indicator
-                    typingIndicator.classList.remove('active');
-                    
-                    // Add bot response
-                    const botMessage = data.response || data.message || "Je suis désolé, je n'ai pas pu traiter votre demande.";
-                    addMessage(botMessage, 'bot');
-                    
-                    // Track successful interaction
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'Chat_Message_Sent', {
-                            event_category: 'Engagement',
-                            event_label: 'ai_chat_interaction'
-                        });
-                    }
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-            } catch (error) {
-                console.error('Chat error:', error);
-                typingIndicator.classList.remove('active');
-                
-                const currentLang = document.documentElement.getAttribute('lang') || 'fr';
-                const errorMessages = {
-                    fr: "Désolé, une erreur s'est produite. Veuillez réessayer ou nous contacter directement.",
-                    en: "Sorry, an error occurred. Please try again or contact us directly.",
-                    ar: "عذرًا، حدث خطأ. يرجى المحاولة مرة أخرى أو الاتصال بنا مباشرة."
-                };
-                
-                addMessage(errorMessages[currentLang], 'bot');
-            } finally {
-                sendBtn.disabled = false;
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }
+      async function sendChatMessage(message) {
+    const messagesContainer = document.getElementById('chatMessages');
+    const typingIndicator = document.getElementById('typingIndicator');
+    const sendBtn = document.getElementById('chatSendBtn');
+
+    // Add user message
+    addMessage(message, 'user');
+
+    // Disable send button and show typing
+    sendBtn.disabled = true;
+    typingIndicator.classList.add('active');
+
+    // Scroll to bottom
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    try {
+        const response = await fetch(CHAT_WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: message,
+                session_id: chatSessionId,
+                timestamp: new Date().toISOString(),
+                source: 'landing_page_chat_widget',
+                language: document.documentElement.getAttribute('lang') || 'fr'
+            })
+        });
+
+        if (response.ok) {
+            const data = await response.text(); // récupérer le texte brut
+
+            // Remove typing indicator
+            typingIndicator.classList.remove('active');
+
+            // Add bot response
+            addMessage(data, 'bot'); // <-- texte brut
+
+        } else {
+            throw new Error('Network response was not ok');
         }
+    } catch (error) {
+        console.error('Chat error:', error);
+        typingIndicator.classList.remove('active');
+
+        const currentLang = document.documentElement.getAttribute('lang') || 'fr';
+        const errorMessages = {
+            fr: "Désolé, une erreur s'est produite. Veuillez réessayer ou nous contacter directement.",
+            en: "Sorry, an error occurred. Please try again or contact us directly.",
+            ar: "عذرًا، حدث خطأ. يرجى المحاولة مرة أخرى أو الاتصال بنا مباشرة."
+        };
+
+        addMessage(errorMessages[currentLang], 'bot');
+    } finally {
+        sendBtn.disabled = false;
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+}
         
         function addMessage(text, sender) {
             const messagesContainer = document.getElementById('chatMessages');
